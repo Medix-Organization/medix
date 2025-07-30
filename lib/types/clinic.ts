@@ -2,8 +2,8 @@ import { Document } from 'mongoose';
 import { LocalizedString } from './common';
 
 export interface Clinic extends Document {
-  name: string;
+  name: LocalizedString; 
   createdAt: Date;
-  address: LocalizedString | null;
-  pin: string | null;
+  address?: LocalizedString ;
+  pin?: string ;
 }

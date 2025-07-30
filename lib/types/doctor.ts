@@ -2,19 +2,19 @@ import { Document, Types } from 'mongoose';
 import { LocalizedString } from './common'
 
 export interface Doctor extends Document {
-  fullName: string;
+  fullName: LocalizedString;
   email: string;
   password: string;
-  specialty: LocalizedString | null;
-  subspecialty: LocalizedString[] | null;
-  clinicId: Types.ObjectId | null;
-  languages: string | null;
-  experience: number | null;
-  gender: LocalizedString | null;
-  phoneNumber: string | null;
-  workingHours: string | null;
-  coveredInsurance: LocalizedString[] | null ;
-  location: string | null;
+  specialty?: LocalizedString ;
+  subspecialty?: LocalizedString[] ;
+  clinicId?: Types.ObjectId;
+  languages?: string;
+  experience?: number;
+  gender?: LocalizedString;
+  phoneNumber?: string;
+  workingHours?: string;
+  coveredInsurance?: LocalizedString[];
+  location?: LocalizedString; 
   createdAt: Date;
   pageVisits: number;
 }

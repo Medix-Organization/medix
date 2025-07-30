@@ -1,5 +1,5 @@
+type supportedLanguage = 'en' | 'ar' ;
 export interface LocalizedString {
-  en: string;
-  ar: string;
+  translations: Record<supportedLanguage, string>;
 }
 
