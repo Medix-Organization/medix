@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 import { LocalizedString } from './common';
 
 export interface Patient extends Document {
-  fullName: LocalizedString;
+  fullName: string;
   email: string;
   password: string;
   createdAt: Date;
