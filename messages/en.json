@@ -1,5 +1,6 @@
 {
-    "common": {
-        "welcome": "مرحبا بكم في Next.js!"
-    }
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  }
 }
