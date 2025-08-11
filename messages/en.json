@@ -1,6 +1,28 @@
 {
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+  "home": {
+    "specialties": [
+      { "id": 1, "label": "Hair & Scalp", "icon": "../hair.jpg", "filled": true },
+      { "id": 2, "label": "Laser Treatment", "icon": "../laser.jpg", "filled": true },
+      { "id": 3, "label": "General Dermatology", "icon": "../detrmology.jpg", "filled": true },
+      { "id": 4, "label": "Cosmetic Treatment", "icon": "../cosmetic.jpg", "filled": true }
+    ],
+    "subs": ["Acne", "Skin Allergy", "Laser", "Skin Care"],
+    "ui": {
+      "distanceUnit": "KM",
+      "reviewsLabel": "Reviews",
+      "ratingLabel": "Rating"
+    },
+    "navbar": {
+    "brand": "MEDIX",
+    "links": {
+      "home": "Home",
+      "services": "Services",
+      "contact": "Contact"
+    },
+    "searchPlaceholder": "Search doctors, clinics...",
+    "signIn": "Sign in"
+  }
+    
   }
 }
+

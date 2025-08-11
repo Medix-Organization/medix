@@ -1,7 +1,27 @@
-
 {
-  "HomePage": {
-    "title": "مرحبا بالعالم!",
-    "about": "اذهب إلى صفحة حول"
+  "home": {
+    "specialties": [
+      { "id": 1, "label": "الشعر وفروة الرأس", "icon": "../hair.jpg", "filled": true },
+      { "id": 2, "label": "علاج الليزر", "icon": "../laser.jpg", "filled": true },
+      { "id": 3, "label": "الأمراض الجلدية العامة", "icon": "../detrmology.jpg", "filled": true },
+      { "id": 4, "label": "العلاجات التجميلية", "icon": "../cosmetic.jpg", "filled": true }
+    ],
+    "subs": ["حب الشباب", "حساسية الجلد", "ليزر", "العناية بالبشرة"],
+    "ui": {
+      "distanceUnit": "كم",
+      "reviewsLabel": "التقييمات",
+      "ratingLabel": "التقييم"
+    },
+    "navbar": {
+    "brand": "ميدكس",
+    "links": {
+      "home": "الرئيسية",
+      "services": "الخدمات",
+      "contact": "اتصل بنا"
+    },
+    "searchPlaceholder": "ابحث عن أطباء، عيادات...",
+    "signIn": "تسجيل الدخول"
+  }
+    
   }
 }
