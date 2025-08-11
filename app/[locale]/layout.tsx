@@ -12,6 +12,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import NavBar from "../components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,7 +47,7 @@ export default async function RootLayout({
       >
         <ClerkProvider>
           <NextIntlClientProvider>
-            <header className="flex justify-end items-center p-4 gap-4 h-16">
+            {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
               <SignedOut>
                 <SignInButton />
                 <SignUpButton>
@@ -58,7 +59,8 @@ export default async function RootLayout({
               <SignedIn>
                 <UserButton />
               </SignedIn>
-            </header>
+            </header> */}
+            <NavBar />
             {children}
           </NextIntlClientProvider>
         </ClerkProvider>
