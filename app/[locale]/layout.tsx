@@ -62,7 +62,7 @@ export default async function RootLayout({
             </header> */}
             <div className="flex flex-col h-full">
               <NavBar />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1 pb-20 md:pb-0">{children}</main>
             </div>
           </NextIntlClientProvider>
         </ClerkProvider>

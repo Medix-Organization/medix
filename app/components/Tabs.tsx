@@ -6,14 +6,14 @@ export default function Tabs() {
   const [activeTab, setActiveTab] = useState("Description");
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto">
       {/* Tab Buttons */}
       <div className="flex border-b border-gray-200">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
+            className={`px-6 py-3 text-sm font-medium transition-colors ${
               activeTab === tab
                 ? "border-b-2 border-blue-500 text-blue-500"
                 : "text-gray-500 hover:text-blue-500"
@@ -25,58 +25,67 @@ export default function Tabs() {
       </div>
 
       {/* Tab Content */}
-      <div className="p-4">
+      <div className="p-6">
         {activeTab === "Description" && (
           <div>
-            <h2 className="text-lg font-semibold mb-2">Description</h2>
-            <p className="text-gray-600">
-              This is the description section. Add your doctor’s or clinic’s
-              detailed info here.
+            <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Description</h2>
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+              This is the description section. Add your doctor's or clinic's
+              detailed info here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
         )}
 
         {activeTab === "Gallery" && (
           <div>
-            <h2 className="text-lg font-semibold mb-2">Gallery</h2>
-            <div className="grid grid-cols-2 gap-2">
+            <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Gallery</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
               {/* Example images */}
-              <img
-                src="/images/sample1.jpg"
-                alt="Sample 1"
-                className="w-full h-40 object-cover rounded-lg"
-              />
-              <img
-                src="/images/sample2.jpg"
-                alt="Sample 2"
-                className="w-full h-40 object-cover rounded-lg"
-              />
+              <div className="w-full h-32 sm:h-40 bg-gray-200 rounded-lg flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Sample Image 1</span>
+              </div>
+              <div className="w-full h-32 sm:h-40 bg-gray-200 rounded-lg flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Sample Image 2</span>
+              </div>
             </div>
           </div>
         )}
 
-        {activeTab === " Google Reviews" && (
+        {activeTab === "Google Reviews" && (
           <div>
-            <h2 className="text-lg font-semibold mb-2">Reviews</h2>
-            <ul className="space-y-2">
-              <li className="p-3 bg-gray-50 rounded-lg shadow-sm">
-                ⭐⭐⭐⭐⭐ Great experience!
+            <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Google Reviews</h2>
+            <ul className="space-y-2 sm:space-y-3">
+              <li className="p-2 sm:p-3 bg-gray-50 rounded-lg shadow-sm">
+                <div className="text-sm sm:text-base">
+                  <span className="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                  <span className="ml-2">Great experience!</span>
+                </div>
               </li>
-              <li className="p-3 bg-gray-50 rounded-lg shadow-sm">
-                ⭐⭐⭐⭐ Friendly staff and good service.
+              <li className="p-2 sm:p-3 bg-gray-50 rounded-lg shadow-sm">
+                <div className="text-sm sm:text-base">
+                  <span className="text-yellow-500">⭐⭐⭐⭐</span>
+                  <span className="ml-2">Friendly staff and good service.</span>
+                </div>
               </li>
             </ul>
           </div>
         )}
         {activeTab === "Medix Reviews" && (
           <div>
-            <h2 className="text-lg font-semibold mb-2">Medix Reviews</h2>
-            <ul className="space-y-2">
-              <li className="p-3 bg-gray-50 rounded-lg shadow-sm">
-                ⭐⭐⭐⭐⭐ Excellent service and care!
+            <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Medix Reviews</h2>
+            <ul className="space-y-2 sm:space-y-3">
+              <li className="p-2 sm:p-3 bg-gray-50 rounded-lg shadow-sm">
+                <div className="text-sm sm:text-base">
+                  <span className="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                  <span className="ml-2">Excellent service and care!</span>
+                </div>
               </li>
-              <li className="p-3 bg-gray-50 rounded-lg shadow-sm">
-                ⭐⭐⭐⭐ Very professional and attentive.
+              <li className="p-2 sm:p-3 bg-gray-50 rounded-lg shadow-sm">
+                <div className="text-sm sm:text-base">
+                  <span className="text-yellow-500">⭐⭐⭐⭐</span>
+                  <span className="ml-2">Very professional and attentive.</span>
+                </div>
               </li>
             </ul>
           </div>
