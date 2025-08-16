@@ -41,9 +41,9 @@ export default async function RootLayout({
     notFound();
   }
   return (
-    <html lang={locale}>
+    <html lang={locale} className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
       >
         <ClerkProvider>
           <NextIntlClientProvider>
@@ -60,8 +60,10 @@ export default async function RootLayout({
                 <UserButton />
               </SignedIn>
             </header> */}
-            <NavBar />
-            {children}
+            <div className="flex flex-col h-full">
+              <NavBar />
+              <main className="flex-1">{children}</main>
+            </div>
           </NextIntlClientProvider>
         </ClerkProvider>
       </body>
