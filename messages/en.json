@@ -1,6 +1,135 @@
 {
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+  "home": {
+    "specialties":  [
+  {
+    "id": 1,
+    "label": "General Dermatology",
+    "icon": "/dermatology.jpg",
+    "filled": true,
+    "tags": [
+      "Acne & Scarring",
+      "Eczema / Dermatitis",
+      "Psoriasis",
+      "Vitiligo",
+      "Hair Loss (Alopecia)",
+      "Nail Disorders",
+      "Hyperpigmentation / Melasma",
+      "Pediatric Dermatology"
+    ]
+  },
+  {
+    "id": 2,
+    "label": "Cosmetic Treatment",
+    "icon": "/cosmetic.jpg",
+    "filled": true,
+    "tags": [
+      "Botox",
+      "Fillers",
+      "PRP (Face & Hair)",
+      "Mesotherapy",
+      "Microneedling",
+      "Chemical Peels",
+      "Skin Rejuvenation",
+      "Dark Circles Treatment"
+    ]
+  },
+  {
+    "id": 3,
+    "label": "Hair & Scalp",
+    "icon": "/hair.jpg",
+    "filled": true,
+    "tags": [
+      "Alopecia / Hair Loss",
+      "Hair PRP",
+      "Hair Mesotherapy",
+      "Dandruff / Scalp Psoriasis",
+      "Low-Level Laser Therapy (LLLT)"
+    ]
+  },
+  {
+    "id": 4,
+    "label": "Laser Treatments",
+    "icon": "/laser.jpg",
+    "filled": true,
+    "tags": [
+      "Laser Hair Removal",
+      "Laser for Pigmentation",
+      "Laser for Acne Scars",
+      "Skin Tightening",
+      "Fractional Laser",
+      "IPL",
+      "RF Microneedling"
+    ]
+  },
+  {
+    "id": 5,
+    "label": "Body Dermatology",
+    "icon": "/body.jpg",
+    "filled": true,
+    "tags": [
+      "Hyperhidrosis Treatment",
+      "Back & Body Acne",
+      "Cellulite Reduction",
+      "Body Contouring (Non-invasive)",
+      "Stretch Marks Treatment",
+      "Body Skin Tightening"
+    ]
+  }
+],
+    "subs": ["Acne", "Skin Allergy", "Laser", "Skin Care"],
+    "ui": {
+      "distanceUnit": "KM",
+      "reviewsLabel": "Reviews",
+      "ratingLabel": "Rating"
+    },
+    "navbar": {
+    "brand": "MEDIX",
+    "links": {
+      "home": "Home",
+      "services": "Services",
+      "contact": "Contact"
+    },
+    "searchPlaceholder": "Search doctors, clinics...",
+    "signIn": "Sign in"
+  },
+    "landing": {
+      "hero": {
+        "title": "Connecting Doctors to Patients",
+        "subtitle": "The easiest way to find the best doctors, read verified reviews, and make informed healthcare decisions",
+        "findDoctorBtn": "Find a Doctor",
+        "joinDoctorBtn": "Join as Doctor"
+      },
+      "features": {
+        "title": "Why Choose Medix?",
+        "subtitle": "We're revolutionizing healthcare by making it easier for patients to connect with the right doctors",
+        "easyDiscovery": {
+          "title": "Easy Doctor Discovery",
+          "description": "Find the perfect doctor for your needs with our advanced search and filtering system"
+        },
+        "verifiedReviews": {
+          "title": "Verified Reviews",
+          "description": "Read authentic reviews from real patients to make informed decisions about your healthcare"
+        },
+        "trustedProfessionals": {
+          "title": "Trusted Professionals",
+          "description": "All doctors are verified and credentialed, ensuring you receive quality care from trusted professionals"
+        },
+        "rateReview": {
+          "title": "Rate & Review",
+          "description": "Share your experience and help other patients by leaving honest reviews and ratings"
+        },
+        "patientCentered": {
+          "title": "Patient-Centered Care",
+          "description": "Helping patients make informed decisions and connect with doctors who truly care"
+        }
+      },
+      "cta": {
+        "title": "Ready to Find Your Perfect Doctor?",
+        "subtitle": "Join thousands of patients who trust Medix to connect them with the best healthcare professionals",
+        "button": "Get Started Today"
+      }
+    }
+    
   }
 }
+
