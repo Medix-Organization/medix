@@ -47,7 +47,7 @@ export const specialties = [
   {
     id: 4,
     label: "Laser Treatments",
-    icon: "/laser.jpg",
+    icon: "/Laser.jpg",
     filled: true,
     tags: [
       "Laser Hair Removal",

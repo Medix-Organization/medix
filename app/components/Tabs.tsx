@@ -8,12 +8,12 @@ export default function Tabs() {
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* Tab Buttons */}
-      <div className="flex border-b border-gray-200">
+      <div className="flex overflow-x-auto border-b border-gray-200 scrollbar-hide">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-6 py-3 text-sm font-medium transition-colors ${
+            className={`px-4 md:px-6 py-3 text-xs md:text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
               activeTab === tab
                 ? "border-b-2 border-blue-500 text-blue-500"
                 : "text-gray-500 hover:text-blue-500"
@@ -25,7 +25,7 @@ export default function Tabs() {
       </div>
 
       {/* Tab Content */}
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         {activeTab === "Description" && (
           <div>
             <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Description</h2>

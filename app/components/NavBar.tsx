@@ -30,12 +30,12 @@ const NavBar = async () => {
                 >
                   {t('links.home')}
                 </Link>
-                <Link 
+                {/* <Link 
                    href="/home" 
                    className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
                  >
                    Find Doctors
-                 </Link>
+                 </Link> */}
                 <Link 
                   href="#" 
                   className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
@@ -84,50 +84,50 @@ const NavBar = async () => {
       </nav>
 
       {/* Mobile Navigation - Bottom */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg z-50">
-        <div className="flex items-center justify-around py-2">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
+        <div className="flex items-center justify-around py-3 px-2">
           {/* Home */}
           <Link 
             href="/" 
-            className="flex flex-col items-center gap-1 text-white hover:text-blue-100 transition-colors p-2"
+            className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
           >
-            <FaHome className="text-xl" />
-            <span className="text-xs font-medium">{t('links.home')}</span>
+            <FaHome className="text-lg" />
+            <span className="text-xs font-medium truncate">{t('links.home')}</span>
           </Link>
           
           {/* Doctors */}
-           <Link 
+           {/* <Link 
              href="/home" 
-             className="flex flex-col items-center gap-1 text-white hover:text-blue-100 transition-colors p-2"
+             className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
            >
-             <FaUserMd className="text-xl" />
-             <span className="text-xs font-medium">Doctors</span>
-           </Link>
+             <FaUserMd className="text-lg" />
+             <span className="text-xs font-medium truncate">Doctors</span>
+           </Link> */}
           
           {/* Search */}
-          <button className="flex flex-col items-center gap-1 text-white hover:text-blue-100 transition-colors p-2">
-            <FaSearch className="text-xl" />
-            <span className="text-xs font-medium">Search</span>
+          <button className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0">
+            <FaSearch className="text-lg" />
+            <span className="text-xs font-medium truncate">Search</span>
           </button>
           
           {/* Contact */}
           <Link 
             href="#" 
-            className="flex flex-col items-center gap-1 text-white hover:text-blue-100 transition-colors p-2"
+            className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
           >
-            <FaPhone className="text-xl" />
-            <span className="text-xs font-medium">{t('links.contact')}</span>
+            <FaPhone className="text-lg" />
+            <span className="text-xs font-medium truncate">{t('links.contact')}</span>
           </Link>
           
           {/* Profile/Auth */}
-          <div className="flex flex-col items-center gap-1 p-2">
+          <div className="flex flex-col items-center gap-1 p-2 min-w-0">
             <SignedOut>
               <SignInButton>
-                <button className="flex flex-col items-center gap-1 text-white hover:text-blue-100 transition-colors">
-                  <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-                    <span className="text-xs font-bold">?</span>
+                <button className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors">
+                  <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center">
+                    <span className="text-xs font-bold text-gray-600">?</span>
                   </div>
-                  <span className="text-xs font-medium">{t('signIn')}</span>
+                  <span className="text-xs font-medium truncate">{t('signIn')}</span>
                 </button>
               </SignInButton>
             </SignedOut>
@@ -137,11 +137,11 @@ const NavBar = async () => {
                 <UserButton 
                   appearance={{
                     elements: {
-                      avatarBox: "w-6 h-6 ring-1 ring-white/30"
+                      avatarBox: "w-5 h-5 ring-1 ring-gray-300"
                     }
                   }}
                 />
-                <span className="text-xs font-medium text-white">Profile</span>
+                <span className="text-xs font-medium text-gray-600 truncate">Profile</span>
               </div>
             </SignedIn>
           </div>
@@ -149,11 +149,11 @@ const NavBar = async () => {
       </nav>
 
       {/* Mobile Top Bar - Logo and Language */}
-      <div className="md:hidden bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg">
-        <div className="flex items-center justify-between px-4 py-3">
-          <Link href="/" className="flex items-center gap-2 text-white">
-            <FaStethoscope className="text-xl" />
-            <span className="text-xl font-bold tracking-tight">MEDIX</span>
+      <div className="md:hidden bg-white border-b border-gray-200 shadow-sm">
+        <div className="flex items-center justify-between px-4 py-4">
+          <Link href="/" className="flex items-center gap-2 text-blue-600">
+            <FaStethoscope className="text-2xl" />
+            <span className="text-2xl font-bold tracking-tight">MEDIX</span>
           </Link>
           <ToggleLanguageButton />
         </div>
