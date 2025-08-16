@@ -9,8 +9,8 @@ const Page = async ({ params }: { params: Promise<any> }) => {
   const id = await params;
   console.log("ID from params:", id.id[0]);
   return (
-    <main className="flex flex-col lg:flex-row gap-6 p-6 bg-gray-50 text-gray-800 lg:h-screen lg:overflow-hidden">
-      <section className="flex flex-col lg:flex-[1] lg:max-w-sm w-full bg-white rounded-lg shadow-md p-4 h-fit lg:self-start">
+    <main className="flex flex-col lg:flex-row gap-4 p-4 md:p-6 bg-gray-50 text-gray-800 lg:h-screen lg:overflow-hidden mb-20 md:mb-0">
+      <section className="flex flex-col lg:flex-[1] lg:max-w-sm w-full bg-white rounded-lg shadow-md p-4 md:p-6 h-fit lg:self-start">
         <section className="">
           <section className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
             <div className="flex-shrink-0">
@@ -74,7 +74,7 @@ const Page = async ({ params }: { params: Promise<any> }) => {
           <p className="text-sm font-semibold text-blue-600">Consultation 350 SAR</p>
         </div>
       </section>
-      <section className="flex flex-col lg:flex-[2] w-full bg-white rounded-lg shadow-md p-6 lg:overflow-y-auto lg:max-h-full">
+      <section className="flex flex-col lg:flex-[2] w-full bg-white rounded-lg shadow-md p-4 md:p-6 lg:overflow-y-auto lg:max-h-full">
         <h1 className="text-2xl font-bold mb-4">Doctor Profile</h1>
         <Tabs />
       </section>

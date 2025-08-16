@@ -25,7 +25,7 @@ const ToggleLanguageButton = () => {
   return (
     <button 
       onClick={toggleLocale} 
-      className="px-4 py-2 border border-white/30 rounded-full text-white hover:bg-white/20 hover:border-white/50 transition-all duration-200 font-medium min-w-[50px] backdrop-blur-sm"
+      className="px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-100 hover:border-gray-400 transition-all duration-200 font-medium min-w-[50px] bg-white shadow-sm"
     >
       {currentLocale === 'en' ? 'عر' : 'En'}
     </button>
