@@ -13,42 +13,30 @@ const SpecialitiesAndSubs = () => {
       {/* All Specialities Section */}
       <div className="px-4 py-6">
         <h2 className="text-xl font-bold text-gray-900 mb-6">All Specialities</h2>
-        <div className="flex justify-between items-center gap-2 overflow-x-auto pb-2">
+        <div className="flex justify-between items-center gap-4 overflow-x-auto pb-2 md:justify-center md:gap-8 md:max-w-2xl md:mx-auto lg:max-w-3xl lg:gap-12">
           {specialties.map((speciality, i) => (
             <div key={speciality.id} className="flex flex-col items-center min-w-0 flex-shrink-0">
               <button
-                className={`transition-all duration-200 w-16 h-16 rounded-full flex items-center justify-center overflow-hidden border-2 ${
+                className={`transition-all duration-200 w-20 h-20 rounded-full flex items-center justify-center overflow-hidden border-4 ${
                   activeSpecialty.label === speciality.label
-                    ? "bg-blue-600 border-blue-600"
-                    : "bg-white border-blue-600"
+                    ? "bg-blue-100 border-blue-500"
+                    : "bg-blue-50 border-gray-300 hover:border-blue-300"
                 }`}
                 onClick={() => setActiveSpecialty(speciality)}
               >
-                {activeSpecialty.label === speciality.label ? (
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
-                    <Image
-                      width={24}
-                      height={24}
-                      src={speciality.icon}
-                      alt={speciality.label}
-                      className="w-6 h-6 object-cover"
-                    />
-                  </div>
-                ) : (
-                  <Image
-                    width={32}
-                    height={32}
-                    src={speciality.icon}
-                    alt={speciality.label}
-                    className="w-8 h-8 object-cover"
-                  />
-                )}
+                <Image
+                  width={80}
+                  height={80}
+                  src={speciality.icon}
+                  alt={speciality.label}
+                  className="w-full h-full object-cover"
+                />
               </button>
               <div
-                className={`mt-2 text-center text-xs font-medium ${
+                className={`mt-3 text-center text-sm font-medium max-w-[80px] leading-tight h-10 flex items-center justify-center ${
                   activeSpecialty.label === speciality.label
                     ? "text-blue-600"
-                    : "text-gray-600"
+                    : "text-gray-700"
                 }`}
               >
                 {t(`specialties.${i}.label`)}
@@ -61,15 +49,15 @@ const SpecialitiesAndSubs = () => {
       {/* Sub Specialities Section */}
       <div className="px-4 pb-6">
         <h3 className="text-lg font-bold text-gray-900 mb-4">Sub Specialities</h3>
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide md:justify-center md:flex-wrap md:overflow-visible md:max-w-4xl md:mx-auto" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
           {activeSpecialty.tags.map((tag, i) => (
             <button
               key={i}
               onClick={() => setActiveTag(tag)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+              className={`px-5 py-3 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 shadow-sm ${
                 tag === activeTag
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  ? "bg-blue-600 text-white shadow-blue-200"
+                  : "bg-white text-gray-700 border border-gray-200 hover:bg-blue-50 hover:border-blue-300"
               }`}
             >
               {t(

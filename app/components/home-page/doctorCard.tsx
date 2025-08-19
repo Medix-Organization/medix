@@ -7,8 +7,8 @@ const DoctorCard = async (d: any) => {
   console.log(d);
 
   return (
-    <Link href={`/doctor-profile/${d.d.id || 'default'}`} className="block cursor-pointer hover:shadow-md transition-shadow duration-200">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mx-4 mb-4 hover:border-gray-200 transition-colors duration-200">
+    <Link href={`/doctor-profile/${d.d.id || 'default'}`} className="block cursor-pointer transition-shadow duration-200">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 mx-4 mb-4 hover:border-gray-200 transition-colors duration-200 md:mx-6 lg:mx-8">
       <div className="p-4">
         <div className="flex items-start gap-3 sm:gap-4">
           <Image

@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { FaSearch, FaStethoscope, FaHome, FaUserMd, FaPhone } from "react-icons/fa";
+import { FaSearch, FaStethoscope, FaHome, FaUserMd, FaPhone, FaUser } from "react-icons/fa";
 import ToggleLanguageButton from "./ToggleLanguageButton";
 import { Link } from "@/i18n/navigation";
 
@@ -124,9 +124,7 @@ const NavBar = async () => {
             <SignedOut>
               <SignInButton>
                 <button className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors">
-                  <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-xs font-bold text-gray-600">?</span>
-                  </div>
+                  <FaUser className="text-lg" />
                   <span className="text-xs font-medium truncate">{t('signIn')}</span>
                 </button>
               </SignInButton>
