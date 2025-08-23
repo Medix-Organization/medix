@@ -28,20 +28,95 @@ export default function Tabs() {
       <div className="p-4 md:p-6">
         {activeTab === "Description" && (
           <div>
-            <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Description</h2>
-            <div className="max-w-none">
-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4">
-                This is the description section. Add your doctor's or clinic's
-                detailed info here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              </p>
-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
+            {/* <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Description</h2> */}
+            <div className="max-w-none space-y-3">
+              {/* Nationality and Role Section */}
+              <div className="space-y-1 bg-slate-200 rounded-md p-3">
+                 <div className="text-gray-800 font-semibold text-sm sm:text-base">
+                  Consultant General Dermatology
+                </div>
+                <div className="text-gray-600 font-semibold text-sm sm:text-base">
+                  Saudi National
+                </div>
+               
+              </div>
+
+              {/* Qualifications Section */}
+              <div className="space-y-3">
+                <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Qualifications</h3>
+                <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>MD in Dermatology from King Saud University</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Fellowship in Cosmetic Dermatology from Harvard Medical School</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Board Certified by Saudi Commission for Health Specialties</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Member of American Academy of Dermatology</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Certificate in Advanced Laser Therapy</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>10+ years of clinical experience in dermatology</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Services Provided Section */}
+              <div className="space-y-3">
+                <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Services Provided by the Doctor</h3>
+                <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>General dermatology consultations and skin examinations</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Cosmetic procedures including botox and dermal fillers</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Laser treatments for hair removal and skin rejuvenation</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Materials and Devices Section */}
+              <div className="space-y-3">
+                <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Materials and Devices</h3>
+                <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Advanced CO2 Laser System for skin resurfacing</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>IPL (Intense Pulsed Light) for pigmentation treatment</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Dermatoscope for detailed skin analysis</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>Cryotherapy equipment for wart and lesion removal</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-500 mr-2 mt-1">•</span>
+                    <span>High-quality injectable fillers and neurotoxins</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         )}

@@ -38,26 +38,39 @@ const Page = async ({ params }: { params: Promise<any> }) => {
           <div className="flex flex-col sm:flex-row justify-between gap-3">
             <div className="flex flex-col gap-2">
               <div className="flex gap-2 items-center">
-                <FaLocationDot className="text-gray-400 flex-shrink-0" />
+                <FaLocationDot className="text-gray-600 flex-shrink-0" size={18} style={{strokeWidth: 2.5}} />
                 <p className="text-gray-600 text-sm">Riyadh, Sulaiman alhabeeb</p>
               </div>
               <div className="flex gap-2 items-center">
-                <FaGraduationCap className="text-gray-400 flex-shrink-0" />
+                <FaGraduationCap className="text-gray-600 flex-shrink-0" size={18} style={{strokeWidth: 2.5}} />
                 <p className="text-gray-600 text-sm">+12 years of experience</p>
               </div>
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex gap-2 items-center">
-                <BiSolidLike className="text-green-500 flex-shrink-0" />
+                <BiSolidLike className="text-gray-600 flex-shrink-0" size={18} style={{strokeWidth: 2.5}} />
                 <p className="text-gray-600 text-sm">Recommendation: 97%</p>
               </div>
               <div className="flex gap-2 items-center">
+                <svg className="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                <p className="text-gray-600 text-sm">Languages: English, Arabic</p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <svg className="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <p className="text-gray-600 text-sm"><b>30</b> Reviews</p>
+              </div>
+              
+              {/* <div className="flex gap-2 items-center">
                 <IoMdStar color="#fbbf24" size={20} className="flex-shrink-0" />
                 <p className="text-gray-600 text-sm">Reviews</p>
-              </div>
+              </div> */}
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 mt-3">
+          {/* <div className="flex flex-wrap gap-2 mt-3">
             <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
               Heart Surgery
             </span>
@@ -67,7 +80,7 @@ const Page = async ({ params }: { params: Promise<any> }) => {
             <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">
               Emergency Care
             </span>
-          </div>
+          </div> */}
         </section>
         <div className="border-t mt-3 border-slate-200"></div>
         <div className="flex justify-center sm:justify-end mt-2">
