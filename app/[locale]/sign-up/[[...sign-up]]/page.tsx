@@ -1,8 +1,18 @@
 import { SignUp } from '@clerk/nextjs'
 
-export default function Page() {
+interface PageProps {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ role?: string }>;
+}
+
+export default async function Page({ params, searchParams }: PageProps) {
+  const { locale } = await params;
+  const { role } = await searchParams;
+  
+  const redirectUrl = `/${locale}/onboarding${role ? `?role=${role}` : ''}`;
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blur-md py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-blur-md py-12 px-4 sm:px-6 lg:px-8" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <div className="max-w-md w-full space-y-8">
         <SignUp 
           appearance={{
@@ -11,6 +21,8 @@ export default function Page() {
               card: "shadow-lg border-0",
             }
           }}
+          forceRedirectUrl={redirectUrl}
+          signInUrl={`/${locale}/sign-in`}
         />
       </div>
     </div>

@@ -48,7 +48,7 @@ export default async function Home() {
               {t("landing.hero.findDoctorBtn")}
             </Link>
             <Link
-              href="#"
+              href="/sign-up?role=doctor"
               className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center"
             >
               {t("landing.hero.joinDoctorBtn")}

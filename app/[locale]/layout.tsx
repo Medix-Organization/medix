@@ -12,6 +12,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { arSA } from "@clerk/localizations";
 import NavBar from "../components/NavBar";
 
 const geistSans = Geist({
@@ -45,7 +46,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
       >
-        <ClerkProvider>
+        <ClerkProvider localization={locale === 'ar' ? arSA : undefined}>
           <NextIntlClientProvider>
             {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
               <SignedOut>
