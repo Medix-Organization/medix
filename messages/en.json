@@ -86,6 +86,9 @@
     "brand": "MEDIX",
     "links": {
       "home": "Home",
+      "doctors": "Doctors",
+      "favourites": "Favourites",
+      "profile": "Profile",
       "services": "Services",
       "contact": "Contact"
     },
@@ -128,8 +131,72 @@
         "subtitle": "Join thousands of patients who trust Medix to connect them with the best healthcare professionals",
         "button": "Get Started Today"
       }
+    },
+    "favourites": {
+      "title": "My Favourites",
+      "subtitle": "Your saved doctors for quick access",
+      "doctorsCount": "Favourite Doctor",
+      "doctorsCountPlural": "Favourite Doctors",
+      "empty": {
+        "title": "No favourites yet",
+        "description": "Start adding doctors to your favourites by tapping the heart icon"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "accountOverview": "Account Overview",
+      "personalInfo": "Personal Information",
+      "quickActions": "Quick Actions",
+      "stats": {
+        "favouriteDoctors": "Favourite Doctors",
+        "appointments": "Appointments",
+        "pending": "Pending"
+      },
+      "info": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "memberSince": "Member Since",
+        "accountType": "Account Type",
+        "notProvided": "Not provided",
+        "patient": "Patient"
+      },
+      "actions": {
+        "editProfile": {
+          "title": "Edit Profile",
+          "description": "Update your personal information"
+        },
+        "medicalHistory": {
+          "title": "Medical History",
+          "description": "View your medical records"
+        },
+        "notifications": {
+          "title": "Notifications",
+          "description": "Manage your preferences"
+        },
+        "helpSupport": {
+          "title": "Help & Support",
+          "description": "Get assistance"
+        }
+      }
+    },
+    "doctorCard": {
+      "experience": "Experience",
+      "years": "Years",
+      "location": "Location",
+      "away": "mins away",
+      "recommendation": "Recommendation",
+      "reviews": "Reviews",
+      "consultation": "Consultation",
+      "addedToFavorites": "Added to favorites",
+      "removedFromFavorites": "Removed from favorites",
+      "shareMenu": {
+        "whatsapp": "WhatsApp",
+        "twitter": "Twitter",
+        "copyLink": "Copy Link",
+        "linkCopied": "Link copied to clipboard!"
+      }
     }
-    
   }
 }
 

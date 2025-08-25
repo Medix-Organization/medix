@@ -1,13 +1,11 @@
 import { getTranslations } from "next-intl/server";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { FaSearch, FaStethoscope, FaHome, FaUserMd, FaPhone, FaUser } from "react-icons/fa";
+import { FaSearch, FaStethoscope, FaHome, FaUserMd, FaPhone, FaUser, FaHeart } from "react-icons/fa";
 import ToggleLanguageButton from "./ToggleLanguageButton";
 import { Link } from "@/i18n/navigation";
 
 const NavBar = async () => {
-
   const t = await getTranslations('home.navbar');
-
 
   return (
     <>
@@ -19,7 +17,7 @@ const NavBar = async () => {
             <div className="flex items-center gap-8">
               <Link href="/" className="flex items-center gap-2 text-white hover:text-blue-100 transition-colors">
                 <FaStethoscope className="text-2xl" />
-                <span className="text-2xl font-bold tracking-tight">MEDIX</span>
+                <span className="text-2xl font-bold tracking-tight">{t('brand')}</span>
               </Link>
               
               {/* Navigation Links */}
@@ -30,17 +28,23 @@ const NavBar = async () => {
                 >
                   {t('links.home')}
                 </Link>
-                {/* <Link 
-                   href="/home" 
-                   className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
-                 >
-                   Find Doctors
-                 </Link> */}
                 <Link 
-                  href="#" 
+                  href="/home" 
                   className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
                 >
-                  {t('links.contact')}
+                  {t('links.doctors')}
+                </Link>
+                <Link 
+                  href="/favourites" 
+                  className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
+                >
+                  {t('links.favourites')}
+                </Link>
+                <Link 
+                  href="/profile" 
+                  className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
+                >
+                  {t('links.profile')}
                 </Link>
               </div>
             </div>
@@ -96,27 +100,21 @@ const NavBar = async () => {
           </Link>
           
           {/* Doctors */}
-           {/* <Link 
-             href="/home" 
-             className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
-           >
-             <FaUserMd className="text-lg" />
-             <span className="text-xs font-medium truncate">Doctors</span>
-           </Link> */}
-          
-          {/* Search */}
-          <button className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0">
-            <FaSearch className="text-lg" />
-            <span className="text-xs font-medium truncate">Search</span>
-          </button>
-          
-          {/* Contact */}
           <Link 
-            href="#" 
+            href="/home" 
             className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
           >
-            <FaPhone className="text-lg" />
-            <span className="text-xs font-medium truncate">{t('links.contact')}</span>
+            <FaUserMd className="text-lg" />
+            <span className="text-xs font-medium truncate">{t('links.doctors')}</span>
+          </Link>
+          
+          {/* Favourites */}
+          <Link 
+            href="/favourites" 
+            className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
+          >
+            <FaHeart className="text-lg" />
+            <span className="text-xs font-medium truncate">{t('links.favourites')}</span>
           </Link>
           
           {/* Profile/Auth */}
@@ -131,7 +129,10 @@ const NavBar = async () => {
             </SignedOut>
             
             <SignedIn>
-              <div className="flex flex-col items-center gap-1">
+              <Link 
+                href="/profile" 
+                className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors"
+              >
                 <UserButton 
                   appearance={{
                     elements: {
@@ -139,8 +140,8 @@ const NavBar = async () => {
                     }
                   }}
                 />
-                <span className="text-xs font-medium text-gray-600 truncate">Profile</span>
-              </div>
+                <span className="text-xs font-medium text-gray-600 truncate">{t('links.profile')}</span>
+              </Link>
             </SignedIn>
           </div>
         </div>
@@ -151,7 +152,7 @@ const NavBar = async () => {
         <div className="flex items-center justify-between px-4 py-4">
           <Link href="/" className="flex items-center gap-2 text-blue-600">
             <FaStethoscope className="text-2xl" />
-            <span className="text-2xl font-bold tracking-tight">MEDIX</span>
+            <span className="text-2xl font-bold tracking-tight">{t('brand')}</span>
           </Link>
           <ToggleLanguageButton />
         </div>

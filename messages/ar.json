@@ -75,8 +75,7 @@
       "شد بشرة الجسم"
     ]
   }
-]
-,
+],
     "subs": ["حب الشباب", "حساسية الجلد", "ليزر", "العناية بالبشرة"],
     "ui": {
       "distanceUnit": "كم",
@@ -87,6 +86,9 @@
     "brand": "ميدكس",
     "links": {
       "home": "الرئيسية",
+      "doctors": "الأطباء",
+      "favourites": "المفضلة",
+      "profile": "الملف الشخصي",
       "services": "الخدمات",
       "contact": "اتصل بنا"
     },
@@ -129,7 +131,71 @@
         "subtitle": "انضم إلى آلاف المرضى الذين يثقون في ميدكس لربطهم بأفضل المختصين في الرعاية الصحية",
         "button": "ابدأ اليوم"
       }
+    },
+    "favourites": {
+      "title": "مفضلتي",
+      "subtitle": "الأطباء المحفوظون للوصول السريع",
+      "doctorsCount": "طبيب مفضل",
+      "doctorsCountPlural": "أطباء مفضلون",
+      "empty": {
+        "title": "لا توجد مفضلة بعد",
+        "description": "ابدأ بإضافة الأطباء إلى مفضلتك بالنقر على أيقونة القلب"
+      }
+    },
+    "profile": {
+      "title": "الملف الشخصي",
+      "accountOverview": "نظرة عامة على الحساب",
+      "personalInfo": "المعلومات الشخصية",
+      "quickActions": "الإجراءات السريعة",
+      "stats": {
+        "favouriteDoctors": "الأطباء المفضلون",
+        "appointments": "المواعيد",
+        "pending": "قيد الانتظار"
+      },
+      "info": {
+        "fullName": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "memberSince": "عضو منذ",
+        "accountType": "نوع الحساب",
+        "notProvided": "غير مقدم",
+        "patient": "مريض"
+      },
+      "actions": {
+        "editProfile": {
+          "title": "تعديل الملف الشخصي",
+          "description": "تحديث معلوماتك الشخصية"
+        },
+        "medicalHistory": {
+          "title": "التاريخ الطبي",
+          "description": "عرض سجلاتك الطبية"
+        },
+        "notifications": {
+          "title": "الإشعارات",
+          "description": "إدارة تفضيلاتك"
+        },
+        "helpSupport": {
+          "title": "المساعدة والدعم",
+          "description": "الحصول على المساعدة"
+        }
+      }
+    },
+    "doctorCard": {
+      "experience": "الخبرة",
+      "years": "سنوات",
+      "location": "الموقع",
+      "away": "دقيقة",
+      "recommendation": "التوصية",
+      "reviews": "التقييمات",
+      "consultation": "الاستشارة",
+      "addedToFavorites": "تمت الإضافة إلى المفضلة",
+      "removedFromFavorites": "تم الحذف من المفضلة",
+      "shareMenu": {
+        "whatsapp": "واتساب",
+        "twitter": "تويتر",
+        "copyLink": "نسخ الرابط",
+        "linkCopied": "تم نسخ الرابط!"
+      }
     }
-    
   }
 }

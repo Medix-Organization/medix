@@ -17,20 +17,32 @@ const SpecialitiesAndSubs = () => {
           {specialties.map((speciality, i) => (
             <div key={speciality.id} className="flex flex-col items-center min-w-0 flex-shrink-0">
               <button
-                className={` transition-all duration-200 w-20 h-20 rounded-full flex items-center justify-center overflow-hidden border-4 ${
+                className={`transition-all duration-200 w-20 h-20 rounded-full flex items-center justify-center overflow-hidden border-4 relative ${
                   activeSpecialty.label === speciality.label
-                    ? "bg-blue-100 border-blue-500"
+                    ? "bg-blue-600 border-blue-600"
                     : "bg-blue-50 border-gray-300 hover:border-blue-300"
                 }`}
                 onClick={() => setActiveSpecialty(speciality)}
               >
-                <Image
-                  width={80}
-                  height={80}
-                  src={speciality.icon}
-                  alt={speciality.label}
-                  className="w-full h-full object-cover"
-                />
+                {activeSpecialty.label === speciality.label ? (
+                  <div className="w-full h-full bg-white rounded-full flex items-center justify-center m-1">
+                    <Image
+                      width={60}
+                      height={60}
+                      src={speciality.icon}
+                      alt={speciality.label}
+                      className="w-12 h-12 object-cover"
+                    />
+                  </div>
+                ) : (
+                  <Image
+                    width={80}
+                    height={80}
+                    src={speciality.icon}
+                    alt={speciality.label}
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </button>
               <div
                 className={`mt-3 text-center text-xs font-bold max-w-[80px] leading-tight h-10 flex items-center justify-center ${
