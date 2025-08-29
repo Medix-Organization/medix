@@ -1,279 +1,248 @@
-'use client'
-
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import BilingualInput from '../shared/BilingualInput';
+import LocationInput from '../shared/LocationInput';
+import { LocalizedString } from '@/lib/types/common';
 
 interface DoctorOnboardingFormProps {
   locale: string;
 }
 
+type PlaceData = {
+  name: string;
+  address: string;
+  placeId: string;
+  googleMapLink?: string;
+};
+
 export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormProps) {
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: { translations: { en: '', ar: '' } } as LocalizedString,
+    specialty: { translations: { en: '', ar: '' } } as LocalizedString,
+    shortBio: { translations: { en: '', ar: '' } } as LocalizedString,
+    email: '',
     phoneNumber: '',
-    specialization: '',
-    subSpecialization: '',
-    licenseNumber: '',
     yearsOfExperience: '',
-    education: '',
-    hospitalAffiliation: '',
+    licenseNumber: '',
     consultationFee: '',
-    bio: '',
-    languages: '',
-    availableHours: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+    availableForOnlineConsultation: false,
+    location: null as PlaceData | null,
+    languages: [] as string[],
+    titleCredentials: [] as string[]
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrors({});
+    
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.fullName.translations.en && !formData.fullName.translations.ar) {
+      newErrors.fullName = 'Full name is required in at least one language';
+    }
+    if (!formData.specialty.translations.en && !formData.specialty.translations.ar) {
+      newErrors.specialty = 'Specialty is required in at least one language';
+    }
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.location) newErrors.location = 'Location is required';
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setIsSubmitting(false);
+      return;
+    }
     
     try {
+      const submitData = {
+        ...formData,
+        location: formData.location ? {
+          googleMapLink: formData.location.googleMapLink || `https://www.google.com/maps/place/?q=place_id:${formData.location.placeId}`
+        } : null
+      };
+      
       const response = await fetch('/api/onboarding/doctor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
-      })
+        body: JSON.stringify(submitData),
+      });
       
       if (response.ok) {
-        router.push(`/${locale}/doctor-profile`)
+        router.push(`/${locale}/doctor-profile`);
       } else {
-        throw new Error('Failed to submit form')
+        throw new Error('Failed to submit form');
       }
     } catch (error) {
-      console.error('Error submitting form:', error)
-      alert('Error submitting form. Please try again.')
+      console.error('Error submitting form:', error);
+      alert('Error submitting form. Please try again.');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-            First Name *
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">Doctor Registration</h2>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Full Name - Bilingual */}
+        <div className="lg:col-span-2">
+          <BilingualInput
+            label="Full Name"
+            name="fullName"
+            value={formData.fullName}
+            onChange={(value) => setFormData({ ...formData, fullName: value })}
             required
-            value={formData.firstName}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={{ en: 'Dr. John Smith', ar: 'د. أحمد محمد' }}
+            error={errors.fullName}
           />
         </div>
-        
-        <div>
-          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-            Last Name *
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
+
+        {/* Specialty - Bilingual */}
+        <div className="lg:col-span-2">
+          <BilingualInput
+            label="Specialty"
+            name="specialty"
+            value={formData.specialty}
+            onChange={(value) => setFormData({ ...formData, specialty: value })}
             required
-            value={formData.lastName}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={{ en: 'Cardiology', ar: 'أمراض القلب' }}
+            error={errors.specialty}
           />
         </div>
-        
+
+        {/* Email */}
         <div>
-          <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
-            Phone Number *
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Email *
+          </label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              errors.email ? 'border-red-500' : 'border-gray-300'
+            }`}
+            placeholder="doctor@example.com"
+          />
+          {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+        </div>
+
+        {/* Phone Number */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number
           </label>
           <input
             type="tel"
-            id="phoneNumber"
-            name="phoneNumber"
-            required
             value={formData.phoneNumber}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="+966 50 123 4567"
           />
         </div>
-        
+
+        {/* Years of Experience */}
         <div>
-          <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700 mb-2">
-            Medical License Number *
-          </label>
-          <input
-            type="text"
-            id="licenseNumber"
-            name="licenseNumber"
-            required
-            value={formData.licenseNumber}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="specialization" className="block text-sm font-medium text-gray-700 mb-2">
-            Specialization *
-          </label>
-          <select
-            id="specialization"
-            name="specialization"
-            required
-            value={formData.specialization}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">Select Specialization</option>
-            <option value="cardiology">Cardiology</option>
-            <option value="dermatology">Dermatology</option>
-            <option value="neurology">Neurology</option>
-            <option value="orthopedics">Orthopedics</option>
-            <option value="pediatrics">Pediatrics</option>
-            <option value="psychiatry">Psychiatry</option>
-            <option value="general">General Medicine</option>
-          </select>
-        </div>
-        
-        <div>
-          <label htmlFor="subSpecialization" className="block text-sm font-medium text-gray-700 mb-2">
-            Sub-Specialization
-          </label>
-          <input
-            type="text"
-            id="subSpecialization"
-            name="subSpecialization"
-            value={formData.subSpecialization}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="yearsOfExperience" className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Years of Experience *
           </label>
           <input
             type="number"
-            id="yearsOfExperience"
-            name="yearsOfExperience"
-            required
-            min="0"
             value={formData.yearsOfExperience}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, yearsOfExperience: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="5"
+            min="0"
           />
         </div>
-        
+
+        {/* License Number */}
         <div>
-          <label htmlFor="consultationFee" className="block text-sm font-medium text-gray-700 mb-2">
-            Consultation Fee (USD) *
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            License Number
+          </label>
+          <input
+            type="text"
+            value={formData.licenseNumber}
+            onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="LIC123456"
+          />
+        </div>
+
+        {/* Consultation Fee */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Consultation Fee (SAR)
           </label>
           <input
             type="number"
-            id="consultationFee"
-            name="consultationFee"
-            required
-            min="0"
             value={formData.consultationFee}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, consultationFee: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="200"
+            min="0"
           />
         </div>
+
+        {/* Online Consultation */}
+        <div>
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={formData.availableForOnlineConsultation}
+              onChange={(e) => setFormData({ ...formData, availableForOnlineConsultation: e.target.checked })}
+              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            <span className="text-sm font-medium text-gray-700">Available for Online Consultation</span>
+          </label>
+        </div>
       </div>
-      
+
+      {/* Location */}
       <div>
-        <label htmlFor="education" className="block text-sm font-medium text-gray-700 mb-2">
-          Education *
-        </label>
-        <textarea
-          id="education"
-          name="education"
+        <LocationInput
+          label="Clinic/Practice Location"
+          placeholder="e.g. Dr. Kareem Clinic, Jeddah"
+          value={formData.location}
+          onChange={(place) => setFormData({ ...formData, location: place })}
           required
-          rows={3}
-          value={formData.education}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Medical degree, university, graduation year..."
+          error={errors.location}
         />
       </div>
-      
+
+      {/* Short Bio - Bilingual */}
       <div>
-        <label htmlFor="hospitalAffiliation" className="block text-sm font-medium text-gray-700 mb-2">
-          Hospital/Clinic Affiliation
-        </label>
-        <input
-          type="text"
-          id="hospitalAffiliation"
-          name="hospitalAffiliation"
-          value={formData.hospitalAffiliation}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <BilingualInput
+          label="Short Bio"
+          name="shortBio"
+          value={formData.shortBio}
+          onChange={(value) => setFormData({ ...formData, shortBio: value })}
+          type="textarea"
+          placeholder={{ 
+            en: 'Brief description of your practice and expertise...', 
+            ar: 'وصف مختصر لممارستك وخبرتك...' 
+          }}
         />
       </div>
-      
-      <div>
-        <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
-          Professional Bio
-        </label>
-        <textarea
-          id="bio"
-          name="bio"
-          rows={4}
-          value={formData.bio}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Brief description of your experience and approach to patient care..."
-        />
+
+      {/* Submit Button */}
+      <div className="flex justify-end">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+        >
+          {isSubmitting ? 'Submitting...' : 'Complete Registration'}
+        </button>
       </div>
-      
-      <div>
-        <label htmlFor="languages" className="block text-sm font-medium text-gray-700 mb-2">
-          Languages Spoken
-        </label>
-        <input
-          type="text"
-          id="languages"
-          name="languages"
-          value={formData.languages}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="e.g., English, Arabic, French"
-        />
-      </div>
-      
-      <div>
-        <label htmlFor="availableHours" className="block text-sm font-medium text-gray-700 mb-2">
-          Available Hours
-        </label>
-        <input
-          type="text"
-          id="availableHours"
-          name="availableHours"
-          value={formData.availableHours}
-          onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="e.g., Mon-Fri 9AM-5PM"
-        />
-      </div>
-      
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 px-4 rounded-md font-semibold transition-colors"
-      >
-        {isSubmitting ? 'Completing Registration...' : 'Complete Registration'}
-      </button>
     </form>
-  )
+  );
 }

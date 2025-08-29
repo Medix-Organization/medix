@@ -17,6 +17,24 @@ const DoctorSchema = new Schema<Doctor>({
   memberships: { type: [String], default: [] },
   awards: { type: [String], default: [] },
   numberOfReviews: { type: Number, default: 0 },
+  clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
+  shortBio: { type: localizedStringSchema },
+  subspecialties: { type: [localizedStringSchema], default: [] },
+  devicesMaterials: { type: [String], default: [] },
+  reviews: { type: reviewSummarySchema, default: () => ({}) },
+  location: { type: locationSchema, required: true },
+   email: { type: String, required: true, unique: true },
+  phoneNumber: { type: String },
+  consultationFee: { type: Number },
+  availableForOnlineConsultation: { type: Boolean, default: false },
+  profileImage: { type: String },
+  coverImage: { type: String },
+  isVerified: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+  pageVisits: { type: Number, default: 0 },
+  socialLinks: { type: socialLinksSchema, default: () => ({}) },
+
   
   // Updated: Multiple clinic associations with working hours
   clinicAssociations: {
@@ -33,30 +51,12 @@ const DoctorSchema = new Schema<Doctor>({
   },
   
   // Deprecated: Keep for backward compatibility
-  clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
   
-  shortBio: { type: localizedStringSchema },
-  subspecialties: { type: [localizedStringSchema], default: [] },
-  devicesMaterials: { type: [String], default: [] },
-  reviews: { type: reviewSummarySchema, default: () => ({}) },
-  
-  // Location & Map
-  location: { type: locationSchema, required: true },
   
   // Social Media & Professional Links
-  socialLinks: { type: socialLinksSchema, default: () => ({}) },
   
   // Additional fields
-  email: { type: String, required: true, unique: true },
-  phoneNumber: { type: String },
-  consultationFee: { type: Number },
-  availableForOnlineConsultation: { type: Boolean, default: false },
-  profileImage: { type: String },
-  coverImage: { type: String },
-  isVerified: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-  pageVisits: { type: Number, default: 0 }
+ 
 });
 
 // Add indexes for better performance
