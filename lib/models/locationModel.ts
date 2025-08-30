@@ -4,10 +4,10 @@ import { Schema } from 'mongoose';
 export const locationSchema = new Schema({
   googleMapLink: { 
     type: String, 
-    required: true,
+    required: false, // Make this optional
     validate: {
       validator: function(v: string) {
-        return /^https:\/\/(www\.)?google\.(com|[a-z]{2,3}(\.[a-z]{2})?)\/maps/.test(v);
+        return !v || /^https:\/\/(www\.)?google\.(com|[a-z]{2,3}(\.[a-z]{2})?)?\/maps/.test(v);
       },
       message: 'Google Map link must be a valid Google Maps URL'
     }
@@ -21,7 +21,7 @@ export const locationSchema = new Schema({
     zipCode: { type: String }
   },
   coordinates: {
-    latitude: { type: Number },
-    longitude: { type: Number }
+    latitude: { type: Number, required: true }, // Make coordinates required instead
+    longitude: { type: Number, required: true }
   }
 }, { _id: false });

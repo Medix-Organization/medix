@@ -1,26 +1,21 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { searchClinics, createClinic } from '@/lib/actions/clinicActions';
-import {  ClinicType } from '@/lib/types/clinic';
-import { ClinicAssociation } from '@/lib/types/workingHours';
-import { LocalizedString } from '@/lib/types/common';
+import { searchClinics } from '@/lib/actions/clinicActions';
+import type { ClinicType } from '@/lib/types/clinic';
+import type { ClinicAssociation, DaySchedule, TimeSlot } from '@/lib/types/workingHours';
+import type { LocalizedString } from '@/lib/types/common';
 import BilingualInput from './BilingualInput';
-import LocationInput from './LocationInput';
+import LocationInput, { PlaceData } from './LocationInput';
 
 interface ClinicSelectorProps {
   selectedClinics: ClinicAssociation[];
   onChange: (clinics: ClinicAssociation[]) => void;
   error?: string;
+  allowCreate?: boolean; // New prop
 }
 
-type PlaceData = {
-  name: string;
-  address: string;
-  placeId: string;
-  googleMapLink?: string;
-};
-
-export default function ClinicSelector({ selectedClinics, onChange, error }: ClinicSelectorProps) {
+// Removed the local PlaceData definition; using the exported one from LocationInput
+export default function ClinicSelector({ selectedClinics, onChange, error, allowCreate = true }: ClinicSelectorProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<ClinicType[]>([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -34,6 +29,95 @@ export default function ClinicSelector({ selectedClinics, onChange, error }: Cli
     contactPhone: '',
     description: { translations: { en: '', ar: '' } } as LocalizedString
   });
+
+  // Resolve name/address safely for both legacy and Places-shaped ClinicType
+  const getClinicName = (clinic: ClinicType): string => {
+    if (clinic.displayName?.text) return clinic.displayName.text;
+    if (typeof clinic.name === 'string' && clinic.name) return clinic.name;
+    const legacy = (clinic as any)?.name?.translations;
+    return legacy?.en || legacy?.ar || '';
+  };
+
+  const getClinicAddress = (clinic: ClinicType): string => {
+    if (clinic.formattedAddress) return clinic.formattedAddress;
+    const legacy = (clinic as any)?.address?.translations;
+    return legacy?.en || legacy?.ar || '';
+  };
+
+  // Days of the week for working hours UI
+  const DAYS: DaySchedule['dayOfWeek'][] = [
+    'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'
+  ];
+
+  // Utilities to update a single association immutably
+  const updateAssociationAt = (idx: number, updater: (a: ClinicAssociation) => ClinicAssociation) => {
+    const updated = selectedClinics.map((a, i) => (i === idx ? updater(a) : a));
+    onChange(updated);
+  };
+
+  const toggleDayAvailability = (index: number, day: DaySchedule['dayOfWeek'], available: boolean) => {
+    updateAssociationAt(index, (assoc) => {
+      const wh = Array.isArray(assoc.workingHours) ? [...assoc.workingHours] : [];
+      const di = wh.findIndex((d) => d.dayOfWeek === day);
+      if (di >= 0) {
+        wh[di] = { ...wh[di], isAvailable: available };
+      } else {
+        wh.push({ dayOfWeek: day, timeSlots: [], isAvailable: available });
+      }
+      return { ...assoc, workingHours: wh };
+    });
+  };
+
+  const addTimeSlot = (index: number, day: DaySchedule['dayOfWeek']) => {
+    updateAssociationAt(index, (assoc) => {
+      const wh = Array.isArray(assoc.workingHours) ? [...assoc.workingHours] : [];
+      const di = wh.findIndex((d) => d.dayOfWeek === day);
+      if (di >= 0) {
+        const ds = wh[di];
+        const slots: TimeSlot[] = [...ds.timeSlots, { startTime: '09:00', endTime: '17:00' }];
+        wh[di] = { ...ds, timeSlots: slots, isAvailable: true };
+      } else {
+        wh.push({
+          dayOfWeek: day,
+          timeSlots: [{ startTime: '09:00', endTime: '17:00' }],
+          isAvailable: true
+        });
+      }
+      return { ...assoc, workingHours: wh };
+    });
+  };
+
+  const updateTimeSlot = (
+    index: number,
+    day: DaySchedule['dayOfWeek'],
+    slotIndex: number,
+    field: 'startTime' | 'endTime',
+    value: string
+  ) => {
+    updateAssociationAt(index, (assoc) => {
+      const wh = Array.isArray(assoc.workingHours) ? [...assoc.workingHours] : [];
+      const di = wh.findIndex((d) => d.dayOfWeek === day);
+      if (di >= 0) {
+        const ds = wh[di];
+        const slots = ds.timeSlots.map((s, i) => (i === slotIndex ? { ...s, [field]: value } : s));
+        wh[di] = { ...ds, timeSlots: slots };
+      }
+      return { ...assoc, workingHours: wh };
+    });
+  };
+
+  const removeTimeSlot = (index: number, day: DaySchedule['dayOfWeek'], slotIndex: number) => {
+    updateAssociationAt(index, (assoc) => {
+      const wh = Array.isArray(assoc.workingHours) ? [...assoc.workingHours] : [];
+      const di = wh.findIndex((d) => d.dayOfWeek === day);
+      if (di >= 0) {
+        const ds = wh[di];
+        const slots = ds.timeSlots.filter((_, i) => i !== slotIndex);
+        wh[di] = { ...ds, timeSlots: slots };
+      }
+      return { ...assoc, workingHours: wh };
+    });
+  };
 
   // Search clinics when query changes
   useEffect(() => {
@@ -74,41 +158,8 @@ export default function ClinicSelector({ selectedClinics, onChange, error }: Cli
     onChange(updated);
   };
 
-  const handleCreateClinic = async () => {
-    try {
-      if (!newClinicData.location) {
-        alert('Please select a location for the clinic');
-        return;
-      }
-
-      const clinicData = {
-        ...newClinicData,
-        location: {
-          googleMapLink: newClinicData.location.googleMapLink || 
-            `https://www.google.com/maps/place/?q=place_id:${newClinicData.location.placeId}`
-        }
-      };
-
-      const createdClinic = await createClinic(clinicData);
-      handleSelectClinic(createdClinic);
-      setShowCreateForm(false);
-      
-      // Reset form
-      setNewClinicData({
-        name: { translations: { en: '', ar: '' } },
-        address: { translations: { en: '', ar: '' } },
-        pin: '',
-        location: null,
-        contactEmail: '',
-        contactPhone: '',
-        description: { translations: { en: '', ar: '' } }
-      });
-    } catch (error) {
-      console.error('Error creating clinic:', error);
-      alert('Failed to create clinic. Please try again.');
-    }
-  };
-
+ 
+ 
   return (
     <div className="space-y-4">
       <div>
@@ -144,134 +195,183 @@ export default function ClinicSelector({ selectedClinics, onChange, error }: Cli
                 onClick={() => handleSelectClinic(clinic)}
                 className="w-full text-left px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
               >
-                <div className="font-medium">{clinic.name.translations.en || clinic.name.translations.ar}</div>
-                <div className="text-sm text-gray-600">{clinic.address.translations.en || clinic.address.translations.ar}</div>
+                <div className="font-medium">{getClinicName(clinic) || 'Unnamed clinic'}</div>
+                <div className="text-sm text-gray-600">{getClinicAddress(clinic)}</div>
               </button>
             ))}
           </div>
         )}
 
         {/* Create New Clinic Button */}
-        <button
-          type="button"
-          onClick={() => setShowCreateForm(!showCreateForm)}
-          className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline"
-        >
-          {showCreateForm ? 'Cancel' : "Can't find your clinic? Create a new one"}
-        </button>
-      </div>
+        {allowCreate && (
+          <button
+            type="button"
+            onClick={() => setShowCreateForm(!showCreateForm)}
+            className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline"
+          >
+            {showCreateForm ? 'Cancel' : "Can't find your clinic? Create a new one"}
+          </button>
+        )}
 
-      {/* Create New Clinic Form */}
-      {showCreateForm && (
-        <div className="border border-gray-200 rounded-md p-4 bg-gray-50">
-          <h4 className="text-md font-medium text-gray-900 mb-4">Create New Clinic</h4>
-          
-          <div className="space-y-4">
-            <BilingualInput
-              label="Clinic Name"
-              name="clinicName"
-              value={newClinicData.name}
-              onChange={(value) => setNewClinicData({ ...newClinicData, name: value })}
-              required
-              placeholder={{ en: 'Medical Center Name', ar: 'اسم المركز الطبي' }}
-            />
+        {/* Create New Clinic Form */}
+        {allowCreate && showCreateForm && (
+          <div className="border border-gray-200 rounded-md p-4 bg-gray-50">
+            <h4 className="text-md font-medium text-gray-900 mb-4">Create New Clinic</h4>
+            
+            <div className="space-y-4">
+              <BilingualInput
+                label="Clinic Name"
+                name="clinicName"
+                value={newClinicData.name}
+                onChange={(value) => setNewClinicData({ ...newClinicData, name: value })}
+                required
+                placeholder={{ en: 'Medical Center Name', ar: 'اسم المركز الطبي' }}
+              />
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Contact Email *</label>
+                  <input
+                    type="email"
+                    value={newClinicData.contactEmail}
+                    onChange={(e) => setNewClinicData({ ...newClinicData, contactEmail: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="info@clinic.com"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Contact Phone *</label>
+                  <input
+                    type="tel"
+                    value={newClinicData.contactPhone}
+                    onChange={(e) => setNewClinicData({ ...newClinicData, contactPhone: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="+966 11 123 4567"
+                    required
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Contact Email *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">PIN/License Number *</label>
                 <input
-                  type="email"
-                  value={newClinicData.contactEmail}
-                  onChange={(e) => setNewClinicData({ ...newClinicData, contactEmail: e.target.value })}
+                  type="text"
+                  value={newClinicData.pin}
+                  onChange={(e) => setNewClinicData({ ...newClinicData, pin: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="info@clinic.com"
+                  placeholder="Clinic registration number"
                   required
                 />
               </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Contact Phone *</label>
-                <input
-                  type="tel"
-                  value={newClinicData.contactPhone}
-                  onChange={(e) => setNewClinicData({ ...newClinicData, contactPhone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="+966 11 123 4567"
-                  required
-                />
-              </div>
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">PIN/License Number *</label>
-              <input
-                type="text"
-                value={newClinicData.pin}
-                onChange={(e) => setNewClinicData({ ...newClinicData, pin: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Clinic registration number"
+              <LocationInput
+                label="Clinic Location"
+                placeholder="Search for clinic location..."
+                value={newClinicData.location}
+                onChange={(place) => setNewClinicData({ ...newClinicData, location: place })}
                 required
               />
-            </div>
 
-            <LocationInput
-              label="Clinic Location"
-              placeholder="Search for clinic location..."
-              value={newClinicData.location}
-              onChange={(place) => setNewClinicData({ ...newClinicData, location: place })}
-              required
-            />
+              <BilingualInput
+                label="Address Details"
+                name="address"
+                value={newClinicData.address}
+                onChange={(value) => setNewClinicData({ ...newClinicData, address: value })}
+                placeholder={{ en: 'Building, Street, District', ar: 'المبنى، الشارع، الحي' }}
+              />
 
-            <BilingualInput
-              label="Address Details"
-              name="address"
-              value={newClinicData.address}
-              onChange={(value) => setNewClinicData({ ...newClinicData, address: value })}
-              placeholder={{ en: 'Building, Street, District', ar: 'المبنى، الشارع، الحي' }}
-            />
-
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={handleCreateClinic}
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-              >
-                Create Clinic
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowCreateForm(false)}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Selected Clinics */}
-      {selectedClinics.length > 0 && (
-        <div>
-          <h4 className="text-sm font-medium text-gray-700 mb-2">Selected Clinics:</h4>
-          <div className="space-y-2">
-            {selectedClinics.map((association, index) => (
-              <div key={index} className="flex items-center justify-between bg-blue-50 px-3 py-2 rounded-md">
-                <span className="text-sm">Clinic Association {index + 1}</span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveClinic(index)}
-                  className="text-red-600 hover:text-red-800 text-sm"
-                >
-                  Remove
-                </button>
+              <div className="flex gap-2">
+                
+               
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
-    </div>
-  );
+        {/* Selected Clinics */}
+        {selectedClinics.length > 0 && (
+          <div>
+            <h4 className="text-sm font-medium text-gray-700 mb-2">Selected Clinics:</h4>
+            <div className="space-y-4">
+              {selectedClinics.map((association, index) => (
+                <div key={index} className="bg-blue-50 px-3 py-3 rounded-md">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Clinic Association {index + 1}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveClinic(index)}
+                      className="text-red-600 hover:text-red-800 text-sm"
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  {/* Working hours editor */}
+                  <div className="mt-3 bg-white rounded-md p-3 border border-gray-200">
+                    {DAYS.map((day) => {
+                      const ds = association.workingHours?.find((d) => d.dayOfWeek === day);
+                      const available = ds?.isAvailable ?? false;
+                      const slots = ds?.timeSlots ?? [];
+                      return (
+                        <div key={day} className="mb-3">
+                          <label className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={available}
+                              onChange={(e) => toggleDayAvailability(index, day, e.target.checked)}
+                            />
+                            <span className="font-medium">{day}</span>
+                          </label>
+
+                          {available && (
+                            <div className="ml-6 mt-2 space-y-2">
+                              {slots.map((slot, sIdx) => (
+                                <div key={sIdx} className="flex items-center gap-2">
+                                  <input
+                                    type="time"
+                                    value={slot.startTime}
+                                    onChange={(e) => updateTimeSlot(index, day, sIdx, 'startTime', e.target.value)}
+                                    className="border rounded px-2 py-1"
+                                  />
+                                  <span>-</span>
+                                  <input
+                                    type="time"
+                                    value={slot.endTime}
+                                    onChange={(e) => updateTimeSlot(index, day, sIdx, 'endTime', e.target.value)}
+                                    className="border rounded px-2 py-1"
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => removeTimeSlot(index, day, sIdx)}
+                                    className="text-red-600 text-sm"
+                                  >
+                                    Remove
+                                  </button>
+                                </div>
+                              ))}
+                              <button
+                                type="button"
+                                onClick={() => addTimeSlot(index, day)}
+                                className="text-blue-600 text-sm"
+                              >
+                                + Add time slot
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {error && <p className="text-sm text-red-500">{error}</p>}
+      </div>
+      </div>
+    );
 }

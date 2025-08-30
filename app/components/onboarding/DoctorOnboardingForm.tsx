@@ -430,6 +430,7 @@ export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormPro
               selectedClinics={formData.clinicAssociations}
               onChange={(associations) => setFormData({ ...formData, clinicAssociations: associations })}
               error={errors.clinicAssociations}
+              allowCreate={false}
             />
           </div>
         )}
