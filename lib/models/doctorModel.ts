@@ -18,7 +18,7 @@ const DoctorSchema = new Schema<DoctorType>({
   memberships: { type: [String], default: [] },
   awards: { type: [String], default: [] },
   numberOfReviews: { type: Number, default: 0 },
-  clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
+  //clinic: { type: Schema.Types.ObjectId, ref: 'Clinic' },
   shortBio: { type: localizedStringSchema },
   subspecialties: { type: [localizedStringSchema], default: [] },
   devicesMaterials: { type: [String], default: [] },

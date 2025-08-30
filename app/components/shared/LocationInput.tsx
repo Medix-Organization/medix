@@ -47,47 +47,77 @@ export default function LocationInput({
   const [place, setPlace] = useState<PlaceData | null>(value || null);
 
   useEffect(() => {
-    if (!window.google || !inputRef.current) return;
-
-    const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
-      types: ['establishment', 'geocode'],
-    });
-
-    autocomplete.addListener('place_changed', () => {
-      const selectedPlace = autocomplete.getPlace();
-  
-      if (!selectedPlace.place_id || !selectedPlace.formatted_address) return;
-  
-      // Generate a valid Google Maps URL that matches the validation pattern
-      let googleMapLink = '';
-      
-      if (selectedPlace.url && selectedPlace.url.includes('google.com/maps')) {
-        // Use the official URL if it's already a valid Google Maps URL
-        googleMapLink = selectedPlace.url;
-      } else if (selectedPlace.place_id) {
-        // Use the correct Google Maps URL format that matches validation
-        googleMapLink = `https://www.google.com/maps/place/?q=place_id:${selectedPlace.place_id}`;
-      } else if (selectedPlace.geometry?.location) {
-        // Use coordinates format that matches validation
-        const lat = selectedPlace.geometry.location.lat();
-        const lng = selectedPlace.geometry.location.lng();
-        googleMapLink = `https://www.google.com/maps/@${lat},${lng},15z`;
-      } else {
-        // Fallback to search format that matches validation
-        const query = encodeURIComponent(`${selectedPlace.name || ''} ${selectedPlace.formatted_address || ''}`.trim());
-        googleMapLink = `https://www.google.com/maps/search/${query}`;
+    // Add a small delay to ensure Google Maps API is fully loaded
+    const initializeAutocomplete = () => {
+      if (!window.google?.maps?.places?.Autocomplete || !inputRef.current) {
+        console.log('Google Maps API not ready, retrying...');
+        setTimeout(initializeAutocomplete, 100);
+        return;
       }
   
-      const placeData: PlaceData = {
-        name: selectedPlace.name || '',
-        address: selectedPlace.formatted_address || '',
-        placeId: selectedPlace.place_id,
-        googleMapLink: googleMapLink
-      };
+      try {
+        const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
+          types: ['hospital' ,, 'doctor', 'clinic', 'health', 'medical_center'], // Remove 'geocode' for better results
+          componentRestrictions: { country: 'sa' }, // Uncomment this - it's important!
+          // fields: ['place_id', 'formatted_address', 'name', 'types', 'geometry', 'url'] // Specify required fields
+        });
   
-      setPlace(placeData);
-      onChange(placeData);
-    });
+        autocomplete.addListener('place_changed', () => {
+          const selectedPlace = autocomplete.getPlace();
+          
+          console.log('Place selected:', selectedPlace); // Debug log
+          
+          if (!selectedPlace.place_id || !selectedPlace.formatted_address) {
+            console.log('Invalid place selected');
+            return;
+          }
+  
+          // Optional: Filter for medical establishments only
+          // const types = selectedPlace.types || [];
+          // const isMedicalPlace = types.some((type: string) =>
+          //   ['hospital', 'doctor', 'clinic', 'health', 'medical_center', 
+          //    ].includes(type)
+          // );
+          
+          // if (!isMedicalPlace) {
+          //   console.log('Non-medical place selected:', types);
+          //   // Uncomment the next line if you want to restrict to medical places only
+          //   // return;
+          // }
+  
+          // Generate Google Maps URL
+          let googleMapLink = '';
+          
+          if (selectedPlace.url && selectedPlace.url.includes('google.com/maps')) {
+            googleMapLink = selectedPlace.url;
+          } else if (selectedPlace.place_id) {
+            googleMapLink = `https://www.google.com/maps/place/?q=place_id:${selectedPlace.place_id}`;
+          } else if (selectedPlace.geometry?.location) {
+            const lat = selectedPlace.geometry.location.lat();
+            const lng = selectedPlace.geometry.location.lng();
+            googleMapLink = `https://www.google.com/maps/@${lat},${lng},15z`;
+          } else {
+            const query = encodeURIComponent(`${selectedPlace.name || ''} ${selectedPlace.formatted_address || ''}`.trim());
+            googleMapLink = `https://www.google.com/maps/search/${query}`;
+          }
+  
+          const placeData: PlaceData = {
+            name: selectedPlace.name || '',
+            address: selectedPlace.formatted_address || '',
+            placeId: selectedPlace.place_id,
+            googleMapLink: googleMapLink
+          };
+  
+          console.log('Setting place data:', placeData); // Debug log
+          setPlace(placeData);
+          onChange(placeData);
+        });
+      } catch (error) {
+        console.error('Error initializing Google Places Autocomplete:', error);
+      }
+    };
+  
+    initializeAutocomplete();
   }, [onChange]);
 
   const handleClear = () => {

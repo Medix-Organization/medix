@@ -6,11 +6,6 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import {
   ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
 } from "@clerk/nextjs";
 import { arSA } from "@clerk/localizations";
 import NavBar from "../components/NavBar";
@@ -47,7 +42,7 @@ export default async function RootLayout({
     <html lang={locale} className="h-full">
        <head>
         <script
-          src={`https://maps.googleapis.com/maps/api/js?key=${PLACE_API}`}
+          src={`https://maps.googleapis.com/maps/api/js?key=${PLACE_API}&libraries=places`}
           async
           defer
         ></script>

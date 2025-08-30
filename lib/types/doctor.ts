@@ -1,11 +1,12 @@
-import { Document, Types } from 'mongoose';
 import { LocalizedString } from './common';
-import { Clinic } from './clinic';
+import { ClinicType } from './clinic';
 import { ReviewSummary } from './review';
 import { ClinicAssociation } from './workingHours';
 
-export interface DoctorType extends Document {
-  clerkId: string; // Add this line
+// Remove extends Document - this is now a plain interface
+export interface DoctorType {
+  _id: string; // Change from Types.ObjectId to string
+  clerkId: string;
   fullName: LocalizedString;
   specialty: LocalizedString;
   titleCredentials: string[];
@@ -21,7 +22,7 @@ export interface DoctorType extends Document {
   clinicAssociations: ClinicAssociation[];
   
   // Deprecated: Keep for backward compatibility, but mark as optional
-  clinic?: Clinic;
+  //clinic?: ClinicType;
   
   shortBio: LocalizedString;
   subspecialties: LocalizedString[];
@@ -46,7 +47,6 @@ export interface DoctorType extends Document {
   // Additional fields
   email: string;
   phoneNumber?: string;
-  
   consultationFee?: number;
   availableForOnlineConsultation: boolean;
   profileImage?: string;
