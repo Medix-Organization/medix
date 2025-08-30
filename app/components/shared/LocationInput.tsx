@@ -55,16 +55,36 @@ export default function LocationInput({
 
     autocomplete.addListener('place_changed', () => {
       const selectedPlace = autocomplete.getPlace();
-
+  
       if (!selectedPlace.place_id || !selectedPlace.formatted_address) return;
-
+  
+      // Generate a valid Google Maps URL that matches the validation pattern
+      let googleMapLink = '';
+      
+      if (selectedPlace.url && selectedPlace.url.includes('google.com/maps')) {
+        // Use the official URL if it's already a valid Google Maps URL
+        googleMapLink = selectedPlace.url;
+      } else if (selectedPlace.place_id) {
+        // Use the correct Google Maps URL format that matches validation
+        googleMapLink = `https://www.google.com/maps/place/?q=place_id:${selectedPlace.place_id}`;
+      } else if (selectedPlace.geometry?.location) {
+        // Use coordinates format that matches validation
+        const lat = selectedPlace.geometry.location.lat();
+        const lng = selectedPlace.geometry.location.lng();
+        googleMapLink = `https://www.google.com/maps/@${lat},${lng},15z`;
+      } else {
+        // Fallback to search format that matches validation
+        const query = encodeURIComponent(`${selectedPlace.name || ''} ${selectedPlace.formatted_address || ''}`.trim());
+        googleMapLink = `https://www.google.com/maps/search/${query}`;
+      }
+  
       const placeData: PlaceData = {
         name: selectedPlace.name || '',
         address: selectedPlace.formatted_address || '',
         placeId: selectedPlace.place_id,
-        googleMapLink: selectedPlace.url || `https://www.google.com/maps/place/?q=place_id:${selectedPlace.place_id}`
+        googleMapLink: googleMapLink
       };
-
+  
       setPlace(placeData);
       onChange(placeData);
     });

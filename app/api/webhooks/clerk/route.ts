@@ -11,6 +11,7 @@ if (!webhookSecret) {
 }
 
 export async function POST(req: NextRequest) {
+ 
   try {
     // Get the headers
     const headerPayload = await headers();
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     // If there are no headers, error out
     if (!svix_id || !svix_timestamp || !svix_signature) {
-      return new NextResponse('Error occurred -- no svix headers', {
+      return new NextResponse('Error occurred -- no svix headers , or one of the svix headers is missing', {
         status: 400,
       });
     }
@@ -58,16 +59,13 @@ export async function POST(req: NextRequest) {
 
     // Handle user creation
     if (eventType === 'user.created') {
-      const { id, email_addresses, first_name, last_name, image_url } = evt.data;
+      const { id, email_addresses, image_url } = evt.data;
       
       // Create user in your database
       const userData = {
         clerkId: id,
         email: email_addresses[0]?.email_address,
-        firstName: first_name,
-        lastName: last_name,
         imageUrl: image_url,
-        createdAt: new Date(),
       };
 
       console.log('🔥 CREATING USER:', userData);

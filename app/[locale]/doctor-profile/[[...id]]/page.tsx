@@ -3,11 +3,9 @@ import Image from "next/image";
 import React from "react";
 import { BiSolidLike } from "react-icons/bi";
 import { FaGraduationCap, FaLocationDot } from "react-icons/fa6";
-import { IoMdStar } from "react-icons/io";
 
 const Page = async ({ params }: { params: Promise<any> }) => {
   const id = await params;
-  console.log("ID from params:", id.id[0]);
   return (
     <main className="flex flex-col lg:flex-row gap-4 p-4 md:p-6  text-gray-800 mb-20 md:mb-0 md:max-w-5xl md:mx-auto lg:max-w-6xl xl:max-w-6xl xl:px-8">
       <section className="flex flex-col lg:flex-[0.8] lg:max-w-sm w-full bg-white rounded-lg shadow-md p-4 md:p-6 h-fit lg:self-start">

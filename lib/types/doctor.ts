@@ -4,7 +4,8 @@ import { Clinic } from './clinic';
 import { ReviewSummary } from './review';
 import { ClinicAssociation } from './workingHours';
 
-export interface Doctor extends Document {
+export interface DoctorType extends Document {
+  clerkId: string; // Add this line
   fullName: LocalizedString;
   specialty: LocalizedString;
   titleCredentials: string[];
@@ -45,9 +46,6 @@ export interface Doctor extends Document {
   // Additional fields
   email: string;
   phoneNumber?: string;
-  
-  // Deprecated: Remove workingHours as it's now part of clinicAssociations
-  // workingHours?: string;
   
   consultationFee?: number;
   availableForOnlineConsultation: boolean;
