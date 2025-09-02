@@ -30,25 +30,16 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{
+}: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-}>) {
+}) {
   const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
+
   return (
-    <html lang={locale} className="h-full">
-       <head>
-        <script
-          src={`https://maps.googleapis.com/maps/api/js?key=${PLACE_API}&libraries=places`}
-          async
-          defer
-        ></script>
-      </head>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full ${locale === 'ar' ? 'rtl' : 'ltr'}`}
       >
         <ClerkProvider localization={locale === 'ar' ? arSA : undefined}>
           <NextIntlClientProvider>

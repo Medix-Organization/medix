@@ -2,19 +2,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import BilingualInput from '../shared/BilingualInput';
-import LocationInput from '../shared/LocationInput';
+import LocationInput, { PlaceData } from '../shared/LocationInput';  // Import PlaceData from LocationInput
 import { LocalizedString } from '@/lib/types/common';
 
 interface ClinicRegistrationFormProps {
   locale: string;
 }
 
-type PlaceData = {
-  name: string;
-  address: string;
-  placeId: string;
-  googleMapLink?: string;
-};
+// Remove the local PlaceData type definition (lines 12-16)
+// Use the imported one instead
 
 export default function ClinicRegistrationForm({ locale }: ClinicRegistrationFormProps) {
   const router = useRouter();
