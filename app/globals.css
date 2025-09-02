@@ -25,6 +25,28 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Google Places Autocomplete Dropdown Fix */
+.pac-container {
+  z-index: 9999 !important;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.pac-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+}
+
+.pac-item:hover {
+  background-color: #f9fafb;
+}
+
+.pac-item:last-child {
+  border-bottom: none;
+}
+
 /* Custom scrollbar utilities */
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -33,4 +55,31 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* RTL Support */
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+/* RTL-specific spacing utilities */
+.rtl .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+/* RTL form inputs */
+.rtl input, .rtl textarea, .rtl select {
+  text-align: right;
+}
+
+.rtl .text-left {
+  text-align: right;
+}
+
+.rtl .text-right {
+  text-align: left;
 }

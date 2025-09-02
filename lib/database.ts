@@ -1,9 +1,10 @@
+'use server'
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGO_SECRET;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  throw new Error('Please define the MONGODB_SECRET environment variable inside .env.local');
 }
 
 /**
@@ -34,6 +35,8 @@ async function connectToDatabase() {
 
   try {
     cached.conn = await cached.promise;
+    console.log('Connected to MongoDB');
+    
   } catch (e) {
     cached.promise = null;
     throw e;

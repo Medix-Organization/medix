@@ -1,81 +1,81 @@
 {
   "home": {
-    "specialties":  [
-  {
-    "id": 1,
-    "label": "General Dermatology",
-    "icon": "/dermatology.jpg",
-    "filled": true,
-    "tags": [
-      "Acne & Scarring",
-      "Eczema / Dermatitis",
-      "Psoriasis",
-      "Vitiligo",
-      "Hair Loss (Alopecia)",
-      "Nail Disorders",
-      "Hyperpigmentation / Melasma",
-      "Pediatric Dermatology"
-    ]
-  },
-  {
-    "id": 2,
-    "label": "Cosmetic Treatment",
-    "icon": "/cosmetic.jpg",
-    "filled": true,
-    "tags": [
-      "Botox",
-      "Fillers",
-      "PRP (Face & Hair)",
-      "Mesotherapy",
-      "Microneedling",
-      "Chemical Peels",
-      "Skin Rejuvenation",
-      "Dark Circles Treatment"
-    ]
-  },
-  {
-    "id": 3,
-    "label": "Hair & Scalp",
-    "icon": "/hair.jpg",
-    "filled": true,
-    "tags": [
-      "Alopecia / Hair Loss",
-      "Hair PRP",
-      "Hair Mesotherapy",
-      "Dandruff / Scalp Psoriasis",
-      "Low-Level Laser Therapy (LLLT)"
-    ]
-  },
-  {
-    "id": 4,
-    "label": "Laser Treatments",
-    "icon": "/laser.jpg",
-    "filled": true,
-    "tags": [
-      "Laser Hair Removal",
-      "Laser for Pigmentation",
-      "Laser for Acne Scars",
-      "Skin Tightening",
-      "Fractional Laser",
-      "IPL",
-      "RF Microneedling"
-    ]
-  },
-  {
-    "id": 5,
-    "label": "Body Dermatology",
-    "icon": "/body.jpg",
-    "filled": true,
-    "tags": [
-      "Hyperhidrosis Treatment",
-      "Back & Body Acne",
-      "Cellulite Reduction",
-      "Body Contouring (Non-invasive)",
-      "Stretch Marks Treatment",
-      "Body Skin Tightening"
-    ]
-  }
-],
+    "specialties": [
+      {
+        "id": 1,
+        "label": "General Dermatology",
+        "icon": "/dermatology.jpg",
+        "filled": true,
+        "tags": [
+          "Acne & Scarring",
+          "Eczema / Dermatitis",
+          "Psoriasis",
+          "Vitiligo",
+          "Hair Loss (Alopecia)",
+          "Nail Disorders",
+          "Hyperpigmentation / Melasma",
+          "Pediatric Dermatology"
+        ]
+      },
+      {
+        "id": 2,
+        "label": "Cosmetic Treatment",
+        "icon": "/cosmetic.jpg",
+        "filled": true,
+        "tags": [
+          "Botox",
+          "Fillers",
+          "PRP (Face & Hair)",
+          "Mesotherapy",
+          "Microneedling",
+          "Chemical Peels",
+          "Skin Rejuvenation",
+          "Dark Circles Treatment"
+        ]
+      },
+      {
+        "id": 3,
+        "label": "Hair & Scalp",
+        "icon": "/hair.jpg",
+        "filled": true,
+        "tags": [
+          "Alopecia / Hair Loss",
+          "Hair PRP",
+          "Hair Mesotherapy",
+          "Dandruff / Scalp Psoriasis",
+          "Low-Level Laser Therapy (LLLT)"
+        ]
+      },
+      {
+        "id": 4,
+        "label": "Laser Treatments",
+        "icon": "/laser.jpg",
+        "filled": true,
+        "tags": [
+          "Laser Hair Removal",
+          "Laser for Pigmentation",
+          "Laser for Acne Scars",
+          "Skin Tightening",
+          "Fractional Laser",
+          "IPL",
+          "RF Microneedling"
+        ]
+      },
+      {
+        "id": 5,
+        "label": "Body Dermatology",
+        "icon": "/body.jpg",
+        "filled": true,
+        "tags": [
+          "Hyperhidrosis Treatment",
+          "Back & Body Acne",
+          "Cellulite Reduction",
+          "Body Contouring (Non-invasive)",
+          "Stretch Marks Treatment",
+          "Body Skin Tightening"
+        ]
+      }
+    ],
     "subs": ["Acne", "Skin Allergy", "Laser", "Skin Care"],
     "ui": {
       "distanceUnit": "KM",
@@ -83,15 +83,15 @@
       "ratingLabel": "Rating"
     },
     "navbar": {
-    "brand": "MEDIX",
-    "links": {
-      "home": "Home",
-      "services": "Services",
-      "contact": "Contact"
+      "brand": "MEDIX",
+      "links": {
+        "home": "Home",
+        "services": "Services",
+        "contact": "Contact"
+      },
+      "searchPlaceholder": "Search doctors, clinics...",
+      "signIn": "Sign in"
     },
-    "searchPlaceholder": "Search doctors, clinics...",
-    "signIn": "Sign in"
-  },
     "landing": {
       "hero": {
         "title": "Connecting Doctors to Patients",
@@ -129,7 +129,106 @@
         "button": "Get Started Today"
       }
     }
-    
+  },
+  "onboarding": {
+    "doctor": {
+      "title": "Doctor Registration",
+      "emailInfo": "Your email is automatically taken from your account",
+      "steps": {
+        "step1": "Basic Information",
+        "step2": "Professional Details",
+        "step3": "Contact & Social",
+        "step4": "Clinic Association"
+      },
+      "stepIndicator": "Step {current} of {total}: {stepName}",
+      "basicInfo": {
+        "title": "Basic Information",
+        "fullName": "Full Name",
+        "fullNamePlaceholder": "Dr. John Smith",
+        "specialty": "Specialty",
+        "specialtyPlaceholder": "Cardiology",
+        "yearsOfExperience": "Years of Experience",
+        "yearsPlaceholder": "5",
+        "licenseNumber": "License Number",
+        "licensePlaceholder": "LIC123456",
+        "shortBio": "Short Bio",
+        "shortBioPlaceholder": "Brief description of your practice and expertise..."
+      },
+      "professionalDetails": {
+        "title": "Professional Details",
+        "titleCredentials": "Title Credentials",
+        "titleCredentialsPlaceholder": "e.g., MD, PhD, FRCS",
+        "certifications": "Certifications & Fellowships",
+        "certificationsPlaceholder": "e.g., Board Certified in Cardiology",
+        "memberships": "Professional Memberships",
+        "membershipsPlaceholder": "e.g., American Medical Association",
+        "awards": "Awards & Recognition",
+        "awardsPlaceholder": "e.g., Best Doctor Award 2023",
+        "devices": "Devices & Materials Used",
+        "devicesPlaceholder": "e.g., Laser Equipment, Advanced Imaging",
+        "languages": "Languages Spoken",
+        "languagesPlaceholder": "e.g., English, Arabic, French"
+      },
+      "contactSocial": {
+        "title": "Contact & Social Information",
+        "phoneNumber": "Phone Number",
+        "phonePlaceholder": "+966 50 123 4567",
+        "consultationFee": "Consultation Fee (SAR)",
+        "consultationFeePlaceholder": "200",
+        "onlineConsultation": "Available for Online Consultation",
+        "socialLinks": "Social Media & Professional Links",
+        "socialPlaceholder": "https://{platform}.com/yourprofile",
+        "platforms": {
+          "x": "X (Twitter)",
+          "researchGate": "Research Gate",
+          "clinicWebsite": "Clinic Website"
+        }
+      },
+      "clinicAssociation": {
+        "title": "Clinic Association"
+      },
+      "navigation": {
+        "previous": "Previous",
+        "next": "Next",
+        "submit": "Complete Registration",
+        "submitting": "Creating Profile..."
+      }
+    },
+    "clinicSelector": {
+      "searchLabel": "Search & Select Clinics",
+      "searchPlaceholder": "Search for existing clinics...",
+      "unnamedClinic": "Unnamed clinic",
+      "createNew": "Can't find your clinic? Create a new one",
+      "cancel": "Cancel",
+      "createNewTitle": "Create New Clinic",
+      "clinicName": "Clinic Name",
+      "clinicNamePlaceholder": "Medical Center Name",
+      "contactEmail": "Contact Email",
+      "contactEmailPlaceholder": "info@clinic.com",
+      "contactPhone": "Contact Phone",
+      "contactPhonePlaceholder": "+966 11 123 4567",
+      "location": "Location",
+      "address": "Address Details",
+      "addressPlaceholder": "Building number, street name, district",
+      "createButton": "Create Clinic",
+      "selectedClinics": "Selected Clinics",
+      "workingHours": "Working Hours",
+      "toggleHours": "Click to toggle working hours editor",
+      "days": {
+        "sunday": "Sunday",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday"
+      },
+      "addTimeSlot": "Add Time Slot",
+      "removeTimeSlot": "Remove",
+      "removeClinic": "Remove",
+      "startTime": "Start",
+      "endTime": "End"
+    }
   }
 }
 

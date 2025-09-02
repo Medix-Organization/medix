@@ -7,4 +7,6 @@ export interface Patient extends Document {
   password: string;
   createdAt: Date;
   location?: LocalizedString;
+  age : number , 
+  gender : 'male' | 'female'
 }
