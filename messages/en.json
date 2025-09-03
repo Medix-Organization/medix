@@ -179,7 +179,10 @@
         "socialLinks": "Social Media & Professional Links",
         "socialPlaceholder": "https://{platform}.com/yourprofile",
         "platforms": {
+          "linkedin": "LinkedIn",
           "x": "X (Twitter)",
+          "instagram": "Instagram",
+          "facebook": "Facebook",
           "researchGate": "Research Gate",
           "clinicWebsite": "Clinic Website"
         }
