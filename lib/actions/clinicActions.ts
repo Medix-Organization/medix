@@ -171,3 +171,25 @@ export async function getAllClinics(): Promise<ClinicType[]> {
     throw new Error('Failed to fetch clinics');
   }
 }
+
+// Add this function to the existing clinicActions.ts file
+export async function updateClinic(clinicId: string, updateData: Partial<ClinicType>) {
+  try {
+    await connectToDatabase();
+    
+    const updatedClinic = await Clinic.findByIdAndUpdate(
+      clinicId,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+    
+    if (!updatedClinic) {
+      throw new Error('Clinic not found');
+    }
+    
+    return JSON.parse(JSON.stringify(updatedClinic));
+  } catch (error) {
+    console.error('Error updating clinic:', error);
+    throw error;
+  }
+}

@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { ClinicType } from '@/lib/types/clinic';
+import { useRouter } from 'next/navigation';
 
 interface ClinicListProps {
   clinics: ClinicType[];
@@ -10,6 +11,7 @@ interface ClinicListProps {
 
 export default function ClinicList({ clinics, loading, onRefresh }: ClinicListProps) {
   const [selectedClinic, setSelectedClinic] = useState<ClinicType | null>(null);
+  const router = useRouter();
 
   // Helper function to get clinic name
   const getClinicName = (clinic: ClinicType) => {
@@ -34,6 +36,12 @@ export default function ClinicList({ clinics, loading, onRefresh }: ClinicListPr
            clinic.contactPhone || 
            'Phone not available';
   };
+
+  // Add this import at the top
+ 
+
+  // In the clinic card, add this button after the "View on Map" link (around line 160):
+ 
 
   if (loading) {
     return (
@@ -89,6 +97,9 @@ export default function ClinicList({ clinics, loading, onRefresh }: ClinicListPr
             className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer"
             onClick={() => setSelectedClinic(clinic)}
           >
+            {/* All your clinic content here - make sure it's inside the map function */}
+            {/* The 'clinic' variable is only available inside this map function */}
+            
             {/* Clinic Header */}
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -109,7 +120,35 @@ export default function ClinicList({ clinics, loading, onRefresh }: ClinicListPr
                 {clinic.businessStatus || 'Active'}
               </span>
             </div>
-
+               <div className="mt-4 flex space-x-2">
+    {(clinic.googleMapsUri || (clinic as any)?.location?.googleMapLink) && (
+      <a
+        href={clinic.googleMapsUri || (clinic as any)?.location?.googleMapLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+        View on Map
+      </a>
+    )}
+    
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        router.push(`/admin/clinic/${clinic._id}/edit`);
+      }}
+      className="inline-flex items-center text-green-600 hover:text-green-800 text-sm"
+    >
+      <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>
+      Edit Clinic
+    </button>
+  </div>
             {/* Clinic Info */}
             <div className="space-y-2 text-sm">
               <div className="flex items-center text-gray-600">
