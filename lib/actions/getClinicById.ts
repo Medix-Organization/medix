@@ -2,7 +2,8 @@
 
 import connectToDatabase from '../database';
 import { Clinic } from '../models/clinicModel';
-import {  ClinicType } from '../types/clinic';
+import { Doctor } from '../models/doctorModel'; // Add this import
+import { ClinicType } from '../types/clinic';
 
 export async function getClinicWithDoctors(clinicId: string): Promise<ClinicType | null> {
   try {
@@ -11,6 +12,7 @@ export async function getClinicWithDoctors(clinicId: string): Promise<ClinicType
     const clinic = await Clinic.findById(clinicId)
       .populate({
         path: 'doctors',
+        model : Doctor,
         select: 'fullName specialty yearsOfExperience profileImage isVerified'
       })
       .lean()

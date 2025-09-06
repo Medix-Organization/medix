@@ -232,6 +232,56 @@
       "startTime": "Start",
       "endTime": "End"
     }
+  },
+  "clinic": {
+    "unnamed": "Unnamed Clinic",
+    "reviews": "reviews",
+    "visitWebsite": "Visit Website",
+    "basicInformation": "Basic Information",
+    "description": "Description",
+    "openingHours": "Opening Hours",
+    "statistics": "Statistics",
+    "doctors": "Doctors",
+    "services": "Services",
+    "rating": "Rating",
+    "openNow": "Open Now",
+    "closedNow": "Closed Now",
+    "contactForHours": "Contact clinic for hours",
+    "operational": "Operational",
+    "closedTemporarily": "Temporarily Closed",
+    "permanentlyClosed": "Permanently Closed",
+    "additionalInfo": "Additional Information",
+    "categories": "Categories",
+    "status": {
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "services": "Services",
+      "doctors": "Doctors",
+      "reviews": "Reviews"
+    },
+    "owner": {
+      "welcome": "Welcome, Clinic Owner!",
+      "description": "You can edit your clinic information and manage services.",
+      "editClinic": "Edit Clinic"
+    },
+    "actions": {
+      "bookAppointment": "Book Appointment",
+      "getDirections": "Get Directions",
+      "callNow": "Call Now"
+    },
+    "operations": {
+      "title": "Services & Treatments",
+      "allCategories": "All Categories",
+      "noOperations": "No Services Available",
+      "noOperationsDescription": "This clinic hasn't added any services yet.",
+      "minutes": "minutes",
+      "consultationRequired": "Consultation Required",
+      "bookService": "Book Service"
+    }
   }
 }
+
 

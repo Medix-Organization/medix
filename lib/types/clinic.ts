@@ -1,6 +1,7 @@
 import { LocalizedString } from './common';
 import { DoctorType } from './doctor';
 import { DaySchedule } from './workingHours';
+import { Types } from 'mongoose';
 
 // Updated ClinicType to match Google Places API structure
 export interface ClinicType {
@@ -126,6 +127,9 @@ export interface ClinicType {
   // Timestamps
   createdAt?: Date;
   updatedAt?: Date;
+  
+  // Add this new field
+  operations?: Types.ObjectId[];
 }
 
 // Simplified interface for creating clinics from Google Places

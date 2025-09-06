@@ -1,4 +1,4 @@
-import { Schema, models, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 import { locationSchema } from './locationModel';
 import type { ClinicType } from '../types/clinic';
 
@@ -23,7 +23,7 @@ const ClinicSchema: Schema = new Schema<ClinicType>({
     types: [{ type: String }]
   }],
   
-  // Location information - FIXED: Use locationSchema for consistency
+  // Location information
   location: { type: locationSchema, required: true },
   
   // Contact information
@@ -120,6 +120,20 @@ const ClinicSchema: Schema = new Schema<ClinicType>({
   // App-specific fields
   doctors: [{ type: Schema.Types.ObjectId, ref: 'Doctor' }],
   
+  // NEW: Operations array
+  operations: [{ 
+    type: Schema.Types.ObjectId, 
+    ref: 'Operation',
+    validate: {
+      validator: function(operations: any[]) {
+        // Ensure no duplicate operations
+        const operationIds = operations.map(op => op.toString());
+        return operationIds.length === new Set(operationIds).size;
+      },
+      message: 'Duplicate operations are not allowed'
+    }
+  }],
+  
   // Google Maps integration
   googleMapsUri: { type: String },
   googleMapsLinks: {
@@ -136,13 +150,18 @@ const ClinicSchema: Schema = new Schema<ClinicType>({
 });
 
 // Indexes for better query performance
-// Remove the duplicate index - keep only one
 ClinicSchema.index({ 'location.latitude': 1, 'location.longitude': 1 });
-// Remove this line: ClinicSchema.index({ googlePlaceId: 1 }); 
-// The unique: true in the schema definition already creates an index
 ClinicSchema.index({ name: 'text', formattedAddress: 'text' });
 ClinicSchema.index({ types: 1 });
 ClinicSchema.index({ businessStatus: 1 });
+ClinicSchema.index({ operations: 1 }); // NEW: Index for operations
+
+// Virtual to populate operations
+ClinicSchema.virtual('populatedOperations', {
+  ref: 'Operation',
+  localField: 'operations',
+  foreignField: '_id'
+});
 
 export const Clinic = models?.Clinic || model<ClinicType>('Clinic', ClinicSchema);
 export default Clinic;
