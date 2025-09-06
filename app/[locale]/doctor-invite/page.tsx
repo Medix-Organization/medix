@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaUserMd, FaStethoscope, FaHeart, FaShieldAlt, FaAward, FaUsers, FaGlobe, FaHandshake, FaChartLine, FaLightbulb, FaRocket, FaStar, FaCheckCircle, FaTimes, FaMedal, FaWhatsapp } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 
@@ -8,16 +8,39 @@ export default function DoctorInvitePage() {
   const [showFieldsList, setShowFieldsList] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const state = event.state;
+      if (state) {
+        setShowOptions(state.showOptions || false);
+        setShowFieldsList(state.showFieldsList || false);
+      } else {
+        // Default state
+        setShowOptions(false);
+        setShowFieldsList(false);
+      }
+    };
+  
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+  
+  // Update your state setters to also update history
   const handleJoinClick = () => {
     setShowOptions(true);
+    window.history.pushState({ showOptions: true, showFieldsList: false }, '', window.location.pathname);
   };
-
+  
   const handleQuickStart = () => {
-    router.push('/sign-up?role=doctor');
+    window.open('/sign-up?role=doctor', '_blank');
   };
-
+  
   const handleAssistedEntry = () => {
     setShowFieldsList(true);
+    window.history.pushState({ showOptions: true, showFieldsList: true }, '', window.location.pathname);
   };
 
   const formFields = [
@@ -185,7 +208,22 @@ export default function DoctorInvitePage() {
                 <p className="text-gray-600">Here are all the fields you'll need to complete during the onboarding process:</p>
               </div>
               <button
-                onClick={() => setShowFieldsList(false)}
+                // Replace the current onClick handler:
+                // First Back button (X button) - already fixed correctly:
+                onClick={() => {
+                  setShowFieldsList(false);
+                  setShowOptions(true);
+                }}
+                
+                // Second Back button ("Back to Options") - needs the same fix:
+                // Replace line 254:
+                // onClick={() => setShowFieldsList(false)}
+                
+                // // With:
+                // onClick={() => {
+                //   setShowFieldsList(false);
+                //   setShowOptions(true);
+                // }}
                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
               >
                 <FaTimes size={24} />
