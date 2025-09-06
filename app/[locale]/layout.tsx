@@ -9,6 +9,7 @@ import {
 } from "@clerk/nextjs";
 import { arSA } from "@clerk/localizations";
 import NavBar from "../components/NavBar";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      <head>
+        <Script
+          src={`https://maps.googleapis.com/maps/api/js?key=${PLACE_API}&libraries=places`}
+          strategy="beforeInteractive"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full ${locale === 'ar' ? 'rtl' : 'ltr'}`}
       >

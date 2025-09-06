@@ -1,13 +1,27 @@
+
+
 'use client';
 
 import { FaCheckCircle, FaWhatsapp, FaPhone, FaHospital, FaShieldAlt, FaCertificate, FaUsers } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default function ClinicInvitePage() {
+interface ClinicInvitePageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default function ClinicInvitePage({ params }: ClinicInvitePageProps) {
   const router = useRouter();
+  const [locale, setLocale] = useState<string>('');
+  
+  useEffect(() => {
+    params.then(({ locale }) => setLocale(locale));
+  }, [params]);
 
   const handleJoinClick = () => {
-    router.push('/onboarding');
+    if (locale) {
+      router.push(`/${locale}/sign-up?role=clinic`);
+    }
   };
 
   return (

@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { FaUserMd, FaStethoscope, FaHeart, FaShieldAlt, FaAward, FaUsers, FaGlobe, FaHandshake, FaChartLine, FaLightbulb, FaRocket, FaStar, FaCheckCircle, FaTimes, FaMedal, FaWhatsapp } from 'react-icons/fa';
-// Or use: FaAward, FaMedal, FaBadgeCheck, FaIdBadge, or FaUserCheck
 import { useRouter } from 'next/navigation';
 
 export default function DoctorInvitePage() {
@@ -267,37 +266,60 @@ export default function DoctorInvitePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
         
         <div className="relative px-6 py-16 w-full">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Medical Icon */}
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-6 backdrop-blur-sm">
-              <FaUserMd className="text-3xl text-white" />
+          <div className="max-w-6xl mx-auto text-center px-4">
+            {/* Saudi Doctor Photo - Larger and more prominent */}
+            {/* <div className="inline-flex items-center justify-center w-32 h-32 bg-white/20 rounded-full mb-8 backdrop-blur-sm overflow-hidden border-4 border-white/30 shadow-2xl">
+              <img 
+                src="/ahmad.jpg" 
+                alt="Saudi Doctor" 
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div> */}
+            
+            {/* Main Headline - Better structured */}
+            <div className="mb-8">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4">
+                <span className="block text-white">Build your medical reputation</span>
+                <span className="block text-blue-200 text-3xl md:text-5xl lg:text-6xl">in a trusted hub</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-blue-100 font-light italic mt-4">
+                — not on ads or social feeds.
+              </p>
             </div>
             
-            {/* Main Headline */}
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Build Your Medical
-              <span className="block text-blue-200">Reputation</span>
-              <span className="block text-lg md:text-2xl lg:text-3xl font-normal mt-3 text-blue-100">
-                In a trusted hub — not on ads or social feeds
-              </span>
-            </h1>
+            {/* Sub-headline - Better formatted with cards */}
+            <div className=" rounded-2xl p-8 mb-8 border border-white/20">
+              <p className="text-lg md:text-xl text-blue-50 leading-relaxed mb-6">
+                Medix helps doctors in Saudi Arabia:
+              </p>
+              <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div className="bg-green-500/20 rounded-xl p-4 border border-green-300/30">
+                  <span className="font-bold text-green-300 text-lg">Showcase Expertise</span>
+                  <p className="text-green-100 text-sm mt-2">Licensed doctors in Saudi Arabia</p>
+                </div>
+                <div className="bg-blue-500/20 rounded-xl p-4 border border-blue-300/30">
+                  <span className="font-bold text-blue-300 text-lg">Attract More Patients</span>
+                  <p className="text-blue-100 text-sm mt-2">Professional visibility</p>
+                </div>
+                <div className="bg-yellow-500/20 rounded-xl p-4 border border-yellow-300/30">
+                  <span className="font-bold text-yellow-300 text-lg">Strengthen Credibility</span>
+                  <p className="text-yellow-100 text-sm mt-2">Compliant platform</p>
+                </div>
+              </div>
+            </div>
             
-            {/* Value Proposition */}
-            <p className="text-lg md:text-xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Medix helps licensed doctors in Saudi Arabia showcase their expertise, 
-              attract more patients, and strengthen credibility — all in a professional, compliant platform.
-            </p>
-            
-            {/* CTA Button */}
+            {/* Updated CTA Button */}
             {!showOptions ? (
-              <button 
-                onClick={handleJoinClick}
-                className="group relative inline-flex items-center justify-center px-6 py-3 text-base md:text-lg font-semibold text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105"
-              >
-                <span className="mr-2">👉</span>
-                Accept & Join Medix — Free for Early Doctors & Clinics
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+              <div className="flex flex-col items-center">
+                <button 
+                  onClick={handleJoinClick}
+                  className="group relative inline-flex items-center justify-center px-8 py-4 text-xl md:text-2xl font-bold text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105 mb-2"
+                >
+                  JOIN MEDIX NOW
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+                <p className="text-sm text-blue-200">Free for early doctors & clinics</p>
+              </div>
             ) : (
               <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 max-w-2xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">Choose Your Onboarding Option</h2>
@@ -339,104 +361,144 @@ export default function DoctorInvitePage() {
       </section>
 
       {/* Pain Point Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Challenges You Face Every Day
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <FaUsers className="text-2xl text-red-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Limited Patient Reach</h3>
-              <p className="text-gray-600">Struggling to connect with patients who need your specialized care</p>
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-3xl font-bold text-gray-900 mb-4">
+              The Problem
+            </h2>
+          </div>
+          
+          <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 md:p-8 mb-8 border-l-4 border-red-400">
+            <p className="text-lg md:text-xl text-gray-800 leading-relaxed text-center">
+              <strong className="text-red-600">Doctors spend years building expertise, yet visibility often depends on ads, influencers, or generic directories.</strong>
+              <br className="hidden md:block" />
+              <span className="block mt-2">
+                <strong className="text-red-600">These unprofessional channels dilute credibility and undervalue licensed specialists.</strong>
+              </span>
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-red-50 rounded-xl p-6 text-center border border-red-200">
+              <FaTimes className="text-red-500 text-3xl mx-auto mb-3" />
+              <h3 className="font-bold text-red-700 mb-3">Current Reality</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• Generic directories</li>
+                <li>• Social media ads</li>
+                <li>• Unprofessional channels</li>
+              </ul>
             </div>
-            <div className="text-center p-6">
-              <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <FaChartLine className="text-2xl text-orange-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Administrative Burden</h3>
-              <p className="text-gray-600">Spending too much time on paperwork instead of patient care</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="bg-yellow-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <FaGlobe className="text-2xl text-yellow-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Digital Presence</h3>
-              <p className="text-gray-600">Difficulty establishing a strong online presence and reputation</p>
+            
+            <div className="bg-blue-50 rounded-xl p-6 text-center border border-blue-200">
+              <FaCheckCircle className="text-blue-500 text-3xl mx-auto mb-3" />
+              <h3 className="font-bold text-blue-700 mb-3">With Medix</h3>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• Professional platform</li>
+                <li>• Verified credentials</li>
+                <li>• Healthcare-focused</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Introduction to Medix */}
-      <section className="px-6 py-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-blue-800">
-            A professional platform built for Saudi doctors and clinics.
-          </h2>
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-            Medix is the first smart healthcare discovery and reputation platform in Saudi Arabia. It gives doctors a professional space to showcase their credentials, services, and experience — and connect directly with patients.
-          </p>
+      {/* Solution Section */}
+      <section className="py-12 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+              <FaShieldAlt className="text-blue-600 text-2xl" />
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              A professional platform built for Saudi doctors and clinics.
+            </h2>
+          </div>
+          
+          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-blue-200 mb-8">
+            <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
+              <strong className="text-blue-600">Medix is the first smart healthcare discovery and reputation platform in Saudi Arabia.</strong>
+              <br className="hidden md:block" />
+              <span className="block mt-2">
+                It gives doctors a professional space to showcase their credentials, services, and experience — and connect directly with patients.
+              </span>
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-white rounded-lg p-4 shadow-sm text-center hover:shadow-md transition-shadow">
+              <FaAward className="text-blue-500 text-2xl mx-auto mb-2" />
+              <h3 className="font-semibold text-gray-900 mb-1 text-sm">Professional Showcase</h3>
+              <p className="text-xs text-gray-600">Display credentials & expertise</p>
+            </div>
+            
+            <div className="bg-white rounded-lg p-4 shadow-sm text-center hover:shadow-md transition-shadow">
+              <FaHandshake className="text-green-500 text-2xl mx-auto mb-2" />
+              <h3 className="font-semibold text-gray-900 mb-1 text-sm">Direct Connection</h3>
+              <p className="text-xs text-gray-600">Connect with patients directly</p>
+            </div>
+            
+            <div className="bg-white rounded-lg p-4 shadow-sm text-center hover:shadow-md transition-shadow">
+              <FaUsers className="text-purple-500 text-2xl mx-auto mb-2" />
+              <h3 className="font-semibold text-gray-900 mb-1 text-sm">Trusted Environment</h3>
+              <p className="text-xs text-gray-600">Built for healthcare professionals</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Credibility & Trust Signals */}
-      <section className="px-6 py-16 bg-blue-50">
+      {/* Trust & Credibility Section */}
+      <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-blue-800">
-            Trusted, Compliant, and Supported.
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
+            Trusted by Leading Organizations
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Monsha'at Card */}
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-              <div className="mb-6">
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
+              <div className="mb-4">
                 <img 
                   src="/monshaat.png" 
-                  alt="Monsha'at" 
-                  className="h-16 mx-auto object-contain"
+                  alt="Monsha'at Partner" 
+                  className="h-12 mx-auto object-contain"
                 />
               </div>
-              <p className="text-lg font-semibold text-gray-800">
-                Backed by Monsha'at Program
+              <p className="text-sm font-medium text-gray-700">
+                Monsha'at Partner
               </p>
-              <p className="text-sm text-gray-600 mt-2">
-                Supporting Saudi entrepreneurs and startups
-              </p>
-            </div>
-
-            {/* Misk Card */}
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-              <div className="mb-6">
-                <img 
-                  src="/misk.png" 
-                  alt="Misk Launchpad" 
-                  className="h-16 mx-auto object-contain"
-                />
-              </div>
-              <p className="text-lg font-semibold text-gray-800">
-                Misk Launchpad Program
-              </p>
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="text-xs text-gray-500 mt-1">
                 Accelerating innovation in Saudi Arabia
               </p>
             </div>
 
-            {/* PDPL Compliance Card */}
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-              <div className="mb-6">
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
+              <div className="mb-4">
                 <img 
                   src="/pdpl.jpeg" 
                   alt="PDPL Compliant" 
-                  className="h-16 mx-auto object-contain"
+                  className="h-12 mx-auto object-contain"
                 />
               </div>
-              <p className="text-lg font-semibold text-gray-800">
+              <p className="text-sm font-medium text-gray-700">
                 Fully PDPL Compliant
               </p>
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="text-xs text-gray-500 mt-1">
                 Saudi data protection regulations certified
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
+              <div className="mb-4">
+                <img 
+                  src="/misk.png" 
+                  alt="Misk Partner" 
+                  className="h-12 mx-auto object-contain"
+                />
+              </div>
+              <p className="text-sm font-medium text-gray-700">
+                Misk Partner
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                Supporting Saudi Vision 2030
               </p>
             </div>
           </div>
@@ -444,109 +506,56 @@ export default function DoctorInvitePage() {
       </section>
 
       {/* Value Proposition */}
-      <section className="px-6 py-16">
+      <section className="px-6 py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <FaMedal className="text-blue-500 text-3xl mx-auto mb-4" />
-              <h3 className="font-bold mb-2">Verified Professional Profiles</h3>
-              <p className="text-gray-600">Highlight credentials, subspecialties, and achievements.</p>
+          {/* Mid-page CTA */}
+          <div className="text-center mb-12">
+            <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <div className="border-2 border-blue-200 rounded-xl p-4 hover:border-blue-400 transition-colors bg-white">
+                <FaRocket className="text-2xl text-blue-600 mb-3" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Quick Start</h3>
+                <p className="text-gray-600 mb-3 text-sm">Jump right into the registration process and complete your profile step by step.</p>
+                <button
+                  onClick={handleQuickStart}
+                  className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+                >
+                  Sign Up & Start Now
+                </button>
+              </div>
+              <div className="border-2 border-green-200 rounded-xl p-4 hover:border-green-400 transition-colors bg-white">
+                <FaLightbulb className="text-2xl text-green-600 mb-3" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Assisted Entry</h3>
+                <p className="text-gray-600 mb-3 text-sm">See all required fields and prepare your information before starting the registration.</p>
+                <button
+                  onClick={handleAssistedEntry}
+                  className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors font-medium text-sm"
+                >
+                  View Required Fields
+                </button>
+              </div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          </div>
+
+          {/* Other Value Cards */}
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
               <FaWhatsapp className="text-green-500 text-3xl mx-auto mb-4" />
-              <h3 className="font-bold mb-2">Direct Patient Contact</h3>
+              <h3 className="font-bold mb-2 text-gray-800 uppercase">DIRECT PATIENT CONTACT</h3>
               <p className="text-gray-600">Patients reach you via WhatsApp or phone — no middlemen.</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
               <FaUsers className="text-purple-500 text-3xl mx-auto mb-4" />
-              <h3 className="font-bold mb-2">Priority Placement</h3>
+              <h3 className="font-bold mb-2 text-gray-800 uppercase">PRIORITY PLACEMENT</h3>
               <p className="text-gray-600">Early doctors appear first in Medix results.</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
               <FaShieldAlt className="text-red-500 text-3xl mx-auto mb-4" />
-              <h3 className="font-bold mb-2">Professional & Secure</h3>
+              <h3 className="font-bold mb-2 text-gray-800 uppercase">PROFESSIONAL & SECURE</h3>
               <p className="text-gray-600">Built for healthcare, not ads.</p>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Outcomes */}
-      {/* Hero Section */}
-     
-
-      {/* Main Content */}
-      <section className="px-6 py-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Turn credibility into growth.
-          </h2>
-          <p className="text-lg md:text-xl leading-relaxed">
-            With Medix, you gain more visibility, attract the right patients, and build lasting trust. Instead of competing in advertising spaces, you stand out as a licensed, trusted professional.
-          </p>
-        </div>
-      </section>
-
-      {/* How It Works - Updated to show after main CTA */}
-      {showOptions && (
-        <section className="px-6 py-16">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-blue-800">
-              Choose Your Registration Method
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-blue-50 p-8 rounded-lg text-center border-2 border-blue-200">
-                <h3 className="text-xl font-bold mb-4">Option A: Quick Start</h3>
-                <p className="text-gray-700 mb-6">Create your account with email/password, then fill out a 3-minute professional form to go live immediately.</p>
-                <button 
-                  onClick={handleQuickStart}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full"
-                >
-                  Create Account & Start →
-                </button>
-              </div>
-              <div className="bg-green-50 p-8 rounded-lg text-center border-2 border-green-200">
-                <h3 className="text-xl font-bold mb-4">Option B: Assisted Entry</h3>
-                <p className="text-gray-700 mb-6">Send us your existing brochure or website, and our team will set up your complete profile for you.</p>
-                <button 
-                  onClick={handleAssistedEntry}
-                  className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors w-full"
-                >
-                  Get Professional Help →
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Final Trust Section */}
-      <footer className="px-6 py-16 bg-gray-100">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="flex justify-center items-center space-x-8 mb-8">
-            <div className="bg-white p-4 rounded-lg shadow">
-              <span className="font-bold text-blue-600">Monsha'at</span>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <span className="font-bold text-green-600">Misk</span>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <span className="font-bold text-purple-600">SDAIA</span>
-            </div>
-          </div>
-          <p className="text-gray-600 mb-8">
-            Medix only collects and displays verified professional information. No patient data. 100% PDPL compliant.
-          </p>
-          {!showOptions && (
-            <button 
-              onClick={handleJoinClick}
-              className="bg-blue-600 text-white px-8 py-4 rounded-lg text-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg"
-            >
-              Join Medix Today — Free for Early Doctors & Clinics
-            </button>
-          )}
-        </div>
-      </footer>
     </div>
   );
 }
