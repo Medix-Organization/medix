@@ -132,6 +132,11 @@
   },
   "onboarding": {
     "doctor": {
+      "success": {
+        "title": "Thank you for signing up to Medix!",
+        "message": "We have received your application and will contact you soon to complete your profile setup.",
+        "emailNote": "We will send updates to this email address."
+      },
       "title": "Doctor Registration",
       "emailInfo": "Your email is automatically taken from your account",
       "steps": {

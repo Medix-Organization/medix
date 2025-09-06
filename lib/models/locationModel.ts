@@ -21,7 +21,7 @@ export const locationSchema = new Schema({
     zipCode: { type: String }
   },
   coordinates: {
-    latitude: { type: Number, required: true }, // Make coordinates required instead
-    longitude: { type: Number, required: true }
+    latitude: { type: Number, required: false }, // Make coordinates required instead
+    longitude: { type: Number, required: false }
   }
 }, { _id: false });

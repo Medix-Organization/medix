@@ -15,26 +15,21 @@ interface CreateDoctorData {
   licenseNumber?: string;
   consultationFee?: number;
   availableForOnlineConsultation: boolean;
-  location?: {
-    googleMapLink: string;
-  };
+  // location field removed from interface
   languages?: string[];
   titleCredentials?: string[];
 }
 
 export async function createDoctorUser(formData: CreateDoctorData, locale: string) {
   try {
-    // Get current user from Clerk
     const user = await currentUser();
     
     if (!user) {
       throw new Error('User not authenticated');
     }
 
-    // Connect to database
     await connectToDatabase();
 
-    // Check if doctor already exists
     const existingDoctor = await Doctor.findOne({ 
       $or: [
         { email: user.emailAddresses[0]?.emailAddress },
@@ -46,7 +41,6 @@ export async function createDoctorUser(formData: CreateDoctorData, locale: strin
       throw new Error('Doctor profile already exists');
     }
 
-    // Create doctor document
     const doctorData = {
       clerkId: user.id,
       email: user.emailAddresses[0]?.emailAddress,
@@ -58,7 +52,7 @@ export async function createDoctorUser(formData: CreateDoctorData, locale: strin
       licenseNumber: formData.licenseNumber,
       consultationFee: formData.consultationFee,
       availableForOnlineConsultation: formData.availableForOnlineConsultation,
-      location: formData.location || { googleMapLink: '' },
+      // location field removed from doctorData
       languages: formData.languages || [],
       titleCredentials: formData.titleCredentials || [],
       profileImage: user.imageUrl,
@@ -89,8 +83,10 @@ export async function createDoctorUser(formData: CreateDoctorData, locale: strin
 
     console.log('Doctor created successfully:', doctor._id);
     
-    // Redirect to doctor profile after successful creation
-    redirect(`/${locale}/doctor-profile`);
+    // Remove this line to prevent automatic redirect:
+    // redirect(`/${locale}/doctor-profile`);
+    
+    return doctor; // Return the doctor object instead
   } catch (error) {
     console.error('Error creating doctor user:', error);
     throw error;
