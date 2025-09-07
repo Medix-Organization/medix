@@ -83,10 +83,10 @@ export async function createDoctorUser(formData: CreateDoctorData, locale: strin
 
     console.log('Doctor created successfully:', doctor._id);
     
-    // Remove this line to prevent automatic redirect:
-    // redirect(`/${locale}/doctor-profile`);
+    // Convert the doctor document to a plain object before returning
+    const plainDoctor = doctor.toObject ? doctor.toObject() : JSON.parse(JSON.stringify(doctor));
     
-    return doctor; // Return the doctor object instead
+    return plainDoctor; // Return the plain object instead of the Mongoose document
   } catch (error) {
     console.error('Error creating doctor user:', error);
     throw error;
@@ -97,7 +97,9 @@ export async function getDoctorByClerkId(clerkId: string) {
   try {
     await connectToDatabase();
     const doctor = await Doctor.findOne({ clerkId });
-    return doctor;
+    
+    // Convert to plain object before returning
+    return doctor ? (doctor.toObject ? doctor.toObject() : JSON.parse(JSON.stringify(doctor))) : null;
   } catch (error) {
     console.error('Error fetching doctor by Clerk ID:', error);
     throw error;
@@ -112,7 +114,9 @@ export async function updateDoctorProfile(clerkId: string, updateData: Partial<C
       { ...updateData, updatedAt: new Date() },
       { new: true }
     );
-    return doctor;
+    
+    // Convert to plain object before returning
+    return doctor ? (doctor.toObject ? doctor.toObject() : JSON.parse(JSON.stringify(doctor))) : null;
   } catch (error) {
     console.error('Error updating doctor profile:', error);
     throw error;

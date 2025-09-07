@@ -286,7 +286,54 @@
       "consultationRequired": "Consultation Required",
       "bookService": "Book Service"
     }
-  }
+  },
+  "doctorInvite": {
+    "hero": {
+      "title": "Join Medix as a Doctor",
+      "subtitle": "The professional platform for Saudi doctors and clinics",
+      "joinButton": "JOIN MEDIX NOW",
+      "earlyAccess": "Free for early doctors & clinics"
+    },
+    "benefits": {
+      "showcaseExpertise": "Showcase Expertise",
+      "showcaseExpertiseDesc": "Professional visibility",
+      "attractPatients": "Attract More Patients",
+      "attractPatientsDesc": "Professional visibility",
+      "strengthenCredibility": "Strengthen Credibility",
+      "strengthenCredibilityDesc": "Compliant platform"
+    },
+    "problem": {
+      "title": "The Problem",
+      "description1": "Doctors spend years building expertise, yet visibility often depends on ads, influencers, or generic directories.",
+      "description2": "These unprofessional channels dilute credibility and undervalue licensed specialists.",
+      "currentReality": "Current Reality",
+      "currentRealityItems": {
+        "0": "Generic directories",
+        "1": "Social media ads",
+        "2": "Unprofessional channels"
+      },
+      "withMedix": "With Medix",
+      "withMedixItems": {
+        "0": "Professional platform",
+        "1": "Verified credentials",
+        "2": "Healthcare-focused"
+      }
+    },
+    "solution": {
+      "title": "A professional platform built for Saudi doctors and clinics.",
+      "description1": "Medix is the first smart healthcare discovery and reputation platform in Saudi Arabia.",
+      "description2": "It gives doctors a professional space to showcase their credentials, services, and experience — and connect directly with patients."
+    },
+    "trustedBy": "Trusted By Leading Organizations",
+    "options": {
+      "title": "Choose Your Onboarding Option",
+      "quickStart": "Quick Start",
+      "quickStartDesc": "Jump right into the registration process and complete your profile step by step.",
+      "quickStartButton": "Sign Up & Start Now",
+      "assistedEntry": "Assisted Entry",
+      "assistedEntryDesc": "See all required fields and prepare your information before starting the registration.",
+      "assistedEntryButton": "View Required Fields"
+    }}
 }
 
 

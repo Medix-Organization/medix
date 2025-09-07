@@ -6,6 +6,8 @@ import {
   FaShieldAlt,
   FaClock,
   FaHeart,
+  FaHospital,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { MdVerified, MdRateReview } from "react-icons/md";
 import { Link } from "@/i18n/navigation";
@@ -58,9 +60,9 @@ export default async function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-white py-8 sm:py-16 lg:py-24">
+      <section className="bg-gray-50 py-12 sm:py-20 lg:py-28">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-8 sm:mb-16">
+          <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               {t("landing.features.title")}
             </h2>
@@ -69,13 +71,13 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-6xl mx-auto">
             {/* Feature 1 */}
-            <div className="text-center p-4 sm:p-6 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="bg-blue-100 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <div className="bg-white text-center p-6 sm:p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <div className="bg-blue-100 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
                 <FaSearch className="text-blue-600 text-lg sm:text-2xl" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
                 {t("landing.features.easyDiscovery.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
@@ -84,11 +86,11 @@ export default async function Home() {
             </div>
 
             {/* Feature 2 */}
-            <div className="text-center p-4 sm:p-6 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="bg-green-100 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <div className="bg-white text-center p-6 sm:p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <div className="bg-green-100 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
                 <MdVerified className="text-green-600 text-lg sm:text-2xl" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
                 {t("landing.features.verifiedReviews.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
@@ -97,54 +99,41 @@ export default async function Home() {
             </div>
 
             {/* Feature 3 */}
-            <div className="text-center p-4 sm:p-6 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="bg-purple-100 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <FaUserMd className="text-purple-600 text-lg sm:text-2xl" />
+            <div className="bg-white text-center p-6 sm:p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <div className="bg-purple-100 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
+                <FaCalendarAlt className="text-purple-600 text-lg sm:text-2xl" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                {t("landing.features.trustedProfessionals.title")}
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
+                {t("landing.features.easyBooking.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                {t("landing.features.trustedProfessionals.description")}
+                {t("landing.features.easyBooking.description")}
               </p>
             </div>
 
             {/* Feature 4 */}
-            <div className="text-center p-4 sm:p-6 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="bg-yellow-100 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <FaStar className="text-yellow-600 text-lg sm:text-2xl" />
+            <div className="bg-white text-center p-6 sm:p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <div className="bg-yellow-100 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
+                <FaUserMd className="text-yellow-600 text-lg sm:text-2xl" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                {t("landing.features.rateReview.title")}
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
+                {t("landing.features.doctorProfile.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                {t("landing.features.rateReview.description")}
+                {t("landing.features.doctorProfile.description")}
               </p>
             </div>
 
             {/* Feature 5 */}
-            {/* <div className="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
-              <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaClock className="text-red-600 text-2xl" />
+            <div className="bg-white text-center p-6 sm:p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <div className="bg-red-100 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-5 sm:mb-6">
+                <FaHospital className="text-red-600 text-lg sm:text-2xl" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                Quick Appointments
-              </h3>
-              <p className="text-gray-600">
-                Book appointments instantly and manage your healthcare schedule with ease
-              </p>
-            </div> */}
-
-            {/* Feature 5 */}
-            <div className="text-center p-4 sm:p-6 rounded-xl hover:shadow-lg transition-shadow sm:col-span-2 lg:col-span-1">
-              <div className="bg-indigo-100 w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <FaHeart className="text-indigo-600 text-lg sm:text-2xl" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                {t("landing.features.patientCentered.title")}
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
+                {t("landing.features.clinicManagement.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                {t("landing.features.patientCentered.description")}
+                {t("landing.features.clinicManagement.description")}
               </p>
             </div>
           </div>

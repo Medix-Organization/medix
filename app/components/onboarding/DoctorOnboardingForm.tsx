@@ -22,7 +22,7 @@ export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormPro
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitted, setIsSubmitted] = useState(false); // Add this new state
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     // Basic Information
     fullName: { translations: { en: '', ar: '' } } as LocalizedString,
@@ -148,7 +148,40 @@ export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormPro
   }
 
   const isRTL = locale === 'ar';
-  
+
+  // ✅ ADD THE SUCCESS MESSAGE CHECK HERE (after line 150)
+  if (isSubmitted) {
+    return (
+      <div className={`min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8 ${isRTL ? 'rtl' : 'ltr'}`}>
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white p-8 rounded-lg shadow-md text-center">
+            <div className="mb-6">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                {t('success.title', { defaultValue: 'Thank you for signing up to Medix!' })}
+              </h2>
+              <p className="text-gray-600 mb-6">
+                {t('success.message', { defaultValue: 'We have received your application and will contact you soon to complete your profile setup.' })}
+              </p>
+              <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
+                <p className="text-sm text-blue-800">
+                  <strong>Email:</strong> {user?.emailAddresses[0]?.emailAddress}
+                </p>
+                <p className="text-xs text-blue-600 mt-1">
+                  {t('success.emailNote', { defaultValue: 'We will send updates to this email address.' })}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="max-w-4xl mx-auto">
@@ -506,7 +539,10 @@ export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormPro
           <div className="flex justify-between pt-6 border-t">
             <button
               type="button"
-              onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
+              onClick={(e) => {
+                e.preventDefault(); // Prevent any form submission
+                setCurrentStep(Math.max(1, currentStep - 1));
+              }}
               disabled={currentStep === 1}
               className="px-4 py-2 text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -516,7 +552,10 @@ export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormPro
             {currentStep < 3 ? (
               <button
                 type="button"
-                onClick={() => setCurrentStep(Math.min(3, currentStep + 1))}
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent any form submission
+                  setCurrentStep(Math.min(3, currentStep + 1));
+                }}
                 className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {t('navigation.next')}
@@ -556,9 +595,11 @@ function ArrayInputField({ label, placeholder, values, onAdd, onRemove }: ArrayI
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  // ✅ FIXED: Changed from handleKeyPress to handleKeyDown
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      e.stopPropagation(); // Prevent event bubbling to form
       handleAdd();
     }
   };
@@ -571,7 +612,7 @@ function ArrayInputField({ label, placeholder, values, onAdd, onRemove }: ArrayI
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown} // ✅ FIXED: Changed from onKeyPress
           className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder={placeholder}
         />
@@ -586,15 +627,12 @@ function ArrayInputField({ label, placeholder, values, onAdd, onRemove }: ArrayI
       {values.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {values.map((value, index) => (
-            <span
-              key={index}
-              className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
-            >
+            <span key={index} className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
               {value}
               <button
                 type="button"
                 onClick={() => onRemove(index)}
-                className="ml-2 text-blue-600 hover:text-blue-800"
+                className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
               >
                 ×
               </button>
@@ -602,39 +640,6 @@ function ArrayInputField({ label, placeholder, values, onAdd, onRemove }: ArrayI
           ))}
         </div>
       )}
-    </div>
-  );
-}
-
-// Add success message component before the main form return
-if (isSubmitted) {
-  return (
-    <div className={`min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8 ${isRTL ? 'rtl' : 'ltr'}`}>
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white p-8 rounded-lg shadow-md text-center">
-          <div className="mb-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              {t('success.title', { defaultValue: 'Thank you for signing up to Medix!' })}
-            </h2>
-            <p className="text-gray-600 mb-6">
-              {t('success.message', { defaultValue: 'We have received your application and will contact you soon to complete your profile setup.' })}
-            </p>
-            <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
-              <p className="text-sm text-blue-800">
-                <strong>Email:</strong> {user?.emailAddresses[0]?.emailAddress}
-              </p>
-              <p className="text-xs text-blue-600 mt-1">
-                {t('success.emailNote', { defaultValue: 'We will send updates to this email address.' })}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

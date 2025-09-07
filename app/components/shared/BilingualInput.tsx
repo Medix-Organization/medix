@@ -37,6 +37,15 @@ export default function BilingualInput({
     });
   };
 
+  // Add this function to the component
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && type === 'input') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+  
+  // And add onKeyDown={handleKeyDown} to both input fields
   const InputComponent = type === 'textarea' ? 'textarea' : 'input';
 
   return (
@@ -78,6 +87,7 @@ export default function BilingualInput({
             name={`${name}_en`}
             value={value.translations.en || ''}
             onChange={(e) => handleChange('en', e.target.value)}
+            onKeyDown={handleKeyDown} // Add Enter key handling
             placeholder={placeholder?.en}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               error ? 'border-red-500' : 'border-gray-300'
@@ -91,6 +101,7 @@ export default function BilingualInput({
             name={`${name}_ar`}
             value={value.translations.ar || ''}
             onChange={(e) => handleChange('ar', e.target.value)}
+            onKeyDown={handleKeyDown} // Add Enter key handling
             placeholder={placeholder?.ar}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-right ${
               error ? 'border-red-500' : 'border-gray-300'
