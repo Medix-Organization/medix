@@ -7,6 +7,9 @@ import { FaUserMd, FaStethoscope, FaHeart,
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import ToggleLanguageButton from '@/app/components/ToggleLanguageButton';
+import { formFields } from '@/app/components/doctor-invite-components/formfields';
+import OnboardingOptions from '@/app/components/doctor-invite-components/OnboardingOptions';
+import FormFieldsDisplay from '@/app/components/doctor-invite-components/FormFieldsDisplay';
 
 export default function DoctorInvitePage() {
   const [showOptions, setShowOptions] = useState(false);
@@ -49,246 +52,15 @@ export default function DoctorInvitePage() {
     window.history.pushState({ showOptions: true, showFieldsList: true }, '', window.location.pathname);
   };
 
-  const formFields = [
-    {
-      category: "Basic Information",
-      fields: [
-        {
-          name: "Full Name",
-          description: "Your complete professional name as it appears on your medical license (bilingual: English and Arabic)",
-          required: true,
-          example: "Dr. Ahmed Mohamed / د. أحمد محمد"
-        },
-        {
-          name: "Medical Specialty",
-          description: "Your primary area of medical expertise (bilingual: English and Arabic)",
-          required: true,
-          example: "Cardiology / أمراض القلب"
-        },
-        {
-          name: "Years of Experience",
-          description: "Total number of years practicing medicine",
-          required: true,
-          example: "15 years"
-        },
-        {
-          name: "License Number",
-          description: "Your medical license registration number",
-          required: false,
-          example: "MD123456789"
-        },
-        {
-          name: "Short Bio",
-          description: "Brief description of your practice and expertise (bilingual: English and Arabic)",
-          required: false,
-          example: "Experienced cardiologist specializing in interventional procedures..."
-        }
-      ]
-    },
-    {
-      category: "Professional Details",
-      fields: [
-        {
-          name: "Title & Credentials",
-          description: "Professional titles and academic credentials (multiple entries allowed)",
-          required: false,
-          example: "MD, PhD, FACC, Professor"
-        },
-        {
-          name: "Certifications & Fellowships",
-          description: "Board certifications and fellowship training (multiple entries allowed)",
-          required: false,
-          example: "American Board of Internal Medicine, Interventional Cardiology Fellowship"
-        },
-        {
-          name: "Professional Memberships",
-          description: "Medical associations and professional organizations (multiple entries allowed)",
-          required: false,
-          example: "American College of Cardiology, European Society of Cardiology"
-        },
-        {
-          name: "Awards & Recognition",
-          description: "Professional awards and recognitions received (multiple entries allowed)",
-          required: false,
-          example: "Best Doctor Award 2023, Excellence in Patient Care"
-        },
-        {
-          name: "Devices & Materials",
-          description: "Specialized medical devices or materials you work with (multiple entries allowed)",
-          required: false,
-          example: "Cardiac Stents, Pacemakers, Defibrillators"
-        },
-        {
-          name: "Languages",
-          description: "Languages you can communicate with patients in (multiple entries allowed)",
-          required: false,
-          example: "English, Arabic, French"
-        }
-      ]
-    },
-    {
-      category: "Contact & Consultation",
-      fields: [
-        {
-          name: "Phone Number",
-          description: "Professional contact number for patient inquiries",
-          required: false,
-          example: "+1-555-123-4567"
-        },
-        {
-          name: "Consultation Fee",
-          description: "Your standard consultation fee amount",
-          required: false,
-          example: "150 (in your local currency)"
-        },
-        {
-          name: "Online Consultation Availability",
-          description: "Whether you offer telemedicine/online consultations",
-          required: false,
-          example: "Yes/No checkbox"
-        }
-      ]
-    },
-    {
-      category: "Social & Professional Links",
-      fields: [
-        {
-          name: "LinkedIn Profile",
-          description: "Your professional LinkedIn profile URL",
-          required: false,
-          example: "https://linkedin.com/in/dr-ahmed-mohamed"
-        },
-        {
-          name: "X (Twitter) Profile",
-          description: "Your professional X/Twitter profile URL",
-          required: false,
-          example: "https://x.com/dr_ahmed_cardio"
-        },
-        {
-          name: "Instagram Profile",
-          description: "Your professional Instagram profile URL",
-          required: false,
-          example: "https://instagram.com/dr.ahmed.cardiology"
-        },
-        {
-          name: "Facebook Profile",
-          description: "Your professional Facebook profile URL",
-          required: false,
-          example: "https://facebook.com/dr.ahmed.cardiology"
-        },
-        {
-          name: "ResearchGate Profile",
-          description: "Your ResearchGate academic profile URL",
-          required: false,
-          example: "https://researchgate.net/profile/Ahmed-Mohamed"
-        },
-        {
-          name: "Clinic Website",
-          description: "Your clinic or practice website URL",
-          required: false,
-          example: "https://ahmedcardiology.com"
-        }
-      ]
-    },
-    {
-      category: "Clinic Association",
-      fields: [
-        {
-          name: "Clinic Associations",
-          description: "Clinics or hospitals where you practice (at least one required)",
-          required: true,
-          example: "City General Hospital, Ahmed Cardiology Clinic"
-        }
-      ]
-    }
-  ];
+ 
 
   if (showFieldsList) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Doctor Onboarding Form Fields</h1>
-                <p className="text-gray-600">Here are all the fields you'll need to complete during the onboarding process:</p>
-              </div>
-              <button
-                onClick={() => {
-                  setShowFieldsList(false);
-                  setShowOptions(true);
-                }}
-                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
-              >
-                <FaTimes size={24} />
-              </button>
-            </div>
-
-            <div className="space-y-8">
-              {formFields.map((category, categoryIndex) => (
-                <div key={categoryIndex} className="border-l-4 border-blue-500 pl-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                    <FaCheckCircle className="text-blue-500 mr-2" />
-                    {category.category}
-                  </h2>
-                  <div className="space-y-4">
-                    {category.fields.map((field, fieldIndex) => (
-                      <div key={fieldIndex} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="font-medium text-gray-900 flex items-center">
-                            {field.name}
-                            {field.required && (
-                              <span className="ml-2 bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-semibold">
-                                REQUIRED
-                              </span>
-                            )}
-                            {!field.required && (
-                              <span className="ml-2 bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
-                                Optional
-                              </span>
-                            )}
-                          </h3>
-                        </div>
-                        <p className="text-gray-600 text-sm mb-2">{field.description}</p>
-                        <div className="bg-blue-50 border border-blue-200 rounded p-2">
-                          <p className="text-xs text-blue-800">
-                            <strong>Example:</strong> {field.example}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
-              <h3 className="font-semibold text-blue-900 mb-2">Ready to get started?</h3>
-              <p className="text-blue-800 text-sm mb-4">
-                Now that you know what information you'll need, you can proceed with the registration process. 
-                The form is divided into 3 easy steps to make the process smooth and manageable.
-              </p>
-              <div className="flex gap-4">
-                <button
-                  onClick={handleQuickStart}
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                >
-                  Start Registration Now
-                </button>
-                <button
-                  onClick={() => {
-                    setShowFieldsList(false);
-                    setShowOptions(true);
-                  }}
-                  className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors font-medium"
-                >
-                  Back to Options
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <FormFieldsDisplay 
+        setShowFieldsList={setShowFieldsList}
+        setShowOptions={setShowOptions}
+        handleQuickStart={handleQuickStart}
+      />
     );
   }
 
@@ -361,33 +133,11 @@ export default function DoctorInvitePage() {
                 <p className="text-sm text-blue-700">{t('hero.earlyAccess')}</p>
               </div>
             ) : (
-              <div className="bg-white rounded-2xl shadow-xl p-6 max-w-2xl mx-auto mt-10 border border-blue-200">
-                <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">Choose Your Onboarding Option</h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="border-2 border-blue-200 rounded-xl p-4 hover:border-blue-400 transition-colors bg-white">
-                    <FaRocket className="text-2xl text-blue-600 mb-3" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Quick Start</h3>
-                    <p className="text-gray-600 mb-3 text-sm">Jump right into the registration process and complete your profile step by step.</p>
-                    <button
-                      onClick={handleQuickStart}
-                      className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
-                    >
-                      Sign Up & Start Now
-                    </button>
-                  </div>
-                  <div className="border-2 border-indigo-200 rounded-xl p-4 hover:border-indigo-400 transition-colors bg-white">
-                    <FaLightbulb className="text-2xl text-indigo-600 mb-3" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Assisted Entry</h3>
-                    <p className="text-gray-600 mb-3 text-sm">See all required fields and prepare your information before starting the registration.</p>
-                    <button
-                      onClick={handleAssistedEntry}
-                      className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium text-sm"
-                    >
-                      View Required Fields
-                    </button>
-                  </div>
-                </div>
-              </div>
+               <OnboardingOptions 
+                handleQuickStart={handleQuickStart}
+                handleAssistedEntry={handleAssistedEntry}
+                t={t}
+              />
             )}
           </div>
         </div>
@@ -506,32 +256,11 @@ export default function DoctorInvitePage() {
       <section className="px-6 py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="max-w-6xl mx-auto">
           {/* Mid-page CTA */}
-          <div className="text-center mb-12">
-            <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-              <div className="border-2 border-blue-200 rounded-xl p-4 hover:border-blue-400 transition-colors bg-white">
-                <FaRocket className="text-2xl text-blue-600 mb-3" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Quick Start</h3>
-                <p className="text-gray-600 mb-3 text-sm">Jump right into the registration process and complete your profile step by step.</p>
-                <button
-                  onClick={handleQuickStart}
-                  className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
-                >
-                  Sign Up & Start Now
-                </button>
-              </div>
-              <div className="border-2 border-green-200 rounded-xl p-4 hover:border-green-400 transition-colors bg-white">
-                <FaLightbulb className="text-2xl text-green-600 mb-3" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Assisted Entry</h3>
-                <p className="text-gray-600 mb-3 text-sm">See all required fields and prepare your information before starting the registration.</p>
-                <button
-                  onClick={handleAssistedEntry}
-                  className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors font-medium text-sm"
-                >
-                  View Required Fields
-                </button>
-              </div>
-            </div>
-          </div>
+         <OnboardingOptions 
+                handleQuickStart={handleQuickStart}
+                handleAssistedEntry={handleAssistedEntry}
+                t={t}
+              />
         </div>
       </section>
     </div>

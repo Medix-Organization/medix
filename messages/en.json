@@ -289,19 +289,32 @@
   },
   "doctorInvite": {
     "hero": {
-      "title": "Build Your Medical Reputation In A Trusted Hub",
-      "subtitle_separator": "- Not On Ads Or Social Feeds -",
+      "title": "Build Your Medical Reputation In The New Saudi Arabian Trusted Medical Hub",
+      "subtitle_separator": "Not On Ads Or Social Feeds ",
       "subtitle": "Medix helps licensed doctors in Saudi Arabia",
       "joinButton": "JOIN MEDIX NOW",
       "earlyAccess": "Free for early doctors & clinics"
     },
+    "onboardingOptions": {
+      "title": "Choose Your Onboarding Option",
+      "quickStart": {
+        "title": "Quick Start",
+        "description": "Create your profile in minutes and start building your reputation today",
+        "button": "Instant Setup"
+      },
+      "assistedEntry": {
+        "title": "Assisted Entry",
+        "description": "Click here to know the required information to share with us and our team will do the rest for you — accurate, hassle-free, and compliant",
+        "button": "View Required Fields"
+      }
+    },
     "benefits": {
       "showcaseExpertise": "Showcase Expertise",
-      "showcaseExpertiseDesc": "Professional visibility",
+      "showcaseExpertiseDesc": "Highlight your verified credentials",
       "attractPatients": "Attract More Patients",
-      "attractPatientsDesc": "Professional visibility",
+      "attractPatientsDesc": "Get discovered by patients who truly need your care ",
       "strengthenCredibility": "Strengthen Credibility",
-      "strengthenCredibilityDesc": "Compliant platform"
+      "strengthenCredibilityDesc": "Build trust in a healthcare-only platform"
     },
     "problem": {
       "title": "The Problem",
