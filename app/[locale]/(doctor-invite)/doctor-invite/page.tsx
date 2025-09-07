@@ -304,13 +304,13 @@ export default function DoctorInvitePage() {
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-2 text-blue-900">
-              Build Your Medical Reputation In A Trusted Hub 
+               {t("hero.title")}
             </h1>
             <p className='text-l md:text-xl font-bold mb-6 text-blue-800'>
-               - Not On Ads Or Social Feeds -
+                {t("hero.subtitle_separator")} 
             </p>
             <p className="text-xl md:text-2xl text-blue-800 mb-8">
-              Medix helps licensed doctors in Saudi Arabia
+             {t("hero.subtitle")}
             </p>
             
             {/* Benefits Cards */}

@@ -289,8 +289,9 @@
   },
   "doctorInvite": {
     "hero": {
-      "title": "Join Medix as a Doctor",
-      "subtitle": "The professional platform for Saudi doctors and clinics",
+      "title": "Build Your Medical Reputation In A Trusted Hub",
+      "subtitle_separator": "- Not On Ads Or Social Feeds -",
+      "subtitle": "Medix helps licensed doctors in Saudi Arabia",
       "joinButton": "JOIN MEDIX NOW",
       "earlyAccess": "Free for early doctors & clinics"
     },
