@@ -8,7 +8,7 @@ import {
   ClerkProvider,
 } from "@clerk/nextjs";
 import { arSA } from "@clerk/localizations";
-import NavBar from "../components/NavBar";
+import ConditionalNavBar from "../components/ConditionalNavBar";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -36,6 +36,9 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  
+  // Load messages for the client provider
+  const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
@@ -49,9 +52,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full ${locale === 'ar' ? 'rtl' : 'ltr'}`}
       >
         <ClerkProvider localization={locale === 'ar' ? arSA : undefined}>
-          <NextIntlClientProvider>
+          <NextIntlClientProvider messages={messages} locale={locale}>
             <div className="flex flex-col h-full">
-              <NavBar />
+              <ConditionalNavBar />
               <main className="flex-1 pb-20 md:pb-0">{children}</main>
             </div>
           </NextIntlClientProvider>

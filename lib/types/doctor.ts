@@ -3,9 +3,8 @@ import { ClinicType } from './clinic';
 import { ReviewSummary } from './review';
 import { ClinicAssociation } from './workingHours';
 
-// Remove extends Document - this is now a plain interface
 export interface DoctorType {
-  _id: string; // Change from Types.ObjectId to string
+  _id: string;
   clerkId: string;
   fullName: LocalizedString;
   specialty: LocalizedString;
@@ -18,23 +17,15 @@ export interface DoctorType {
   awards?: string[];
   numberOfReviews: number;
   
-  // Updated: Multiple clinic associations with working hours
-  clinicAssociations: ClinicAssociation[];
-  
-  // Deprecated: Keep for backward compatibility, but mark as optional
-  //clinic?: ClinicType;
+  clinicAssociations?: ClinicAssociation[];
   
   shortBio: LocalizedString;
   subspecialties: LocalizedString[];
   devicesMaterials: string[];
   reviews: ReviewSummary;
   
-  // Location & Map
-  location: {
-    googleMapLink: string;
-  };
+  // Location section completely removed
 
-  // Social Media & Professional Links
   socialLinks: {
     linkedin?: string;
     instagram?: string;
@@ -44,7 +35,6 @@ export interface DoctorType {
     clinicWebsite?: string;
   };
   
-  // Additional fields
   email: string;
   phoneNumber?: string;
   consultationFee?: number;

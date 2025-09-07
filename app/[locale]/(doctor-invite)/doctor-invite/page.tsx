@@ -1,12 +1,18 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { FaUserMd, FaStethoscope, FaHeart, FaShieldAlt, FaAward, FaUsers, FaGlobe, FaHandshake, FaChartLine, FaLightbulb, FaRocket, FaStar, FaCheckCircle, FaTimes, FaMedal, FaWhatsapp } from 'react-icons/fa';
+import { FaUserMd, FaStethoscope, FaHeart, 
+  FaShieldAlt, FaAward, FaUsers, FaGlobe, FaHandshake,
+   FaChartLine, FaLightbulb, FaRocket, FaStar, FaCheckCircle, FaTimes, FaMedal,
+    FaWhatsapp } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import ToggleLanguageButton from '@/app/components/ToggleLanguageButton';
 
 export default function DoctorInvitePage() {
   const [showOptions, setShowOptions] = useState(false);
   const [showFieldsList, setShowFieldsList] = useState(false);
   const router = useRouter();
+  const t = useTranslations('doctorInvite');
 
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
@@ -208,22 +214,10 @@ export default function DoctorInvitePage() {
                 <p className="text-gray-600">Here are all the fields you'll need to complete during the onboarding process:</p>
               </div>
               <button
-                // Replace the current onClick handler:
-                // First Back button (X button) - already fixed correctly:
                 onClick={() => {
                   setShowFieldsList(false);
                   setShowOptions(true);
                 }}
-                
-                // Second Back button ("Back to Options") - needs the same fix:
-                // Replace line 254:
-                // onClick={() => setShowFieldsList(false)}
-                
-                // // With:
-                // onClick={() => {
-                //   setShowFieldsList(false);
-                //   setShowOptions(true);
-                // }}
                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
               >
                 <FaTimes size={24} />
@@ -272,7 +266,7 @@ export default function DoctorInvitePage() {
               <h3 className="font-semibold text-blue-900 mb-2">Ready to get started?</h3>
               <p className="text-blue-800 text-sm mb-4">
                 Now that you know what information you'll need, you can proceed with the registration process. 
-                The form is divided into 4 easy steps to make the process smooth and manageable.
+                The form is divided into 3 easy steps to make the process smooth and manageable.
               </p>
               <div className="flex gap-4">
                 <button
@@ -282,7 +276,10 @@ export default function DoctorInvitePage() {
                   Start Registration Now
                 </button>
                 <button
-                  onClick={() => setShowFieldsList(false)}
+                  onClick={() => {
+                    setShowFieldsList(false);
+                    setShowOptions(true);
+                  }}
                   className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors font-medium"
                 >
                   Back to Options
@@ -296,71 +293,76 @@ export default function DoctorInvitePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white min-h-screen flex items-center">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-        
-        <div className="relative px-6 py-16 w-full">
-          <div className="max-w-6xl mx-auto text-center px-4">
-            {/* Saudi Doctor Photo - Larger and more prominent */}
-            {/* <div className="inline-flex items-center justify-center w-32 h-32 bg-white/20 rounded-full mb-8 backdrop-blur-sm overflow-hidden border-4 border-white/30 shadow-2xl">
-              <img 
-                src="/ahmad.jpg" 
-                alt="Saudi Doctor" 
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div> */}
+    <div className="min-h-screen bg-white">
+      {/* Language Toggle Button */}
+      <div className="absolute top-4 right-4 z-50">
+        <ToggleLanguageButton />
+      </div>
+      
+      {/* Hero Section - Updated with blueish background */}
+      <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 text-gray-800 py-20 px-4 overflow-hidden border-b border-blue-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-2 text-blue-900">
+               {t("hero.title")}
+            </h1>
+            <p className='text-l md:text-xl font-bold mb-6 text-blue-800'>
+                {t("hero.subtitle_separator")} 
+            </p>
+            <p className="text-xl md:text-2xl text-blue-800 mb-8">
+             {t("hero.subtitle")}
+            </p>
             
-            {/* Main Headline - Better structured */}
-            <div className="mb-8">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4">
-                <span className="block text-white">Build your medical reputation</span>
-                <span className="block text-blue-200 text-3xl md:text-5xl lg:text-6xl">in a trusted hub</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-blue-100 font-light italic mt-4">
-                — not on ads or social feeds.
-              </p>
-            </div>
-            
-            {/* Sub-headline - Better formatted with cards */}
-            <div className=" rounded-2xl p-8 mb-8 border border-white/20">
-              <p className="text-lg md:text-xl text-blue-50 leading-relaxed mb-6">
-                Medix helps doctors in Saudi Arabia:
-              </p>
-              <div className="grid md:grid-cols-3 gap-6 text-center">
-                <div className="bg-green-500/20 rounded-xl p-4 border border-green-300/30">
-                  <span className="font-bold text-green-300 text-lg">Showcase Expertise</span>
-                  <p className="text-green-100 text-sm mt-2">Licensed doctors in Saudi Arabia</p>
+            {/* Benefits Cards */}
+            <div className="mt-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Showcase Expertise Card */}
+                <div className="bg-white text-center p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-emerald-400">
+                  <h3 className="text-xl font-bold text-emerald-500 mb-3">
+                    {t('benefits.showcaseExpertise')}
+                  </h3>
+                  <p className="font-light italic text-gray-600 tracking-wide">
+                    {t('benefits.showcaseExpertiseDesc')}
+                  </p>
                 </div>
-                <div className="bg-blue-500/20 rounded-xl p-4 border border-blue-300/30">
-                  <span className="font-bold text-blue-300 text-lg">Attract More Patients</span>
-                  <p className="text-blue-100 text-sm mt-2">Professional visibility</p>
+                
+                {/* Attract More Patients Card */}
+                <div className="bg-white text-center p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-blue-400">
+                  <h3 className="text-xl font-bold text-blue-500 mb-3">
+                    {t('benefits.attractPatients')}
+                  </h3>
+                  <p className="font-light italic text-gray-600 tracking-wide">
+                    {t('benefits.attractPatientsDesc')}
+                  </p>
                 </div>
-                <div className="bg-yellow-500/20 rounded-xl p-4 border border-yellow-300/30">
-                  <span className="font-bold text-yellow-300 text-lg">Strengthen Credibility</span>
-                  <p className="text-yellow-100 text-sm mt-2">Compliant platform</p>
+                
+                {/* Strengthen Credibility Card */}
+                <div className="bg-white text-center p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-indigo-400">
+                  <h3 className="text-xl font-bold text-indigo-500 mb-3">
+                    {t('benefits.strengthenCredibility')}
+                  </h3>
+                  <p className="font-light italic text-gray-600 tracking-wide">
+                    {t('benefits.strengthenCredibilityDesc')}
+                  </p>
                 </div>
               </div>
             </div>
             
             {/* Updated CTA Button */}
             {!showOptions ? (
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center mt-10">
                 <button 
                   onClick={handleJoinClick}
-                  className="group relative inline-flex items-center justify-center px-8 py-4 text-xl md:text-2xl font-bold text-blue-600 bg-white rounded-full hover:bg-blue-50 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 hover:scale-105 mb-2"
+                  className="group relative inline-flex items-center justify-center px-8 py-4 text-xl md:text-2xl font-bold text-white bg-blue-600 rounded-full hover:bg-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 hover:scale-105 mb-2 hover:text-white"
                 >
-                  JOIN MEDIX NOW
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  {t('hero.joinButton')}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
-                <p className="text-sm text-blue-200">Free for early doctors & clinics</p>
+                <p className="text-sm text-blue-700">{t('hero.earlyAccess')}</p>
               </div>
             ) : (
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 max-w-2xl mx-auto">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">Choose Your Onboarding Option</h2>
+              <div className="bg-white rounded-2xl shadow-xl p-6 max-w-2xl mx-auto mt-10 border border-blue-200">
+                <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">Choose Your Onboarding Option</h2>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="border-2 border-blue-200 rounded-xl p-4 hover:border-blue-400 transition-colors bg-white">
                     <FaRocket className="text-2xl text-blue-600 mb-3" />
@@ -373,13 +375,13 @@ export default function DoctorInvitePage() {
                       Sign Up & Start Now
                     </button>
                   </div>
-                  <div className="border-2 border-green-200 rounded-xl p-4 hover:border-green-400 transition-colors bg-white">
-                    <FaLightbulb className="text-2xl text-green-600 mb-3" />
+                  <div className="border-2 border-indigo-200 rounded-xl p-4 hover:border-indigo-400 transition-colors bg-white">
+                    <FaLightbulb className="text-2xl text-indigo-600 mb-3" />
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Assisted Entry</h3>
                     <p className="text-gray-600 mb-3 text-sm">See all required fields and prepare your information before starting the registration.</p>
                     <button
                       onClick={handleAssistedEntry}
-                      className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors font-medium text-sm"
+                      className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium text-sm"
                     >
                       View Required Fields
                     </button>
@@ -389,97 +391,54 @@ export default function DoctorInvitePage() {
             )}
           </div>
         </div>
-        
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" className="w-full h-8 fill-blue-50">
-            <path d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,64C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
-          </svg>
-        </div>
       </section>
 
       {/* Pain Point Section */}
       <section className="py-12 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-3xl font-bold text-gray-900 mb-4">
-              The Problem
+            <h2 className="text-3xl md:text-3xl font-bold text-gray-900 mb-4 relative">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">{t('problem.title')}</span>
             </h2>
           </div>
           
-          <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 md:p-8 mb-8 border-l-4 border-red-400">
+          <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 md:p-8 mb-8 border-l-4 border-purple-400 shadow-md">
             <p className="text-lg md:text-xl text-gray-800 leading-relaxed text-center">
-              <strong className="text-red-600">Doctors spend years building expertise, yet visibility often depends on ads, influencers, or generic directories.</strong>
+              <strong className="text-indigo-600">{t('problem.description1')}</strong>
               <br className="hidden md:block" />
               <span className="block mt-2">
-                <strong className="text-red-600">These unprofessional channels dilute credibility and undervalue licensed specialists.</strong>
+                <strong className="text-purple-600">{t('problem.description2')}</strong>
               </span>
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-red-50 rounded-xl p-6 text-center border border-red-200">
-              <FaTimes className="text-red-500 text-3xl mx-auto mb-3" />
-              <h3 className="font-bold text-red-700 mb-3">Current Reality</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>• Generic directories</li>
-                <li>• Social media ads</li>
-                <li>• Unprofessional channels</li>
+            <div className="bg-white rounded-xl p-6 text-center border-2 border-red-400 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <FaTimes className="text-rose-500 text-3xl mx-auto mb-3" />
+              <h3 className="font-bold text-rose-600 mb-3 text-xl">{t('problem.currentReality')}</h3>
+              <ul className="space-y-2 text-sm text-gray-700">
+                {[
+                  t('problem.currentRealityItems.0'),
+                  t('problem.currentRealityItems.1'),
+                  t('problem.currentRealityItems.2')
+                ].map((item, index) => (
+                  <li key={index}>• {item}</li>
+                ))}
               </ul>
             </div>
             
-            <div className="bg-blue-50 rounded-xl p-6 text-center border border-blue-200">
-              <FaCheckCircle className="text-blue-500 text-3xl mx-auto mb-3" />
-              <h3 className="font-bold text-blue-700 mb-3">With Medix</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>• Professional platform</li>
-                <li>• Verified credentials</li>
-                <li>• Healthcare-focused</li>
+            <div className="bg-white rounded-xl p-6 text-center border-2 border-green-400 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <FaCheckCircle className="text-teal-500 text-3xl mx-auto mb-3" />
+              <h3 className="font-bold text-teal-600 mb-3 text-xl">{t('problem.withMedix')}</h3>
+              <ul className="space-y-2 text-sm text-gray-700">
+                {[
+                  t('problem.withMedixItems.0'),
+                  t('problem.withMedixItems.1'),
+                  t('problem.withMedixItems.2')
+                ].map((item, index) => (
+                  <li key={index}>• {item}</li>
+                ))}
               </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Solution Section */}
-      <section className="py-12 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-              <FaShieldAlt className="text-blue-600 text-2xl" />
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              A professional platform built for Saudi doctors and clinics.
-            </h2>
-          </div>
-          
-          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-blue-200 mb-8">
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
-              <strong className="text-blue-600">Medix is the first smart healthcare discovery and reputation platform in Saudi Arabia.</strong>
-              <br className="hidden md:block" />
-              <span className="block mt-2">
-                It gives doctors a professional space to showcase their credentials, services, and experience — and connect directly with patients.
-              </span>
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-white rounded-lg p-4 shadow-sm text-center hover:shadow-md transition-shadow">
-              <FaAward className="text-blue-500 text-2xl mx-auto mb-2" />
-              <h3 className="font-semibold text-gray-900 mb-1 text-sm">Professional Showcase</h3>
-              <p className="text-xs text-gray-600">Display credentials & expertise</p>
-            </div>
-            
-            <div className="bg-white rounded-lg p-4 shadow-sm text-center hover:shadow-md transition-shadow">
-              <FaHandshake className="text-green-500 text-2xl mx-auto mb-2" />
-              <h3 className="font-semibold text-gray-900 mb-1 text-sm">Direct Connection</h3>
-              <p className="text-xs text-gray-600">Connect with patients directly</p>
-            </div>
-            
-            <div className="bg-white rounded-lg p-4 shadow-sm text-center hover:shadow-md transition-shadow">
-              <FaUsers className="text-purple-500 text-2xl mx-auto mb-2" />
-              <h3 className="font-semibold text-gray-900 mb-1 text-sm">Trusted Environment</h3>
-              <p className="text-xs text-gray-600">Built for healthcare professionals</p>
             </div>
           </div>
         </div>
@@ -488,11 +447,11 @@ export default function DoctorInvitePage() {
       {/* Trust & Credibility Section */}
       <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
-            Trusted by Leading Organizations
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 font-serif tracking-wide">
+            {t('trustedBy')}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
+            <div className="bg-white p-8 rounded-lg shadow-md text-center border-2 border-blue-300 hover:shadow-xl hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-1">
               <div className="mb-4">
                 <img 
                   src="/monshaat.png" 
@@ -507,8 +466,8 @@ export default function DoctorInvitePage() {
                 Accelerating innovation in Saudi Arabia
               </p>
             </div>
-
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
+  
+            <div className="bg-white p-8 rounded-lg shadow-md text-center border-2 border-blue-300 hover:shadow-xl hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-1">
               <div className="mb-4">
                 <img 
                   src="/pdpl.jpeg" 
@@ -523,8 +482,8 @@ export default function DoctorInvitePage() {
                 Saudi data protection regulations certified
               </p>
             </div>
-
-            <div className="bg-white p-8 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
+  
+            <div className="bg-white p-8 rounded-lg shadow-md text-center border-2 border-blue-300 hover:shadow-xl hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-1">
               <div className="mb-4">
                 <img 
                   src="/misk.png" 
@@ -571,25 +530,6 @@ export default function DoctorInvitePage() {
                   View Required Fields
                 </button>
               </div>
-            </div>
-          </div>
-
-          {/* Other Value Cards */}
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
-              <FaWhatsapp className="text-green-500 text-3xl mx-auto mb-4" />
-              <h3 className="font-bold mb-2 text-gray-800 uppercase">DIRECT PATIENT CONTACT</h3>
-              <p className="text-gray-600">Patients reach you via WhatsApp or phone — no middlemen.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
-              <FaUsers className="text-purple-500 text-3xl mx-auto mb-4" />
-              <h3 className="font-bold mb-2 text-gray-800 uppercase">PRIORITY PLACEMENT</h3>
-              <p className="text-gray-600">Early doctors appear first in Medix results.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center border hover:shadow-xl transition-shadow">
-              <FaShieldAlt className="text-red-500 text-3xl mx-auto mb-4" />
-              <h3 className="font-bold mb-2 text-gray-800 uppercase">PROFESSIONAL & SECURE</h3>
-              <p className="text-gray-600">Built for healthcare, not ads.</p>
             </div>
           </div>
         </div>

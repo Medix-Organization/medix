@@ -15,26 +15,21 @@ interface CreateDoctorData {
   licenseNumber?: string;
   consultationFee?: number;
   availableForOnlineConsultation: boolean;
-  location?: {
-    googleMapLink: string;
-  };
+  // location field removed from interface
   languages?: string[];
   titleCredentials?: string[];
 }
 
 export async function createDoctorUser(formData: CreateDoctorData, locale: string) {
   try {
-    // Get current user from Clerk
     const user = await currentUser();
     
     if (!user) {
       throw new Error('User not authenticated');
     }
 
-    // Connect to database
     await connectToDatabase();
 
-    // Check if doctor already exists
     const existingDoctor = await Doctor.findOne({ 
       $or: [
         { email: user.emailAddresses[0]?.emailAddress },
@@ -46,7 +41,6 @@ export async function createDoctorUser(formData: CreateDoctorData, locale: strin
       throw new Error('Doctor profile already exists');
     }
 
-    // Create doctor document
     const doctorData = {
       clerkId: user.id,
       email: user.emailAddresses[0]?.emailAddress,
@@ -58,7 +52,7 @@ export async function createDoctorUser(formData: CreateDoctorData, locale: strin
       licenseNumber: formData.licenseNumber,
       consultationFee: formData.consultationFee,
       availableForOnlineConsultation: formData.availableForOnlineConsultation,
-      location: formData.location || { googleMapLink: '' },
+      // location field removed from doctorData
       languages: formData.languages || [],
       titleCredentials: formData.titleCredentials || [],
       profileImage: user.imageUrl,
@@ -89,8 +83,10 @@ export async function createDoctorUser(formData: CreateDoctorData, locale: strin
 
     console.log('Doctor created successfully:', doctor._id);
     
-    // Redirect to doctor profile after successful creation
-    redirect(`/${locale}/doctor-profile`);
+    // Convert the doctor document to a plain object before returning
+    const plainDoctor = doctor.toObject ? doctor.toObject() : JSON.parse(JSON.stringify(doctor));
+    
+    return plainDoctor; // Return the plain object instead of the Mongoose document
   } catch (error) {
     console.error('Error creating doctor user:', error);
     throw error;
@@ -101,7 +97,9 @@ export async function getDoctorByClerkId(clerkId: string) {
   try {
     await connectToDatabase();
     const doctor = await Doctor.findOne({ clerkId });
-    return doctor;
+    
+    // Convert to plain object before returning
+    return doctor ? (doctor.toObject ? doctor.toObject() : JSON.parse(JSON.stringify(doctor))) : null;
   } catch (error) {
     console.error('Error fetching doctor by Clerk ID:', error);
     throw error;
@@ -116,7 +114,9 @@ export async function updateDoctorProfile(clerkId: string, updateData: Partial<C
       { ...updateData, updatedAt: new Date() },
       { new: true }
     );
-    return doctor;
+    
+    // Convert to plain object before returning
+    return doctor ? (doctor.toObject ? doctor.toObject() : JSON.parse(JSON.stringify(doctor))) : null;
   } catch (error) {
     console.error('Error updating doctor profile:', error);
     throw error;
