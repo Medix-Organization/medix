@@ -1,20 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { FaUserMd, FaStethoscope, FaHeart, 
-  FaShieldAlt, FaAward, FaUsers, FaGlobe, FaHandshake,
-   FaChartLine, FaLightbulb, FaRocket, FaStar, FaCheckCircle, FaTimes, FaMedal,
-    FaWhatsapp } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
+import {  FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { useTranslations } from 'next-intl';
 import ToggleLanguageButton from '@/app/components/ToggleLanguageButton';
-import { formFields } from '@/app/components/doctor-invite-components/formfields';
 import OnboardingOptions from '@/app/components/doctor-invite-components/OnboardingOptions';
 import FormFieldsDisplay from '@/app/components/doctor-invite-components/FormFieldsDisplay';
 
 export default function DoctorInvitePage() {
   const [showOptions, setShowOptions] = useState(false);
   const [showFieldsList, setShowFieldsList] = useState(false);
-  const router = useRouter();
   const t = useTranslations('doctorInvite');
 
   useEffect(() => {
@@ -71,7 +65,7 @@ export default function DoctorInvitePage() {
         <ToggleLanguageButton />
       </div>
       
-      {/* Hero Section - Updated with blueish background */}
+      {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 text-gray-800 py-20 px-4 overflow-hidden border-b border-blue-100">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-12">
@@ -139,6 +133,33 @@ export default function DoctorInvitePage() {
                 t={t}
               />
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Who We Are Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            {t('about.title')}
+          </h2>
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+            {t('about.tagline')}
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+            <div className="bg-white border-2 border-blue-200 rounded-xl p-6 shadow-sm hover:shadow-md">
+              <h3 className="text-blue-600 font-semibold mb-2">{t('about.patients.title')}</h3>
+              <p className="text-sm text-gray-700">{t('about.patients.desc')}</p>
+            </div>
+            <div className="bg-white border-2 border-indigo-200 rounded-xl p-6 shadow-sm hover:shadow-md">
+              <h3 className="text-indigo-600 font-semibold mb-2">{t('about.doctors.title')}</h3>
+              <p className="text-sm text-gray-700">{t('about.doctors.desc')}</p>
+            </div>
+            <div className="bg-white border-2 border-emerald-200 rounded-xl p-6 shadow-sm hover:shadow-md">
+              <h3 className="text-emerald-600 font-semibold mb-2">{t('about.clinics.title')}</h3>
+              <p className="text-sm text-gray-700">{t('about.clinics.desc')}</p>
+            </div>
           </div>
         </div>
       </section>

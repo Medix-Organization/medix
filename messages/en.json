@@ -289,11 +289,27 @@
   },
   "doctorInvite": {
     "hero": {
-      "title": "Build Your Medical Reputation In The New Saudi Arabian Trusted Medical Hub",
+      "title": "Build Your Medical Reputation In The First Of It's Kind Saudi Trusted Medical Hub",
       "subtitle_separator": "Not On Ads Or Social Feeds ",
       "subtitle": "Medix helps licensed doctors in Saudi Arabia",
       "joinButton": "JOIN MEDIX NOW",
       "earlyAccess": "Free for early doctors & clinics"
+    },
+     "about": {
+      "title": "Who Are We ? ",
+      "tagline": "Medix is the first Saudi dedicated platform for connecting patients with verified doctors and clinics.",
+      "patients": {
+        "title": "For Patients",
+        "desc": "Discover trusted doctors and clinics with transparent profiles and reviews."
+      },
+      "doctors": {
+        "title": "For Doctors",
+        "desc": "Build a verified profile, showcase expertise, and get discovered by the right patients."
+      },
+      "clinics": {
+        "title": "For Clinics",
+        "desc": "Highlight your services and bring more patients to your medical facility."
+      }
     },
     "onboardingOptions": {
       "title": "Choose Your Onboarding Option",
