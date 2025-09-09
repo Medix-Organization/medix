@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone } = body;
+    const { name, email, phone, clinics } = body;
     
     // Validate the data
     if (!name || !email || !phone) {
@@ -28,18 +28,20 @@ export async function POST(request: Request) {
     // Send the email
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_TO, // This will work with comma-separated emails
+      to: process.env.EMAIL_TO,
       subject: 'New Contact Form Submission from Medix',
       text: `
         Name: ${name}
         Email: ${email}
         Phone: ${phone}
+        ${clinics ? `Clinics: ${clinics}` : ''}
       `,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone}</p>
+        ${clinics ? `<p><strong>Clinics:</strong> ${clinics}</p>` : ''}
       `,
     });
     
