@@ -47,7 +47,8 @@ const FormFieldsDisplay: React.FC<FormFieldsDisplayProps> = ({
             <div className="mb-6 relative md:hidden">
               <button 
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="w-full p-3 border border-blue-300 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex justify-between items-center"
+                aria-expanded={isDropdownOpen}
+                className="w-full p-3 border border-blue-400 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex justify-between items-center shadow-sm active:bg-gray-50"
               >
                 <span className="font-medium">
                   {activeOption === 'form' ? 'Register by Myself' : 
@@ -57,13 +58,13 @@ const FormFieldsDisplay: React.FC<FormFieldsDisplayProps> = ({
               </button>
               
               {isDropdownOpen && (
-                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+                <div className="absolute z-20 mt-1 w-full text-black bg-white border border-blue-200 rounded-lg shadow-xl ring-1 ring-black/5">
                   <button 
                     onClick={() => {
                       setActiveOption('form');
                       setIsDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-3 hover:bg-blue-50 ${activeOption === 'form' ? 'bg-blue-50 text-blue-600' : ''}`}
+                    className={`w-full text-left px-4 py-3 text-gray-900 hover:bg-blue-100 ${activeOption === 'form' ? 'bg-blue-100 text-blue-700 font-semibold' : ''}`}
                   >
                     Register by Myself
                   </button>
@@ -72,7 +73,7 @@ const FormFieldsDisplay: React.FC<FormFieldsDisplayProps> = ({
                       setActiveOption('upload');
                       setIsDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-3 hover:bg-blue-50 ${activeOption === 'upload' ? 'bg-blue-50 text-blue-600' : ''}`}
+                    className={`w-full text-left px-4 py-3 text-gray-900 hover:bg-blue-100 ${activeOption === 'upload' ? 'bg-blue-100 text-blue-700 font-semibold' : ''}`}
                   >
                     Upload Documents
                   </button>
@@ -81,7 +82,7 @@ const FormFieldsDisplay: React.FC<FormFieldsDisplayProps> = ({
                       setActiveOption('contact');
                       setIsDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-3 hover:bg-blue-50 ${activeOption === 'contact' ? 'bg-blue-50 text-blue-600' : ''}`}
+                    className={`w-full text-left px-4 py-3 text-gray-900 hover:bg-blue-100 ${activeOption === 'contact' ? 'bg-blue-100 text-blue-700 font-semibold' : ''}`}
                   >
                     Contact Me
                   </button>

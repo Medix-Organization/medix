@@ -5,7 +5,8 @@ const ContactFormOption: React.FC = () => {
   const [contactInfo, setContactInfo] = useState({
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    clinics: ''
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -130,6 +131,22 @@ const ContactFormOption: React.FC = () => {
                 />
               </div>
             </div>
+            <div>
+              <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="clinics">
+                My Clinic Names (optional)
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="clinics"
+                  name="clinics"
+                  value={contactInfo.clinics}
+                  onChange={handleContactChange}
+                  className="w-full p-2 border bg-white border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Clinic One, Clinic Two"
+                />
+              </div>
+            </div>
           </div>
           
           <button 
@@ -143,6 +160,6 @@ const ContactFormOption: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default ContactFormOption;
