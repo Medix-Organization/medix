@@ -133,7 +133,7 @@ const ContactFormOption: React.FC = () => {
             </div>
             <div>
               <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="clinics">
-                My Clinic Names (optional)
+                My Clinic Names
               </label>
               <div className="relative">
                 <input

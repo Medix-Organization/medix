@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { FaPlus, FaTrash, FaCheck } from 'react-icons/fa';
+import { useState } from 'react';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 
 interface Operation {
   id: string;
@@ -13,38 +13,13 @@ interface OperationsManagementProps {
   onComplete: () => void;
 }
 
-const commonOperations = [
-  { name: 'General Consultation', description: 'General medical consultation and checkup' },
-  { name: 'Dental Care', description: 'Dental examination and treatment' },
-  { name: 'Dermatology', description: 'Skin and hair treatment' },
-  { name: 'Cardiology', description: 'Heart and cardiovascular care' },
-  { name: 'Pediatrics', description: 'Children healthcare' },
-  { name: 'Orthopedics', description: 'Bone and joint treatment' },
-  { name: 'Gynecology', description: 'Women\'s health services' },
-  { name: 'Ophthalmology', description: 'Eye care and vision treatment' },
-  { name: 'ENT', description: 'Ear, Nose, and Throat treatment' },
-  { name: 'Laboratory Tests', description: 'Medical laboratory services' },
-  { name: 'Radiology', description: 'X-ray and imaging services' },
-  { name: 'Physiotherapy', description: 'Physical therapy and rehabilitation' }
-];
 
 export default function OperationsManagement({ clinicId, onComplete }: OperationsManagementProps) {
   const [selectedOperations, setSelectedOperations] = useState<Operation[]>([]);
   const [customOperation, setCustomOperation] = useState({ name: '', description: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleOperationToggle = (operation: { name: string; description?: string }) => {
-    const exists = selectedOperations.find(op => op.name === operation.name);
-    if (exists) {
-      setSelectedOperations(prev => prev.filter(op => op.name !== operation.name));
-    } else {
-      setSelectedOperations(prev => [...prev, {
-        id: Date.now().toString(),
-        name: operation.name,
-        description: operation.description
-      }]);
-    }
-  };
+ 
 
   const handleAddCustomOperation = () => {
     if (customOperation.name.trim()) {
@@ -90,34 +65,6 @@ export default function OperationsManagement({ clinicId, onComplete }: Operation
       <h2 className="text-2xl font-bold mb-6">Add Your Clinic Operations</h2>
       <p className="text-gray-600 mb-6">Select the medical services and operations your clinic provides.</p>
 
-      {/* Common Operations */}
-      <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-4">Common Operations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {commonOperations.map((operation) => {
-            const isSelected = selectedOperations.some(op => op.name === operation.name);
-            return (
-              <button
-                key={operation.name}
-                onClick={() => handleOperationToggle(operation)}
-                className={`p-3 rounded-lg border text-left transition-colors ${
-                  isSelected
-                    ? 'bg-blue-50 border-blue-500 text-blue-700'
-                    : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium">{operation.name}</div>
-                    <div className="text-sm text-gray-500">{operation.description}</div>
-                  </div>
-                  {isSelected && <FaCheck className="text-blue-500" />}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
 
       {/* Custom Operation */}
       <div className="mb-8">

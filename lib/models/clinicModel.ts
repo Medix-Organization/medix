@@ -10,6 +10,10 @@ const ClinicSchema: Schema = new Schema<ClinicType>({
     languageCode: { type: String }
   },
   
+  // Authentication and contact
+  clerkId: { type: String, unique: true, sparse: true },
+  email: { type: String },
+  
   // Google Places API specific fields
   googlePlaceId: { type: String, unique: true, sparse: true },
   types: [{ type: String }],

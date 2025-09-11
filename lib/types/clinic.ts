@@ -1,12 +1,12 @@
 import { LocalizedString } from './common';
-import { DoctorType } from './doctor';
 import { DaySchedule } from './workingHours';
 import { Types } from 'mongoose';
 
 // Updated ClinicType to match Google Places API structure
 export interface ClinicType {
   _id: string;
-  
+  clerkId? : string , 
+  email? : string,
   // Basic information (from Google Places API)
   name?: string; // displayName.text from Places API
   displayName?: {

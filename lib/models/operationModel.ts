@@ -1,7 +1,7 @@
 import { Schema, model, models, Document, Types } from 'mongoose';
 
 // TypeScript interface for Operation
-export interface OperationType extends Document {
+export interface OperationType {
   _id: Types.ObjectId;
   category: string;
   subspecialty: string;
