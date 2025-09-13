@@ -55,7 +55,7 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages} locale={locale}>
             <div className="flex flex-col h-full">
               <ConditionalNavBar />
-              <main className="flex-1 pb-20 md:pb-0">{children}</main>
+              <main className="flex-1 pb-20 md:pb-0 ">{children}</main>
             </div>
           </NextIntlClientProvider>
         </ClerkProvider>

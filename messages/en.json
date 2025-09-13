@@ -99,7 +99,7 @@
         "findDoctorBtn": "Find a Doctor",
         "joinDoctorBtn": "Join as Doctor"
       },
-      "features": {
+       "features": {
         "title": "Why Choose Medix?",
         "subtitle": "We're revolutionizing healthcare by making it easier for patients to connect with the right doctors",
         "easyDiscovery": {
@@ -109,6 +109,18 @@
         "verifiedReviews": {
           "title": "Verified Reviews",
           "description": "Read authentic reviews from real patients to make informed decisions about your healthcare"
+        },
+        "easyBooking": {
+          "title": "Easy Appointment Booking",
+          "description": "Schedule appointments with your preferred doctors quickly and conveniently online"
+        },
+        "doctorProfile": {
+          "title": "Comprehensive Doctor Profiles",
+          "description": "View detailed doctor profiles including specialties, experience, and patient reviews"
+        },
+        "clinicManagement": {
+          "title": "Modern Clinic Management",
+          "description": "Streamlined clinic operations with digital tools for better patient care and efficiency"
         },
         "trustedProfessionals": {
           "title": "Trusted Professionals",
@@ -128,6 +140,31 @@
         "subtitle": "Join thousands of patients who trust Medix to connect them with the best healthcare professionals",
         "button": "Get Started Today"
       }
+    }
+  },
+  "clinicInvite": {
+    "hero": {
+      "title": " Showcase Your Clinic & Services on Medix",
+      "subtitle": "Give your clinic a trusted digital presence. Highlight your services from Laser to Skin Care and connect directly with patients searching for you.",
+      "ctaButton": " Register Your Clinic Today"
+    },
+    "benefits": {
+      "verifiedProfile": "🏥 Verified Clinic Profile",
+      "verifiedProfileDesc": "Display your clinic name, location, and licensed services in a professional, trusted format.",
+      "highlightServices": "💡 Highlight Your Services",
+      "highlightServicesDesc": "Promote popular services like Laser Hair Removal, HydraFacial, and Cosmetic Treatments — even if not tied to a specific doctor.",
+      "attractPatients": "👥 Attract More Patients",
+      "attractPatientsDesc": "Patients can easily search by service type and find your clinic, boosting visibility and trust.",
+      "earlyAdopter": "Early Adopter Advantage",
+      "earlyAdopterDesc": "Clinics that join now receive free visibility as part of our launch phase."
+    },
+    "trust": {
+      "title": "🔒 Your Data, Our Responsibility",
+      "subtitle": "All clinic and patient data are secured under Saudi PDPL compliance. You can trust that Medix is built for safety and privacy."
+    },
+    "finalCta": {
+      "title": "🌟 Put Your Clinic on the Map with Medix",
+      "button": "👉 Join Free as an Early Clinic"
     }
   },
   "onboarding": {
@@ -278,7 +315,7 @@
       "callNow": "Call Now"
     },
     "operations": {
-      "title": "Services & Treatments",
+      "title": "Services ",
       "allCategories": "All Categories",
       "noOperations": "No Services Available",
       "noOperationsDescription": "This clinic hasn't added any services yet.",

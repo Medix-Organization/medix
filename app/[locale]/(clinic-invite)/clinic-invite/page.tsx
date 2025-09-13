@@ -8,7 +8,7 @@ import FormFieldsDisplay from '@/app/components/doctor-invite-components/FormFie
 
 export default function DoctorInvitePage() {
   const [showFieldsList, setShowFieldsList] = useState(false);
-  const t = useTranslations('doctorInvite');
+  const t = useTranslations('clinicInvite');
 
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
@@ -29,7 +29,7 @@ export default function DoctorInvitePage() {
   }, []);
   
   const handleQuickStart = () => {
-    window.open('/sign-up?role=doctor', '_blank');
+    window.open('/clinic/sign-up', '_blank');
   };
   
   const handleAssistedEntry = () => {
@@ -61,43 +61,72 @@ export default function DoctorInvitePage() {
             <h1 className="text-4xl md:text-5xl font-bold mb-2 text-blue-900">
                {t("hero.title")}
             </h1>
-            <p className='text-l md:text-xl font-bold mb-6 text-blue-800'>
-                {t("hero.subtitle_separator")} 
-            </p>
             <p className="text-xl md:text-2xl text-blue-800 mb-8">
              {t("hero.subtitle")}
             </p>
             
-            {/* Benefits Cards */}
-            <div className="mt-12">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Showcase Expertise Card */}
-                <div className="bg-white text-center p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-emerald-400">
-                  <h3 className="text-xl font-bold text-emerald-500 mb-3">
-                    {t('benefits.showcaseExpertise')}
+            {/* <button 
+              onClick={handleQuickStart}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              {t("hero.ctaButton")}
+            </button> */}
+            
+            {/* Value Cards */}
+          
+            
+            {/* Value Proposition Cards */}
+            <div className="mt-16">
+             
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {/* Row 1: Core Benefits */}
+                <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-emerald-400 hover:border-emerald-500">
+                  <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🏥</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-emerald-600 mb-4">
+                    {t('benefits.verifiedProfile')}
                   </h3>
-                  <p className="font-light italic text-gray-600 tracking-wide">
-                    {t('benefits.showcaseExpertiseDesc')}
+                  <p className="text-gray-600 leading-relaxed">
+                    {t('benefits.verifiedProfileDesc')}
                   </p>
                 </div>
                 
-                {/* Attract More Patients Card */}
-                <div className="bg-white text-center p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-blue-400">
-                  <h3 className="text-xl font-bold text-blue-500 mb-3">
+                <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-blue-400 hover:border-blue-500">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">💡</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-blue-600 mb-4">
+                    {t('benefits.highlightServices')}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {t('benefits.highlightServicesDesc')}
+                  </p>
+                </div>
+                
+                {/* Row 2: Growth & Advantage */}
+                <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-indigo-400 hover:border-indigo-500">
+                  <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">👥</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-indigo-600 mb-4">
                     {t('benefits.attractPatients')}
                   </h3>
-                  <p className="font-light italic text-gray-600 tracking-wide">
+                  <p className="text-gray-600 leading-relaxed">
                     {t('benefits.attractPatientsDesc')}
                   </p>
                 </div>
                 
-                {/* Strengthen Credibility Card */}
-                <div className="bg-white text-center p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-2 border-indigo-400">
-                  <h3 className="text-xl font-bold text-indigo-500 mb-3">
-                    {t('benefits.strengthenCredibility')}
+                <div className="bg-white text-center p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-purple-400 hover:border-purple-500">
+                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">⭐</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-purple-600 mb-4">
+                    {t('benefits.earlyAdopter')}
                   </h3>
-                  <p className="font-light italic text-gray-600 tracking-wide">
-                    {t('benefits.strengthenCredibilityDesc')}
+                  <p className="text-gray-600 leading-relaxed">
+                    {t('benefits.earlyAdopterDesc')}
                   </p>
                 </div>
               </div>
@@ -112,90 +141,16 @@ export default function DoctorInvitePage() {
         </div>
       </section>
 
-      {/* Who We Are Section */}
+      {/* Trust & Compliance Section */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            {t('about.title')}
+            {t('trust.title')}
           </h2>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t('about.tagline')}
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-10">
+            {t('trust.subtitle')}
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-            <div className="bg-white border-2 border-blue-200 rounded-xl p-6 shadow-sm hover:shadow-md">
-              <h3 className="text-blue-600 font-semibold mb-2">{t('about.patients.title')}</h3>
-              <p className="text-sm text-gray-700">{t('about.patients.desc')}</p>
-            </div>
-            <div className="bg-white border-2 border-indigo-200 rounded-xl p-6 shadow-sm hover:shadow-md">
-              <h3 className="text-indigo-600 font-semibold mb-2">{t('about.doctors.title')}</h3>
-              <p className="text-sm text-gray-700">{t('about.doctors.desc')}</p>
-            </div>
-            <div className="bg-white border-2 border-emerald-200 rounded-xl p-6 shadow-sm hover:shadow-md">
-              <h3 className="text-emerald-600 font-semibold mb-2">{t('about.clinics.title')}</h3>
-              <p className="text-sm text-gray-700">{t('about.clinics.desc')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pain Point Section */}
-      <section className="py-12 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-3xl font-bold text-gray-900 mb-4 relative">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">{t('problem.title')}</span>
-            </h2>
-          </div>
-          
-          <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 md:p-8 mb-8 border-l-4 border-purple-400 shadow-md">
-            <p className="text-lg md:text-xl text-gray-800 leading-relaxed text-center">
-              <strong className="text-indigo-600">{t('problem.description1')}</strong>
-              <br className="hidden md:block" />
-              <span className="block mt-2">
-                <strong className="text-purple-600">{t('problem.description2')}</strong>
-              </span>
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 text-center border-2 border-red-400 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-              <FaTimes className="text-rose-500 text-3xl mx-auto mb-3" />
-              <h3 className="font-bold text-rose-600 mb-3 text-xl">{t('problem.currentReality')}</h3>
-              <ul className="space-y-2 text-sm text-gray-700">
-                {[
-                  t('problem.currentRealityItems.0'),
-                  t('problem.currentRealityItems.1'),
-                  t('problem.currentRealityItems.2')
-                ].map((item, index) => (
-                  <li key={index}>• {item}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="bg-white rounded-xl p-6 text-center border-2 border-green-400 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-              <FaCheckCircle className="text-teal-500 text-3xl mx-auto mb-3" />
-              <h3 className="font-bold text-teal-600 mb-3 text-xl">{t('problem.withMedix')}</h3>
-              <ul className="space-y-2 text-sm text-gray-700">
-                {[
-                  t('problem.withMedixItems.0'),
-                  t('problem.withMedixItems.1'),
-                  t('problem.withMedixItems.2')
-                ].map((item, index) => (
-                  <li key={index}>• {item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust & Credibility Section */}
-      <section className="px-6 py-16 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 font-serif tracking-wide">
-            {t('trustedBy')}
-          </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-md text-center border-2 border-blue-300 hover:shadow-xl hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-1">
               <div className="mb-4">
@@ -247,6 +202,9 @@ export default function DoctorInvitePage() {
           </div>
         </div>
       </section>
+
+      {/* Final CTA Section */}
+      
     </div>
   );
 }

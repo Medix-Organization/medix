@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import { Webhook } from 'svix';
 import { WebhookEvent } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/nextjs/server';
 
 // You'll need to add your Clerk webhook secret to your environment variables
 const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;
@@ -59,23 +60,41 @@ export async function POST(req: NextRequest) {
 
     // Handle user creation
     if (eventType === 'user.created') {
-      const { id, email_addresses, image_url } = evt.data;
+      const { id, email_addresses, image_url, unsafe_metadata } = evt.data;
+      
+      // Get role from unsafe_metadata
+      const role = unsafe_metadata?.role as string;
       
       // Create user in your database
       const userData = {
         clerkId: id,
         email: email_addresses[0]?.email_address,
         imageUrl: image_url,
+        role: role || 'patient', // Default to patient if no role specified
       };
 
       console.log('🔥 CREATING USER:', userData);
       console.log('📧 User email:', userData.email);
+      console.log('👤 User role:', userData.role);
       
       try {
-        ;
-        console.log('User created successfully:',userData.email);
+        // Update user's public metadata with the role
+        if (role) {
+          const clerk = await clerkClient();
+          await clerk.users.updateUserMetadata(id, {
+            publicMetadata: {
+              role: role,
+            },
+          });
+          console.log(`✅ Role '${role}' assigned to user ${userData.email}`);
+        }
+        
+        // Here you would typically save the user to your database
+        // await createUser(userData);
+        
+        console.log('User created successfully:', userData.email);
       } catch (error) {
-        console.error('Error creating user:', error);
+        console.error('Error creating user or updating metadata:', error);
         return new NextResponse('Error creating user', { status: 500 });
       }
     }
