@@ -62,11 +62,24 @@ export async function getAllOperations() {
     await connectToDatabase();
     
     const operations = await Operation.find({})
-      .populate('responsibleDoctor')
       .sort({ category: 1, subspecialty: 1 })
       .lean();
     
-    return JSON.parse(JSON.stringify(operations));
+    // Manually populate doctor information only for ObjectId references
+    const populatedOperations = await Promise.all(
+      operations.map(async (operation) => {
+        if (Types.ObjectId.isValid(operation.responsibleRole)) {
+          const doctor = await Doctor.findById(operation.responsibleRole).lean();
+          return {
+            ...operation,
+            responsibleDoctor: doctor
+          };
+        }
+        return operation;
+      })
+    );
+     
+    return JSON.parse(JSON.stringify(populatedOperations));
   } catch (error) {
     console.error('Error fetching operations:', error);
     throw error;

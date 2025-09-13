@@ -26,5 +26,15 @@ export default function ConditionalNavBar() {
     return null;
   }
 
+  // Don't show navbar on providers page
+  if (pathname?.includes('/providers')) {
+    return null;
+  }
+
+  // Don't show navbar on any sign-up pages
+  if (pathname?.includes('/sign-up')) {
+    return null;
+  }
+
   return <ClientNavBar />;
 }

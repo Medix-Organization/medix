@@ -30,9 +30,9 @@ export default function ClinicHeader({ clinic, locale }: ClinicHeaderProps) {
   const reviewCount = clinic.userRatingsTotal || 0;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
       {/* Clinic Info - No more cover image */}
-      <div className="p-6">
+      <div className="p-4 lg:p-6">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
           <div className="flex-1">
             {/* Status Badge - moved to top */}
@@ -46,7 +46,7 @@ export default function ClinicHeader({ clinic, locale }: ClinicHeaderProps) {
               </span>
             </div>
             
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
               {clinicName}
             </h1>
             

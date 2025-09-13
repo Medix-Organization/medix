@@ -111,10 +111,10 @@ export default function ClinicOperations({ clinic, locale }: ClinicOperationsPro
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredOperations.map((operation) => (
-            <div key={operation._id} className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-start justify-between mb-4">
+            <div key={operation._id} className="bg-white rounded-lg shadow-md border border-gray-200 p-4 hover:shadow-lg transition-shadow">
+              <div className="flex items-start justify-between mb-3">
                 <div>
                   <span className="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full mb-2">
                     {operation.category}

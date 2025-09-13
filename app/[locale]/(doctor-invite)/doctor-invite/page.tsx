@@ -38,7 +38,7 @@ export default function DoctorInvitePage() {
   };
   
   const handleQuickStart = () => {
-    window.open('/sign-up?role=doctor', '_blank');
+    window.open('/doctor/sign-up', '_blank');
   };
   
   const handleAssistedEntry = () => {

@@ -1,15 +1,11 @@
 import { getTranslations } from "next-intl/server";
 import {
-  FaUserMd,
   FaSearch,
-  FaStar,
-  FaShieldAlt,
-  FaClock,
-  FaHeart,
-  FaHospital,
+  FaUserMd,
   FaCalendarAlt,
+  FaHospital,
 } from "react-icons/fa";
-import { MdVerified, MdRateReview } from "react-icons/md";
+import { MdVerified } from "react-icons/md";
 import { Link } from "@/i18n/navigation";
 
 export default async function Home() {
@@ -42,18 +38,12 @@ export default async function Home() {
           <p className="text-base sm:text-xl lg:text-2xl text-gray-600 mb-6 sm:mb-8 leading-relaxed px-2">
             {t("landing.hero.subtitle")}
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+          <div className="flex justify-center">
             <Link
               href="/home"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center"
             >
               {t("landing.hero.findDoctorBtn")}
-            </Link>
-            <Link
-              href="/sign-up?role=doctor"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center"
-            >
-              {t("landing.hero.joinDoctorBtn")}
             </Link>
           </div>
         </div>
@@ -137,24 +127,6 @@ export default async function Home() {
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-blue-600 py-8 sm:py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">
-            {t("landing.cta.title")}
-          </h2>
-          <p className="text-base sm:text-xl text-blue-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
-            {t("landing.cta.subtitle")}
-          </p>
-          <Link
-            href="/home"
-            className="inline-block bg-white text-blue-600 hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors"
-          >
-            {t("landing.cta.button")}
-          </Link>
         </div>
       </section>
     </div>

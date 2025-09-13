@@ -27,7 +27,7 @@ const OperationSchema = new Schema<OperationType>({
     type: String,
     required: true,
     trim: true
-  },
+  }, 
   responsibleRole: {
     type: Schema.Types.Mixed, // Can be either String or ObjectId
     required: true,

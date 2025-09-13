@@ -1,12 +1,12 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
-import PatientOnboardingForm from '@/app/components/onboarding/PatientOnboardingForm'
+import DoctorOnboardingForm from '@/app/components/onboarding/DoctorOnboardingForm'
 
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function OnboardingPage({ params }: PageProps) {
+export default async function DoctorOnboardingPage({ params }: PageProps) {
   const { userId } = await auth()
   const { locale } = await params
   
@@ -16,17 +16,17 @@ export default async function OnboardingPage({ params }: PageProps) {
   
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Complete Your Patient Registration
+            Complete Your Doctor Registration
           </h1>
           <p className="text-gray-600">
-            Please provide your information to complete your patient profile.
+            Please provide your professional information to complete your doctor profile.
           </p>
         </div>
         
-        <PatientOnboardingForm locale={locale} />
+        <DoctorOnboardingForm locale={locale} />
       </div>
     </div>
   )
