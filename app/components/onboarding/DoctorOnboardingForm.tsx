@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useUser, useClerk } from '@clerk/nextjs';
 import { useTranslations } from 'next-intl';
 import { createDoctorUser } from '@/lib/actions/createUser';
 import { searchClinics, createClinic } from '@/lib/actions/clinicActions';
@@ -19,6 +19,7 @@ interface DoctorOnboardingFormProps {
 export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormProps) {
   const { user, isLoaded } = useUser();
   const t = useTranslations('onboarding.doctor');
+    const { signOut } = useClerk();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -81,6 +82,17 @@ export default function DoctorOnboardingForm({ locale }: DoctorOnboardingFormPro
       }
     }
   }, [isLoaded, user]);
+
+  useEffect(() => {
+    if (isSubmitted) {
+      // Add a delay to allow the user to see the success message
+      const timer = setTimeout(() => {
+        signOut({ redirectUrl: `/${locale}/doctor-invite` });
+      }, 5000); // 5 seconds delay
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isSubmitted, signOut, locale]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

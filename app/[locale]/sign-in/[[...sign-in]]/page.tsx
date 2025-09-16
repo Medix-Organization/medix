@@ -1,38 +1,38 @@
-import { SignIn } from '@clerk/nextjs'
-import { auth } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
+import { SignIn } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
-interface PageProps {
+interface SignInPageProps {
   params: Promise<{ locale: string }>;
-  searchParams?: Promise<{ role?: string }>;
+  searchParams: Promise<{ role?: string }>;
 }
 
-export default async function Page({ params, searchParams }: PageProps) {
+export default async function SignInPage({ params, searchParams }: SignInPageProps) {
   const { locale } = await params;
-  const searchParamsResolved = await searchParams;
-  const roleParam = searchParamsResolved?.role;
-  
-  // Check if user is already signed in
+  const { role } = await searchParams;
   const { userId } = await auth();
+  
+  // If user is already signed in, redirect to dashboard for role-based redirection
   if (userId) {
-    // If already signed in, redirect based on role
     redirect(`/${locale}/dashboard`);
   }
-  
+
+  // Set redirect URL to dashboard where role-based redirection will happen
+  const redirectUrl = `/${locale}/dashboard`;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <div className={`min-h-screen flex items-center justify-center bg-gray-50 ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
       <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            {role === 'doctor' ? 'Doctor Sign In' : role === 'clinic' ? 'Clinic Sign In' : 'Sign In'}
+          </h2>
+        </div>
         <SignIn 
-          appearance={{
-            elements: {
-              rootBox: "mx-auto",
-              card: "shadow-lg border-0",
-            }
-          }}
-          afterSignInUrl={`/${locale}/dashboard`}
-          redirectUrl={`/${locale}/dashboard`}
+          redirectUrl={redirectUrl}
+          signUpUrl={`/${locale}/${role || 'patient'}/sign-up`}
         />
       </div>
     </div>
-  )
+  );
 }

@@ -1,33 +1,56 @@
-import { auth, currentUser } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
+import { auth, clerkClient } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+import { getDoctorByClerkId } from '@/lib/actions/getDoctorById';
+import { getClinicByClerkId } from '@/lib/actions/getClinicById';
 
-interface PageProps {
+interface DashboardPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function DashboardPage({ params }: PageProps) {
-  const { userId } = await auth();
+export default async function DashboardPage({ params }: DashboardPageProps) {
   const { locale } = await params;
+  const { userId } = await auth();
   
   if (!userId) {
     redirect(`/${locale}/sign-in`);
   }
 
-  const user = await currentUser();
-  const role = user?.publicMetadata?.role as string;
-
-  // Redirect based on user role
-  switch (role) {
-    case 'doctor':
-      redirect(`/${locale}/doctor-onboarding`);
-    case 'clinic':
-      redirect(`/${locale}/clinic-onboarding`);
-    case 'patient':
-      redirect(`/${locale}/onboarding`);
-    case 'admin':
-      redirect(`/${locale}/admin`);
-    default:
-      // If no role is set, default to patient onboarding
-      redirect(`/${locale}/onboarding`);
+  try {
+    // Get the user from Clerk to access their role
+    const clerk = await clerkClient();
+    const user = await clerk.users.getUser(userId);
+    const userRole = user.publicMetadata?.role as string;
+    
+    // Role-based redirection based on Clerk roles
+    switch(userRole) {
+      case 'doctor':
+        const doctor = await getDoctorByClerkId(userId);
+        if (doctor) {
+          redirect(`/${locale}/doctor-profile/${doctor._id}`);
+        } else {
+          redirect(`/${locale}/doctor-onboarding`);
+        }
+        break;
+        
+      case 'clinic':
+        const clinic = await getClinicByClerkId(userId);
+        if (clinic) {
+          redirect(`/${locale}/clinic/${clinic._id}`);
+        } else {
+          redirect(`/${locale}/clinic-onboarding`);
+        }
+        break;
+        
+      case 'admin':
+        redirect(`/${locale}/admin`);
+        break;
+        
+      case 'patient':
+      default:
+        redirect(`/${locale}/home`);
+    }
+  } catch (error) {
+    console.error('Error during role-based redirection:', error);
+    redirect(`/${locale}/home`);
   }
 }

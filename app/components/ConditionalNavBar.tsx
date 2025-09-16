@@ -21,6 +21,10 @@ export default function ConditionalNavBar() {
     return null;
   }
 
+  if(pathname?.includes('/doctor-onboarding')) {
+    return null;
+  }
+
   // Don't show navbar on clinic onboarding page
   if (pathname?.includes('/clinic-onboarding')) {
     return null;

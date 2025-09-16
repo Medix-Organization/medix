@@ -19,11 +19,10 @@ export default async function ProvidersPage() {
       <section className="container mx-auto px-4 py-8 sm:py-16 lg:py-24">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-            <span className="text-green-600">Healthcare Providers</span>{" "}
-            <span>Platform</span>
+            <span className="text-green-600">{t("hero.title")}</span>
           </h1>
           <p className="text-base sm:text-xl lg:text-2xl text-gray-600 mb-6 sm:mb-8 leading-relaxed px-2">
-            Join Medix as a healthcare provider and connect with patients who need your expertise
+            {t("hero.subtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <Link
@@ -31,30 +30,30 @@ export default async function ProvidersPage() {
               className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center flex items-center justify-center gap-2"
             >
               <FaUserMd className="text-lg" />
-              Doctor Sign In
+              {t("hero.doctorSignIn")}
             </Link>
             <Link
               href="/sign-in?role=clinic"
               className="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center flex items-center justify-center gap-2"
             >
               <FaHospital className="text-lg" />
-              Clinic Sign In
+              {t("hero.clinicSignIn")}
             </Link>
           </div>
           <div className="mt-4">
-            <p className="text-sm text-gray-500 mb-3">New to Medix?</p>
+            <p className="text-sm text-gray-500 mb-3">{t("hero.newToMedix")}</p>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
               <Link
                 href="/doctor/sign-up"
                 className="text-green-600 hover:text-green-700 font-medium underline"
               >
-                Register as Doctor
+                {t("hero.registerAsDoctor")}
               </Link>
               <Link
                 href="/clinic/sign-up"
                 className="text-green-600 hover:text-green-700 font-medium underline"
               >
-                Register as Clinic
+                {t("hero.registerAsClinic")}
               </Link>
             </div>
           </div>
@@ -66,10 +65,10 @@ export default async function ProvidersPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Why Healthcare Providers Choose Medix?
+              {t("features.title")}
             </h2>
             <p className="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto px-2">
-              Grow your practice and provide better patient care with our comprehensive platform
+              {t("features.subtitle")}
             </p>
           </div>
 
@@ -80,10 +79,10 @@ export default async function ProvidersPage() {
                 <FaSearch className="text-blue-600 text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
-                Increased Visibility
+                {t("features.increasedVisibility.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Get discovered by patients actively searching for your specialty and services
+                {t("features.increasedVisibility.description")}
               </p>
             </div>
 
@@ -93,10 +92,10 @@ export default async function ProvidersPage() {
                 <MdVerified className="text-green-600 text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
-                Verified Credentials
+                {t("features.verifiedCredentials.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Build trust with patients through our verified professional credential system
+                {t("features.verifiedCredentials.description")}
               </p>
             </div>
 
@@ -106,10 +105,10 @@ export default async function ProvidersPage() {
                 <FaCalendarAlt className="text-purple-600 text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
-                Appointment Management
+                {t("features.appointmentManagement.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Streamline your scheduling with our integrated appointment booking system
+                {t("features.appointmentManagement.description")}
               </p>
             </div>
 
@@ -119,10 +118,10 @@ export default async function ProvidersPage() {
                 <MdDashboard className="text-yellow-600 text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
-                Practice Dashboard
+                {t("features.practiceDashboard.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Manage your practice efficiently with comprehensive analytics and insights
+                {t("features.practiceDashboard.description")}
               </p>
             </div>
 
@@ -132,10 +131,10 @@ export default async function ProvidersPage() {
                 <FaShieldAlt className="text-red-600 text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
-                Secure Platform
+                {t("features.securePlatform.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                HIPAA-compliant platform ensuring patient data security and privacy
+                {t("features.securePlatform.description")}
               </p>
             </div>
 
@@ -145,10 +144,10 @@ export default async function ProvidersPage() {
                 <FaClock className="text-indigo-600 text-lg sm:text-2xl" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
-                24/7 Support
+                {t("features.support247.title")}
               </h3>
               <p className="text-sm sm:text-base text-gray-600">
-                Get dedicated support to help you maximize your presence on our platform
+                {t("features.support247.description")}
               </p>
             </div>
           </div>
@@ -159,23 +158,23 @@ export default async function ProvidersPage() {
       <section className="bg-green-600 py-8 sm:py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">
-            Ready to Join Medix?
+            {t("cta.title")}
           </h2>
           <p className="text-base sm:text-xl text-green-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
-            Start connecting with patients and growing your practice today
+            {t("cta.subtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link
               href="/doctor/sign-up"
               className="inline-block bg-white text-green-600 hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors"
             >
-              Join as Doctor
+              {t("cta.joinAsDoctor")}
             </Link>
             <Link
               href="/clinic/sign-up"
               className="inline-block border-2 border-white text-white hover:bg-white hover:text-green-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors"
             >
-              Join as Clinic
+              {t("cta.joinAsClinic")}
             </Link>
           </div>
         </div>

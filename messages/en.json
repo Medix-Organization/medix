@@ -400,7 +400,52 @@
       "assistedEntry": "Assisted Entry",
       "assistedEntryDesc": "See all required fields and prepare your information before starting the registration.",
       "assistedEntryButton": "View Required Fields"
-    }}
+    }}, 
+  "providers": {
+    "hero": {
+      "title": "Healthcare Providers Platform",
+      "subtitle": "Join Medix as a healthcare provider and connect with patients who need your expertise",
+      "doctorSignIn": "Doctor Sign In",
+      "clinicSignIn": "Clinic Sign In",
+      "newToMedix": "New to Medix?",
+      "registerAsDoctor": "Register as Doctor",
+      "registerAsClinic": "Register as Clinic"
+    },
+    "features": {
+      "title": "Why Healthcare Providers Choose Medix?",
+      "subtitle": "Grow your practice and provide better patient care with our comprehensive platform",
+      "increasedVisibility": {
+        "title": "Increased Visibility",
+        "description": "Get discovered by patients actively searching for your specialty and services"
+      },
+      "verifiedCredentials": {
+        "title": "Verified Credentials",
+        "description": "Build trust with patients through our verified professional credential system"
+      },
+      "appointmentManagement": {
+        "title": "Appointment Management",
+        "description": "Streamline your scheduling with our integrated appointment booking system"
+      },
+      "practiceDashboard": {
+        "title": "Practice Dashboard",
+        "description": "Manage your practice efficiently with comprehensive analytics and insights"
+      },
+      "securePlatform": {
+        "title": "Secure Platform",
+        "description": "HIPAA-compliant platform ensuring patient data security and privacy"
+      },
+      "support247": {
+        "title": "24/7 Support",
+        "description": "Get dedicated support to help you maximize your presence on our platform"
+      }
+    },
+    "cta": {
+      "title": "Ready to Join Medix?",
+      "subtitle": "Start connecting with patients and growing your practice today",
+      "joinAsDoctor": "Join as Doctor",
+      "joinAsClinic": "Join as Clinic"
+    }
+  }
 }
 
 
