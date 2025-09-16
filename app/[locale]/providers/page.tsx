@@ -26,14 +26,14 @@ export default async function ProvidersPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <Link
-              href="/doctor/sign-in"
+              href="/sign-in?role=doctor"
               className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center flex items-center justify-center gap-2"
             >
               <FaUserMd className="text-lg" />
               {t("hero.doctorSignIn")}
             </Link>
             <Link
-              href="/clinic/sign-in"
+              href="/sign-in?role=clinic"
               className="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center flex items-center justify-center gap-2"
             >
               <FaHospital className="text-lg" />

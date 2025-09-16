@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import {  FaCheckCircle, FaTimes } from 'react-icons/fa';
+import { FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { useTranslations } from 'next-intl';
 import ToggleLanguageButton from '@/app/components/ToggleLanguageButton';
 import OnboardingOptions from '@/app/components/doctor-invite-components/OnboardingOptions';
@@ -10,7 +10,7 @@ export default function DoctorInvitePage() {
   const [showOptions, setShowOptions] = useState(false);
   const [showFieldsList, setShowFieldsList] = useState(false);
   const t = useTranslations('doctorInvite');
-
+  
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       const state = event.state;
@@ -38,7 +38,9 @@ export default function DoctorInvitePage() {
   };
   
   const handleQuickStart = () => {
-    window.open('/doctor/sign-up', '_blank');
+    // Get the current locale from the pathname
+    const currentLocale = window.location.pathname.split('/')[1] || 'en';
+    window.open(`/${currentLocale}/doctor/sign-up`, '_blank');
   };
   
   const handleAssistedEntry = () => {

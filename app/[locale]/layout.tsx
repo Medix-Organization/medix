@@ -35,7 +35,10 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const { locale: rawLocale } = await params;
+  
+  // Ensure we only use valid locales (en or ar)
+  const locale = ['en', 'ar'].includes(rawLocale) ? rawLocale : 'en';
   
   // Load messages for the client provider
   const messages = (await import(`../../messages/${locale}.json`)).default;
