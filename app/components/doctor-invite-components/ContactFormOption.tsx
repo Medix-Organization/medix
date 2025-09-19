@@ -3,7 +3,7 @@ import { FaUser, FaEnvelope, FaPhone, FaCheckCircle } from 'react-icons/fa';
 import { useTranslations } from 'next-intl';
 
 const ContactFormOption: React.FC = () => {
-  const t = useTranslations('clinicInvite');
+  const t = useTranslations('doctorInvite');
   const [contactInfo, setContactInfo] = useState({
     name: '',
     email: '',
