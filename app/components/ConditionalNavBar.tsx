@@ -21,6 +21,8 @@ export default function ConditionalNavBar() {
     return null;
   }
 
+  
+
   if(pathname?.includes('/doctor-onboarding')) {
     return null;
   }

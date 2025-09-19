@@ -1,9 +1,20 @@
 "use client";
 import { useState } from "react";
+import { DoctorType } from "@/lib/types/doctor";
 
-export default function Tabs() {
+interface TabsProps {
+  doctor: DoctorType;
+}
+
+export default function Tabs({ doctor }: TabsProps) {
   const tabs = ["Description", "Gallery", "Google Reviews", "Medix Reviews"];
   const [activeTab, setActiveTab] = useState("Description");
+
+  // Helper function to get localized text
+  const getLocalizedText = (localizedString: any, locale: string = 'en') => {
+    if (typeof localizedString === 'string') return localizedString;
+    return localizedString?.translations?.[locale] || localizedString?.translations?.en || '';
+  };
 
   return (
     <div className="w-full">
@@ -28,95 +39,162 @@ export default function Tabs() {
       <div className="p-4 md:p-6">
         {activeTab === "Description" && (
           <div>
-            {/* <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Description</h2> */}
             <div className="max-w-none space-y-3">
-              {/* Nationality and Role Section */}
+              {/* Specialty and Bio Section */}
               <div className="space-y-1 bg-slate-200 rounded-md p-3">
-                 <div className="text-gray-800 font-semibold text-sm sm:text-base">
-                  Consultant General Dermatology
+                <div className="text-gray-800 font-semibold text-sm sm:text-base">
+                  {getLocalizedText(doctor.specialty) || 'Medical Specialist'}
                 </div>
-                <div className="text-gray-600 font-semibold text-sm sm:text-base">
-                  Saudi National
-                </div>
-               
+                {doctor.shortBio && getLocalizedText(doctor.shortBio) && (
+                  <div className="text-gray-600 text-sm sm:text-base">
+                    {getLocalizedText(doctor.shortBio)}
+                  </div>
+                )}
               </div>
 
               {/* Qualifications Section */}
               <div className="space-y-3">
                 <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Qualifications</h3>
-                <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>MD in Dermatology from King Saud University</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Fellowship in Cosmetic Dermatology from Harvard Medical School</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Board Certified by Saudi Commission for Health Specialties</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Member of American Academy of Dermatology</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Certificate in Advanced Laser Therapy</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>10+ years of clinical experience in dermatology</span>
-                  </li>
-                </ul>
+                {doctor.titleCredentials && doctor.titleCredentials.length > 0 ? (
+                  <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                    {doctor.titleCredentials.map((credential, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-blue-500 mr-2 mt-1">•</span>
+                        <span>{credential}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500 text-sm italic">No qualifications information available for this doctor.</p>
+                )}
+
+                {/* Certifications & Fellowships */}
+                {doctor.certificationsFellowships && doctor.certificationsFellowships.length > 0 && (
+                  <>
+                    <h4 className="text-gray-700 font-medium text-sm mt-4">Certifications & Fellowships</h4>
+                    <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                      {doctor.certificationsFellowships.map((cert, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-blue-500 mr-2 mt-1">•</span>
+                          <span>{cert}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Professional Memberships */}
+                {doctor.memberships && doctor.memberships.length > 0 && (
+                  <>
+                    <h4 className="text-gray-700 font-medium text-sm mt-4">Professional Memberships</h4>
+                    <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                      {doctor.memberships.map((membership, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-blue-500 mr-2 mt-1">•</span>
+                          <span>{membership}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Awards */}
+                {doctor.awards && doctor.awards.length > 0 && (
+                  <>
+                    <h4 className="text-gray-700 font-medium text-sm mt-4">Awards & Recognition</h4>
+                    <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                      {doctor.awards.map((award, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-blue-500 mr-2 mt-1">•</span>
+                          <span>{award}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Experience */}
+                <div className="mt-4">
+                  <h4 className="text-gray-700 font-medium text-sm">Experience</h4>
+                  <p className="text-gray-600 text-sm sm:text-base mt-1">
+                    {doctor.yearsOfExperience} of clinical experience
+                  </p>
+                </div>
+
+                {/* License Information */}
+                {doctor.licenseNumber && (
+                  <div className="mt-4">
+                    <h4 className="text-gray-700 font-medium text-sm">License Information</h4>
+                    <p className="text-gray-600 text-sm sm:text-base mt-1">
+                      License Number: {doctor.licenseNumber}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Services Provided Section */}
-              <div className="space-y-3">
-                <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Services Provided by the Doctor</h3>
-                <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>General dermatology consultations and skin examinations</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Cosmetic procedures including botox and dermal fillers</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Laser treatments for hair removal and skin rejuvenation</span>
-                  </li>
-                </ul>
-              </div>
+              {/* Subspecialties Section */}
+              {doctor.subspecialties && doctor.subspecialties.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Subspecialties</h3>
+                  <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                    {doctor.subspecialties.map((subspecialty, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-blue-500 mr-2 mt-1">•</span>
+                        <span>{getLocalizedText(subspecialty)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               {/* Materials and Devices Section */}
               <div className="space-y-3">
                 <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Materials and Devices</h3>
-                <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Advanced CO2 Laser System for skin resurfacing</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>IPL (Intense Pulsed Light) for pigmentation treatment</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Dermatoscope for detailed skin analysis</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>Cryotherapy equipment for wart and lesion removal</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-2 mt-1">•</span>
-                    <span>High-quality injectable fillers and neurotoxins</span>
-                  </li>
-                </ul>
+                {doctor.devicesMaterials && doctor.devicesMaterials.length > 0 ? (
+                  <ul className="space-y-2 text-gray-600 text-sm sm:text-base">
+                    {doctor.devicesMaterials.map((device, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-blue-500 mr-2 mt-1">•</span>
+                        <span>{device}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500 text-sm italic">No materials and devices information available for this doctor.</p>
+                )}
               </div>
+
+              {/* Contact Information */}
+              <div className="space-y-3">
+                <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Contact Information</h3>
+                <div className="space-y-2 text-gray-600 text-sm sm:text-base">
+                  {doctor.phoneNumber && (
+                    <p><strong>Phone:</strong> {doctor.phoneNumber}</p>
+                  )}
+                  <p><strong>Email:</strong> {doctor.email}</p>
+                  {doctor.availableForOnlineConsultation && (
+                    <p className="text-green-600"><strong>✓</strong> Available for online consultations</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Social Links */}
+              {doctor.socialLinks && Object.values(doctor.socialLinks).some(link => link) && (
+                <div className="space-y-3">
+                  <h3 className="text-gray-800 font-semibold text-sm sm:text-base">Professional Links</h3>
+                  <div className="space-y-2 text-gray-600 text-sm sm:text-base">
+                    {doctor.socialLinks.linkedin && (
+                      <p><strong>LinkedIn:</strong> <a href={doctor.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{doctor.socialLinks.linkedin}</a></p>
+                    )}
+                    {doctor.socialLinks.researchGate && (
+                      <p><strong>ResearchGate:</strong> <a href={doctor.socialLinks.researchGate} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{doctor.socialLinks.researchGate}</a></p>
+                    )}
+                    {doctor.socialLinks.clinicWebsite && (
+                      <p><strong>Clinic Website:</strong> <a href={doctor.socialLinks.clinicWebsite} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{doctor.socialLinks.clinicWebsite}</a></p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -124,104 +202,24 @@ export default function Tabs() {
         {activeTab === "Gallery" && (
           <div>
             <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Gallery</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              {/* Example images */}
-              <div className="w-full h-32 sm:h-40 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
-                <span className="text-gray-500 text-sm">Sample Image 1</span>
-              </div>
-              <div className="w-full h-32 sm:h-40 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
-                <span className="text-gray-500 text-sm">Sample Image 2</span>
-              </div>
-              <div className="w-full h-32 sm:h-40 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
-                <span className="text-gray-500 text-sm">Sample Image 3</span>
-              </div>
+            <div className="text-center py-8">
+              <p className="text-gray-500 text-sm italic">No gallery images available for this doctor.</p>
             </div>
           </div>
         )}
 
         {activeTab === "Google Reviews" && (
           <div>
-            <div className="space-y-3 sm:space-y-4">
-              <div className="p-3 sm:p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-xs sm:text-sm">
-                      JD
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className="text-yellow-500 text-sm sm:text-base">⭐⭐⭐⭐⭐</span>
-                      <span className="text-gray-500 text-xs sm:text-sm">John Doe</span>
-                    </div>
-                    <p className="text-gray-700 text-xs sm:text-sm leading-relaxed break-words">
-                      Great experience! The doctor was very professional and took time to explain everything clearly. Highly recommended.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="p-3 sm:p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold text-xs sm:text-sm">
-                      MS
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className="text-yellow-500 text-sm sm:text-base">⭐⭐⭐⭐</span>
-                      <span className="text-gray-500 text-xs sm:text-sm">Maria Smith</span>
-                    </div>
-                    <p className="text-gray-700 text-xs sm:text-sm leading-relaxed break-words">
-                      Friendly staff and good service. The clinic is clean and well-organized. Will definitely come back.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="text-center py-8">
+              <p className="text-gray-500 text-sm italic">No Google reviews available for this doctor.</p>
             </div>
           </div>
         )}
+
         {activeTab === "Medix Reviews" && (
           <div>
-            <div className="space-y-3 sm:space-y-4">
-              <div className="p-3 sm:p-4 bg-blue-50 rounded-lg shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-semibold text-xs sm:text-sm">
-                      AB
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className="text-yellow-500 text-sm sm:text-base">⭐⭐⭐⭐⭐</span>
-                      <span className="text-gray-600 text-xs sm:text-sm font-medium">Ahmed Bin Ali</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full whitespace-nowrap">Verified Patient</span>
-                    </div>
-                    <p className="text-gray-700 text-xs sm:text-sm leading-relaxed break-words">
-                      Excellent service and care! Dr. Sarah was very thorough in her examination and provided clear treatment options. The booking through Medix was seamless.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="p-3 sm:p-4 bg-blue-50 rounded-lg shadow-sm hover:shadow-md transition-shadow border-l-4 border-blue-500">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-pink-500 rounded-full flex items-center justify-center text-white font-semibold text-xs sm:text-sm">
-                      FK
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className="text-yellow-500 text-sm sm:text-base">⭐⭐⭐⭐</span>
-                      <span className="text-gray-600 text-xs sm:text-sm font-medium">Fatima Khalil</span>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full whitespace-nowrap">Verified Patient</span>
-                    </div>
-                    <p className="text-gray-700 text-xs sm:text-sm leading-relaxed break-words">
-                      Very professional and attentive. The consultation was detailed and I felt comfortable throughout the visit. Great experience with Medix platform.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="text-center py-8">
+              <p className="text-gray-500 text-sm italic">No Medix reviews available for this doctor yet.</p>
             </div>
           </div>
         )}
