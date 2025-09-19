@@ -11,19 +11,39 @@ import { Doctor } from '../models/doctorModel';
  * @returns Doctor data or null if not found
  */
 export async function getDoctorByClerkId(clerkId: string): Promise<DoctorType | null> {
+  console.log('🔍 getDoctorByClerkId called with clerkId:', clerkId);
+  
   try {
+    console.log('📡 Connecting to database...');
     await connectToDatabase();
+    console.log('✅ Database connected successfully');
     
+    console.log('🔎 Searching for doctor with clerkId:', clerkId);
     const doctor = await Doctor.findOne({ clerkId }).lean().exec();
+    console.log('📊 Raw doctor query result:', doctor);
+    
     const doctorToObj = JSON.parse(JSON.stringify(doctor));
+    console.log('🔄 Parsed doctor object:', doctorToObj);
+    
     if (!doctorToObj) {
+      console.log('❌ No doctor found for clerkId:', clerkId);
       return null;
     }
+
+    console.log('✅ Doctor found successfully:', {
+      id: doctorToObj._id,
+      clerkId: doctorToObj.clerkId,
+      name: doctorToObj.name || 'No name set'
+    });
 
     // Convert MongoDB _id to string
     return doctorToObj;
   } catch (error) {
-    console.error('Error fetching doctor by clerkId:', error);
+    console.error('💥 Error in getDoctorByClerkId:', {
+      clerkId,
+      error: error instanceof Error ? error.message : error,
+      stack: error instanceof Error ? error.stack : undefined
+    });
     throw new Error('Failed to fetch doctor profile');
   }
 }

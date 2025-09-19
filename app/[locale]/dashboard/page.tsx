@@ -1,4 +1,4 @@
-import { auth, clerkClient } from '@clerk/nextjs/server';
+import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { getDoctorByClerkId } from '@/lib/actions/getDoctorById';
 import { getClinicByClerkId } from '@/lib/actions/getClinicById';
@@ -8,49 +8,80 @@ interface DashboardPageProps {
 }
 
 export default async function DashboardPage({ params }: DashboardPageProps) {
-  const { locale } = await params;
-  const { userId } = await auth();
+  console.log('🚀 Dashboard page started');
   
-  if (!userId) {
+  const { locale } = await params;
+  console.log('🌍 Locale:', locale);
+  
+  const user = await currentUser();
+  console.log('👤 Current user:', {
+    id: user?.id,
+    email: user?.emailAddresses?.[0]?.emailAddress,
+    publicMetadata: user?.publicMetadata
+  });
+  
+  if (!user) {
+    console.log('❌ No user found, redirecting to sign-in');
     redirect(`/${locale}/sign-in`);
   }
 
-  try {
-    // Get the user from Clerk to access their role
-    const clerk = await clerkClient();
-    const user = await clerk.users.getUser(userId);
-    const userRole = user.publicMetadata?.role as string;
-    
-    // Role-based redirection based on Clerk roles
-    switch(userRole) {
-      case 'doctor':
-        const doctor = await getDoctorByClerkId(userId);
-        if (doctor) {
-          redirect(`/${locale}/doctor-profile/${doctor._id}`);
-        } else {
-          redirect(`/${locale}/doctor-onboarding`);
-        }
-        break;
-        
-      case 'clinic':
-        const clinic = await getClinicByClerkId(userId);
-        if (clinic) {
-          redirect(`/${locale}/clinic/${clinic._id}`);
-        } else {
-          redirect(`/${locale}/clinic-onboarding`);
-        }
-        break;
-        
-      case 'admin':
-        redirect(`/${locale}/admin`);
-        break;
-        
-      case 'patient':
-      default:
-        redirect(`/${locale}/home`);
-    }
-  } catch (error) {
-    console.error('Error during role-based redirection:', error);
-    redirect(`/${locale}/home`);
+  // Access role from unsafeMetadata (keeping your line 30 as requested)
+  const userRole = user.unsafeMetadata.role as string;
+  
+  console.log('🎭 User role from unsafeMetadata:', userRole);
+  console.log('🆔 User ID:', user.id);
+  console.log('📋 Full unsafeMetadata:', user.unsafeMetadata);
+  
+  // Role-based redirection based on Clerk roles
+  switch(userRole) {
+    case 'doctor':
+      console.log('👨‍⚕️ Processing doctor role...');
+      
+      console.log('🔍 Calling getDoctorByClerkId with userId:', user.id);
+      const doctor = await getDoctorByClerkId(user.id);
+      console.log('📊 getDoctorByClerkId result:', {
+        found: !!doctor,
+        doctorId: doctor?._id,
+        doctorData: doctor ? 'Doctor object exists' : 'No doctor data'
+      });
+      
+      if (doctor) {
+        console.log('✅ Doctor profile found, redirecting to profile:', doctor._id);
+        redirect(`/${locale}/doctor-profile/${doctor._id}`);
+      } else {
+        console.log('⚠️ No doctor profile found, redirecting to onboarding');
+        redirect(`/${locale}/doctor-onboarding`);
+      }
+      break;
+      
+    case 'clinic':
+      console.log('🏥 Processing clinic role...');
+      
+      console.log('🔍 Calling getClinicByClerkId with userId:', user.id);
+      const clinic = await getClinicByClerkId(user.id);
+      console.log('📊 getClinicByClerkId result:', {
+        found: !!clinic,
+        clinicId: clinic?._id,
+        clinicData: clinic ? 'Clinic object exists' : 'No clinic data'
+      });
+      
+      if (clinic) {
+        console.log('✅ Clinic profile found, redirecting to profile:', clinic._id);
+        redirect(`/${locale}/clinic/${clinic._id}`);
+      } else {
+        console.log('⚠️ No clinic profile found, redirecting to onboarding');
+        redirect(`/${locale}/clinic-onboarding`);
+      }
+      break;
+      
+    case 'admin':
+      console.log('👑 Processing admin role, redirecting to admin panel');
+      redirect(`/${locale}/admin`);
+      break;
+      
+    case 'patient':
+    default:
+      console.log('🏠 Processing patient/default role, redirecting to home');
+      redirect(`/${locale}/home`);
   }
 }
