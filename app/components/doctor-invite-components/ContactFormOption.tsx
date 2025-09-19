@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { FaUser, FaEnvelope, FaPhone, FaCheckCircle } from 'react-icons/fa';
+import { useTranslations } from 'next-intl';
 
 const ContactFormOption: React.FC = () => {
+  const t = useTranslations('clinicInvite');
   const [contactInfo, setContactInfo] = useState({
     name: '',
     email: '',
     phone: '',
     clinics: ''
   });
+  const [consentAgreed, setConsentAgreed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -20,8 +23,18 @@ const ContactFormOption: React.FC = () => {
     }));
   };
 
+  const handleConsentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConsentAgreed(e.target.checked);
+  };
+
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!consentAgreed) {
+      setError('Please agree to the data sharing terms before submitting.');
+      return;
+    }
+    
     setIsSubmitting(true);
     setError('');
     
@@ -31,7 +44,10 @@ const ContactFormOption: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(contactInfo),
+        body: JSON.stringify({
+          ...contactInfo,
+          consentAgreed: true
+        }),
       });
       
       const data = await response.json();
@@ -149,10 +165,29 @@ const ContactFormOption: React.FC = () => {
             </div>
           </div>
           
+          {/* Consent Agreement Checkbox */}
+          <div className="flex items-start space-x-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <input
+              type="checkbox"
+              id="consent"
+              checked={consentAgreed}
+              onChange={handleConsentChange}
+              className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              required
+            />
+            <label htmlFor="consent" className="text-sm text-gray-700 leading-relaxed">
+              {t('form.consentAgreement')}
+            </label>
+          </div>
+          
           <button 
             type="submit" 
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium w-full"
-            disabled={isSubmitting}
+            className={`w-full px-6 py-2 rounded-lg font-medium transition-colors ${
+              consentAgreed 
+                ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
+            disabled={isSubmitting || !consentAgreed}
           >
             {isSubmitting ? 'Submitting...' : 'Submit Contact Information'}
           </button>

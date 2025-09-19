@@ -165,6 +165,9 @@
     "finalCta": {
       "title": "🌟 Put Your Clinic on the Map with Medix",
       "button": "👉 Join Free as an Early Clinic"
+    },
+    "form": {
+      "consentAgreement": "I agree that the information I share with Medix will be made publicly available through the app to help patients find and connect with our clinic."
     }
   },
   "onboarding": {
