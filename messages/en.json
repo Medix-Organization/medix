@@ -403,7 +403,11 @@
       "assistedEntry": "Assisted Entry",
       "assistedEntryDesc": "See all required fields and prepare your information before starting the registration.",
       "assistedEntryButton": "View Required Fields"
-    }}, 
+    },
+    "form": {
+      "consentAgreement": "I agree that the information I share with Medix will be made publicly available through the app to help patients find and connect with me as a doctor."
+    }
+  },
   "providers": {
     "hero": {
       "title": "Healthcare Providers Platform",
