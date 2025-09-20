@@ -90,3 +90,22 @@ export async function getDoctorByMongoId(id: string): Promise<DoctorType | null>
     throw new Error('Failed to fetch doctor profile');
   }
 }
+
+/**
+ * Get all verified doctors for home page display
+ * @returns Array of verified doctors with basic info
+ */
+export async function getAllVerifiedDoctors(): Promise<DoctorType[]> {
+  try {
+    await connectToDatabase();
+    
+    const doctors = await Doctor.find({})
+    .select('fullName specialty shortBio profileImage consultationFee yearsOfExperience reviews isVerified availableForOnlineConsultation')
+    .lean();
+    
+    return JSON.parse(JSON.stringify(doctors));
+  } catch (error) {
+    console.error('Error fetching verified doctors:', error);
+    throw new Error('Failed to fetch doctors');
+  }
+}

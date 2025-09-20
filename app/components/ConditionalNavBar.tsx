@@ -6,6 +6,11 @@ import ClientNavBar from './ClientNavBar';
 export default function ConditionalNavBar() {
   const pathname = usePathname();
 
+  // Don't show navbar on landing page (root path only)
+  if (pathname === '/' || pathname === '/en' || pathname === '/ar') {
+    return null;
+  }
+
   // Don't show navbar on doctor invite page
   if (pathname?.includes('/doctor-invite')) {
     return null;
@@ -39,6 +44,9 @@ export default function ConditionalNavBar() {
 
   // Don't show navbar on any sign-up pages
   if (pathname?.includes('/sign-up')) {
+    return null;
+  }
+  if (pathname?.includes('/sign-in')) {
     return null;
   }
 

@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { DoctorType } from "@/lib/types/doctor";
+import { getLocalizedTextSync } from "@/lib/utils/localization";
+import { useLocale } from "next-intl";
 
 interface TabsProps {
   doctor: DoctorType;
@@ -9,12 +11,7 @@ interface TabsProps {
 export default function Tabs({ doctor }: TabsProps) {
   const tabs = ["Description", "Gallery", "Google Reviews", "Medix Reviews"];
   const [activeTab, setActiveTab] = useState("Description");
-
-  // Helper function to get localized text
-  const getLocalizedText = (localizedString: any, locale: string = 'en') => {
-    if (typeof localizedString === 'string') return localizedString;
-    return localizedString?.translations?.[locale] || localizedString?.translations?.en || '';
-  };
+  const locale = useLocale();
 
   return (
     <div className="w-full">
@@ -43,11 +40,11 @@ export default function Tabs({ doctor }: TabsProps) {
               {/* Specialty and Bio Section */}
               <div className="space-y-1 bg-slate-200 rounded-md p-3">
                 <div className="text-gray-800 font-semibold text-sm sm:text-base">
-                  {getLocalizedText(doctor.specialty) || 'Medical Specialist'}
+                  {getLocalizedTextSync(doctor.specialty, locale) || 'Medical Specialist'}
                 </div>
-                {doctor.shortBio && getLocalizedText(doctor.shortBio) && (
+                {doctor.shortBio && getLocalizedTextSync(doctor.shortBio, locale) && (
                   <div className="text-gray-600 text-sm sm:text-base">
-                    {getLocalizedText(doctor.shortBio)}
+                    {getLocalizedTextSync(doctor.shortBio, locale)}
                   </div>
                 )}
               </div>
@@ -140,7 +137,7 @@ export default function Tabs({ doctor }: TabsProps) {
                     {doctor.subspecialties.map((subspecialty, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-blue-500 mr-2 mt-1">•</span>
-                        <span>{getLocalizedText(subspecialty)}</span>
+                        <span>{getLocalizedTextSync(subspecialty, locale)}</span>
                       </li>
                     ))}
                   </ul>
