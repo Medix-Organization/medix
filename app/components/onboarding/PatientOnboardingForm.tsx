@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { createPatient } from '@/lib/actions/patientActions';
 import LocationInput from '../shared/LocationInput';
 import { LocalizedString } from '@/lib/types/common';
 
@@ -21,7 +22,6 @@ export default function PatientOnboardingForm({ locale }: PatientOnboardingFormP
     fullName: '',
     age: '',
     gender: '' as 'male' | 'female' | '',
-
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -50,31 +50,28 @@ export default function PatientOnboardingForm({ locale }: PatientOnboardingFormP
     }
     
     try {
-      // Prepare location data if provided
-      
       const submitData = {
         fullName: formData.fullName.trim(),
         age: parseInt(formData.age),
-        gender: formData.gender,
+        gender: formData.gender === '' ? undefined : formData.gender,
       };
       
-      const response = await fetch('/api/onboarding/patient', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitData),
-      });
+      await createPatient(submitData);
       
-      if (response.ok) {
-        router.push(`/${locale}/profile`);
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit form');
-      }
+      // Redirect to home after successful creation
+      router.push(`/${locale}/home`);
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(`Error submitting form: ${error instanceof Error ? error.message : 'Please try again.'}`);
+      if (error instanceof Error) {
+        if (error.message === 'Patient profile already exists') {
+          // If patient already exists, redirect to home
+          router.push(`/${locale}/home`);
+        } else {
+          setErrors({ submit: error.message });
+        }
+      } else {
+        setErrors({ submit: 'Failed to create profile. Please try again.' });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -89,6 +86,12 @@ export default function PatientOnboardingForm({ locale }: PatientOnboardingFormP
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
+          {errors.submit && (
+            <div className="bg-red-50 border border-red-200 rounded-md p-3">
+              <p className="text-sm text-red-800">{errors.submit}</p>
+            </div>
+          )}
+
           {/* Full Name */}
           <div>
             <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
@@ -99,55 +102,60 @@ export default function PatientOnboardingForm({ locale }: PatientOnboardingFormP
               id="fullName"
               value={formData.fullName}
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.fullName ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Enter your full name"
             />
             {errors.fullName && <p className="text-sm text-red-500 mt-1">{errors.fullName}</p>}
           </div>
 
-          {/* Age and Gender Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Age */}
-            <div>
-              <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-2">
-                Age *
-              </label>
-              <input
-                type="number"
-                id="age"
-                value={formData.age}
-                onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.age ? 'border-red-500' : 'border-gray-300'
-                }`}
-                placeholder="Enter your age"
-                min="1"
-                max="120"
-              />
-              {errors.age && <p className="text-sm text-red-500 mt-1">{errors.age}</p>}
-            </div>
+          {/* Age */}
+          <div>
+            <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-2">
+              Age *
+            </label>
+            <input
+              type="number"
+              id="age"
+              min="1"
+              max="120"
+              value={formData.age}
+              onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter your age"
+            />
+            {errors.age && <p className="text-sm text-red-500 mt-1">{errors.age}</p>}
+          </div>
 
-            {/* Gender */}
-            <div>
-              <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
-                Gender *
+          {/* Gender */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Gender *
+            </label>
+            <div className="grid grid-cols-2 gap-4">
+              <label className="flex items-center p-3 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === 'male'}
+                  onChange={(e) => setFormData({ ...formData, gender: e.target.value as 'male' | 'female' })}
+                  className="mr-2"
+                />
+                <span>Male</span>
               </label>
-              <select
-                id="gender"
-                value={formData.gender}
-                onChange={(e) => setFormData({ ...formData, gender: e.target.value as 'male' | 'female' })}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.gender ? 'border-red-500' : 'border-gray-300'
-                }`}
-              >
-                <option value="">Select your gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-              {errors.gender && <p className="text-sm text-red-500 mt-1">{errors.gender}</p>}
+              <label className="flex items-center p-3 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === 'female'}
+                  onChange={(e) => setFormData({ ...formData, gender: e.target.value as 'male' | 'female' })}
+                  className="mr-2"
+                />
+                <span>Female</span>
+              </label>
             </div>
+            {errors.gender && <p className="text-sm text-red-500 mt-1">{errors.gender}</p>}
           </div>
 
           {/* Submit Button */}

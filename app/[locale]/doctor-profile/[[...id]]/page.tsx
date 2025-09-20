@@ -5,6 +5,7 @@ import { BiSolidLike } from "react-icons/bi";
 import { FaGraduationCap, FaLocationDot } from "react-icons/fa6";
 import { getDoctorByMongoId } from "@/lib/actions/getDoctorById";
 import { notFound } from "next/navigation";
+import { getLocalizedText } from "@/lib/utils/localization";
 
 const Page = async ({ params }: { params: Promise<{ id: string[] }> }) => {
   const { id } = await params;
@@ -26,93 +27,130 @@ const Page = async ({ params }: { params: Promise<{ id: string[] }> }) => {
     specialty: doctor.specialty
   });
 
-  // Helper function to get localized text (defaulting to English if Arabic not available)
-  const getLocalizedText = (localizedString: any, locale: string = 'en') => {
-    if (typeof localizedString === 'string') return localizedString;
-    return localizedString?.translations?.[locale] || localizedString?.translations?.en || '';
-  };
-
   return (
-    <main className="flex flex-col lg:flex-row gap-4 p-4 md:p-6  text-gray-800 mb-20 md:mb-0 md:max-w-5xl md:mx-auto lg:max-w-6xl xl:max-w-6xl xl:px-8">
-      <section className="flex flex-col lg:flex-[0.8] lg:max-w-sm w-full bg-white rounded-lg shadow-md p-4 md:p-6 h-fit lg:self-start">
-        <section className="">
-          <section className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+    <main className="flex flex-col lg:flex-row gap-4 p-4 md:p-8 text-gray-800 mb-20 md:mb-0 md:max-w-6xl md:mx-auto lg:max-w-7xl xl:max-w-7xl xl:px-12 2xl:max-w-8xl">
+      {/* Doctor Info Sidebar */}
+      <section className="flex flex-col lg:flex-[0.35] lg:max-w-md w-full bg-white rounded-lg shadow-lg border border-gray-100 p-4 md:p-8 h-fit lg:self-start lg:sticky lg:top-8">
+        {/* Profile Header */}
+        <section className="mb-6">
+          <section className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-center sm:items-start lg:items-center xl:items-start gap-4 lg:gap-6">
             <div className="flex-shrink-0">
-              <Image
-                src={doctor.profileImage || "/ahmad.jpg"}
-                alt="Doctor Profile"
-                width={150}
-                height={150}
-                className="rounded-full w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] object-cover"
-              />
+              <div className="relative">
+                <Image
+                  src={doctor.profileImage || "/ahmad.jpg"}
+                  alt="Doctor Profile"
+                  width={180}
+                  height={180}
+                  className="rounded-full w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] lg:w-[160px] lg:h-[160px] xl:w-[180px] xl:h-[180px] object-cover shadow-lg border-4 border-white"
+                />
+                {doctor.isVerified && (
+                  <div className="absolute -bottom-2 -right-2 bg-green-500 text-white rounded-full p-2 shadow-lg">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="flex flex-col gap-3 text-center sm:text-left w-full">
-              <h1 className="text-2xl font-bold text-gray-900">
-                {getLocalizedText(doctor.fullName)}
+            <div className="flex flex-col gap-3 text-center sm:text-left lg:text-center xl:text-left w-full">
+              <h1 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight">
+                {await getLocalizedText(doctor.fullName)}
               </h1>
-              <p className="inline-block px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-full w-fit mx-auto sm:mx-0">
-                {getLocalizedText(doctor.specialty)}
-              </p>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {getLocalizedText(doctor.shortBio) || "Experienced medical professional committed to providing comprehensive healthcare."}
+              <div className="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm lg:text-base font-medium rounded-full w-fit mx-auto sm:mx-0 lg:mx-auto xl:mx-0 shadow-md">
+                {await getLocalizedText(doctor.specialty)}
+              </div>
+              <p className="text-gray-600 text-sm lg:text-base leading-relaxed max-w-sm mx-auto sm:mx-0 lg:mx-auto xl:mx-0">
+                {await getLocalizedText(doctor.shortBio) || "Experienced medical professional committed to providing comprehensive healthcare."}
               </p>
             </div>
           </section>
         </section>
-        <div className="border-t mt-4 border-slate-200"></div>
-        <section className="flex flex-col gap-3 mt-4">
-          <div className="flex flex-col sm:flex-row justify-between gap-3">
-            <div className="flex flex-col gap-2">
-              {/* <div className="flex gap-2 items-center">
-                <FaLocationDot className="text-gray-600 flex-shrink-0" size={18} style={{strokeWidth: 2.5}} />
-                <p className="text-gray-600 text-sm">
-                  {doctor.clinicAssociations && doctor.clinicAssociations.length > 0 
-                    ? `${doctor.clinicAssociations[0].clinicName || 'Medical Center'}`
-                    : 'Location not specified'}
-                </p>
-              </div> */}
-              <div className="flex gap-2 items-center">
-                <FaGraduationCap className="text-gray-600 flex-shrink-0" size={18} style={{strokeWidth: 2.5}} />
-                <p className="text-gray-600 text-sm">
-                  {doctor.yearsOfExperience} years of experience
+
+        {/* Stats and Info Grid */}
+        <section className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+            {/* Experience */}
+            <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+              <div className="flex-shrink-0 p-2 bg-blue-100 rounded-lg">
+                <FaGraduationCap className="text-blue-600" size={20} />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Experience</p>
+                <p className="text-sm lg:text-base font-semibold text-gray-900">
+                  {doctor.yearsOfExperience} years
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center">
-                <BiSolidLike className="text-gray-600 flex-shrink-0" size={18} style={{strokeWidth: 2.5}} />
-                <p className="text-gray-600 text-sm">
-                  Recommendation: {doctor.reviews?.averageRating ? `${Math.round(doctor.reviews.averageRating * 20)}%` : 'N/A'}
+
+            {/* Online Consultation Availability */}
+            <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+              <div className="flex-shrink-0 p-2 bg-green-100 rounded-lg">
+                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Online Consultation</p>
+                <p className="text-sm lg:text-base font-semibold text-gray-900">
+                  {doctor.availableForOnlineConsultation ? (
+                    <span className="text-green-600">Available</span>
+                  ) : (
+                    <span className="text-gray-500">Not Available</span>
+                  )}
                 </p>
               </div>
-              <div className="flex gap-2 items-center">
-                <svg className="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </div>
+
+            {/* Languages */}
+            <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg sm:col-span-2 lg:col-span-1 xl:col-span-2">
+              <div className="flex-shrink-0 p-2 bg-purple-100 rounded-lg">
+                <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                 </svg>
-                <p className="text-gray-600 text-sm">
-                  Languages: {doctor.languages && doctor.languages.length > 0 ? doctor.languages.join(', ') : 'Not specified'}
+              </div>
+              <div className="flex-1">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Languages</p>
+                <p className="text-sm lg:text-base font-semibold text-gray-900">
+                  {doctor.languages && doctor.languages.length > 0 ? doctor.languages.join(', ') : 'Not specified'}
                 </p>
               </div>
-              <div className="flex gap-2 items-center">
-                <svg className="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </div>
+
+            {/* Reviews Count */}
+            <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg sm:col-span-2 lg:col-span-1 xl:col-span-2">
+              <div className="flex-shrink-0 p-2 bg-orange-100 rounded-lg">
+                <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <p className="text-gray-600 text-sm">
-                  <b>{doctor.numberOfReviews || 0}</b> Reviews
+              </div>
+              <div className="flex-1">
+                <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Patient Reviews</p>
+                <p className="text-sm lg:text-base font-semibold text-gray-900">
+                  <span className="text-lg">{doctor.numberOfReviews || 0}</span> Reviews
                 </p>
               </div>
             </div>
           </div>
         </section>
-        <div className="border-t mt-3 border-slate-200"></div>
-        <div className="flex justify-center sm:justify-end mt-2">
-          <p className="text-sm font-semibold text-blue-600">
-            Consultation {doctor.consultationFee ? `${doctor.consultationFee} SAR` : 'Price on request'}
+
+        {/* Divider */}
+        <div className="border-t border-gray-200 my-6"></div>
+
+        {/* Consultation Fee */}
+        <div className="flex justify-between items-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+          <p className="text-sm text-gray-600">Consultation Fee</p>
+          <p className="text-2xl lg:text-3xl font-bold text-blue-600">
+            {doctor.consultationFee ? `${doctor.consultationFee} SAR` : 'Price on request'}
           </p>
         </div>
       </section>
-      <section className="flex flex-col lg:flex-[1.2] w-full bg-white rounded-lg shadow-md p-4 md:p-6">
-        <h1 className="text-2xl font-bold mb-4">Doctor Profile</h1>
+
+      {/* Main Content Area */}
+      <section className="flex flex-col lg:flex-[0.65] w-full bg-white rounded-lg shadow-lg border border-gray-100 p-4 md:p-8">
+        <div className="mb-8">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Doctor Profile</h1>
+          <p className="text-gray-600 text-lg">Detailed information and professional background</p>
+        </div>
         <Tabs doctor={doctor} />
       </section>
     </main>

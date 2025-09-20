@@ -40,7 +40,7 @@ export default async function Home() {
           </p>
           <div className="flex justify-center">
             <Link
-              href="/home"
+              href="/sign-in?role=patient"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold transition-colors text-center"
             >
               {t("landing.hero.findDoctorBtn")}

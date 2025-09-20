@@ -2,6 +2,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { getDoctorByClerkId } from '@/lib/actions/getDoctorById';
 import { getClinicByClerkId } from '@/lib/actions/getClinicById';
+import { getPatientByClerkId } from '@/lib/actions/patientActions';
 
 interface DashboardPageProps {
   params: Promise<{ locale: string }>;
@@ -81,7 +82,23 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
       
     case 'patient':
     default:
-      console.log('🏠 Processing patient/default role, redirecting to home');
-      redirect(`/${locale}/home`);
+      console.log('👤 Processing patient/default role (user with no role is considered patient)...');
+      
+      console.log('🔍 Calling getPatientByClerkId with userId:', user.id);
+      const patient = await getPatientByClerkId(user.id);
+      console.log('📊 getPatientByClerkId result:', {
+        found: !!patient,
+        patientId: patient?._id,
+        patientData: patient ? 'Patient object exists' : 'No patient data'
+      });
+      
+      if (patient) {
+        console.log('✅ Patient profile found, redirecting to home');
+        redirect(`/${locale}/home`);
+      } else {
+        console.log('⚠️ No patient profile found, redirecting to patient onboarding');
+        redirect(`/${locale}/onboarding`);
+      }
+      break;
   }
 }
