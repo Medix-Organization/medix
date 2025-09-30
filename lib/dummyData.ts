@@ -2,7 +2,7 @@ export const specialties = [
   {
     id: 1,
     label: "General Dermatology",
-    icon: "/detrmology.jpg",
+    icon: "/Dermatology.png",
     filled: true,
     tags: [
       "Acne & Scarring",
@@ -18,7 +18,7 @@ export const specialties = [
   {
     id: 2,
     label: "Cosmetic Treatment",
-    icon: "/cosmetic.jpg",
+    icon: "/Cosmetic.png",
     filled: true,
     tags: [
       "Botox",
@@ -34,7 +34,7 @@ export const specialties = [
   {
     id: 3,
     label: "Hair & Scalp",
-    icon: "/hair.jpg",
+    icon: "/Hair.png",
     filled: true,
     tags: [
       "Alopecia / Hair Loss",
@@ -47,7 +47,7 @@ export const specialties = [
   {
     id: 4,
     label: "Laser Treatments",
-    icon: "/Laser.jpg",
+    icon: "/Laser.png",
     filled: true,
     tags: [
       "Laser Hair Removal",
@@ -62,7 +62,7 @@ export const specialties = [
   {
     id: 5,
     label: "Body Dermatology",
-    icon: "/brain.jpg",
+    icon: "/body.png",
     filled: true,
     tags: [
       "Hyperhidrosis Treatment",
