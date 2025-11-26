@@ -17,27 +17,26 @@ const SpecialitiesAndSubs = () => {
           {specialties.map((speciality, i) => (
             <div key={speciality.id} className="flex flex-col items-center min-w-0 flex-shrink-0">
               <button
-                className={` transition-all duration-200 w-20 h-20 rounded-full flex items-center justify-center overflow-hidden border-4 ${
+                className={` transition-all duration-200 w-12 h-12 rounded-full flex items-center justify-center overflow-hidden border-2 ${
                   activeSpecialty.label === speciality.label
-                    ? "bg-blue-100 border-blue-500"
-                    : "bg-blue-50 border-gray-300 hover:border-blue-300"
+                    ? "border-green-400"
+                    : "border-none"
                 }`}
                 onClick={() => setActiveSpecialty(speciality)}
               >
-                <Image
-                  width={80}
-                  height={80}
+                <img
+                  width={40}
+                  height={40}
                   src={speciality.icon}
                   alt={speciality.label}
-                  className="w-full h-full object-cover"
+                  className="object-cover rounded-full"
                 />
               </button>
               <div
-                className={`mt-3 text-center text-xs font-bold max-w-[80px] leading-tight h-10 flex items-center justify-center ${
-                  activeSpecialty.label === speciality.label
+                className={`text-center text-xs font-bold max-w-[80px] leading-tight h-10 flex items-center justify-center ${activeSpecialty.label === speciality.label
                     ? "text-blue-600"
                     : "text-gray-800"
-                }`}
+                  }`}
               >
                 {t(`specialties.${i}.label`)}
               </div>
@@ -49,20 +48,19 @@ const SpecialitiesAndSubs = () => {
       {/* Sub Specialities Section */}
       <div className="px-4 pb-6">
         <h3 className="text-lg font-bold text-gray-900 mb-4">Sub Specialities</h3>
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide md:justify-center md:flex-wrap md:overflow-visible md:max-w-4xl md:mx-auto" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide md:justify-center md:flex-wrap md:overflow-visible md:max-w-4xl md:mx-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {activeSpecialty.tags.map((tag, i) => (
             <button
               key={i}
               onClick={() => setActiveTag(tag)}
-              className={`px-5 py-3 font-bold rounded-full text-sm transition-all duration-200 whitespace-nowrap flex-shrink-0 shadow-sm ${
-                tag === activeTag
+              className={`px-5 py-3 font-bold rounded-full text-sm transition-all duration-200 whitespace-nowrap flex-shrink-0 shadow-sm ${tag === activeTag
                   ? "bg-blue-600 text-white shadow-blue-200"
                   : "bg-gray-200 text-gray-700  hover:bg-gray-200 hover:border-gray-300"
-              }`}
+                }`}
             >
               {t(
-                 `specialties.${specialties.indexOf(activeSpecialty)}.tags.${i}`
-               )}
+                `specialties.${specialties.indexOf(activeSpecialty)}.tags.${i}`
+              )}
             </button>
           ))}
         </div>

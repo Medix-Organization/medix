@@ -2,7 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { FaSearch, FaStethoscope, FaHome, FaUserMd, FaPhone, FaUser } from "react-icons/fa";
+import { FaSearch, FaStethoscope, FaUser } from "react-icons/fa";
+import Home from './home.svg';
 import ToggleLanguageButton from "./ToggleLanguageButton";
 import { Link } from "@/i18n/navigation";
 
@@ -21,24 +22,24 @@ const ClientNavBar = () => {
                 <FaStethoscope className="text-2xl" />
                 <span className="text-2xl font-bold tracking-tight">MEDIX</span>
               </Link>
-              
+
               {/* Navigation Links */}
               <div className="flex gap-8">
-                <Link 
-                  href="/" 
+                <Link
+                  href="/"
                   className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
                 >
                   {t('links.home')}
                 </Link>
-                <Link 
-                  href="#" 
+                <Link
+                  href="#"
                   className="text-white hover:text-blue-100 transition-colors font-medium px-3 py-2 rounded-md hover:bg-blue-500/20"
                 >
                   {t('links.contact')}
                 </Link>
               </div>
             </div>
-            
+
             {/* Right Side - Search, Auth, Language */}
             <div className="flex items-center gap-4">
               {/* Search Bar */}
@@ -50,7 +51,7 @@ const ClientNavBar = () => {
                   className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full pl-10 pr-4 py-2 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30 focus:bg-white/20 transition-all w-64"
                 />
               </div>
-              
+
               {/* Authentication */}
               <SignedOut>
                 <SignInButton>
@@ -59,9 +60,9 @@ const ClientNavBar = () => {
                   </button>
                 </SignInButton>
               </SignedOut>
-              
+
               <SignedIn>
-                <UserButton 
+                <UserButton
                   appearance={{
                     elements: {
                       avatarBox: "w-10 h-10 ring-2 ring-white/30 hover:ring-white/50 transition-all"
@@ -69,7 +70,7 @@ const ClientNavBar = () => {
                   }}
                 />
               </SignedIn>
-              
+
               {/* Language Toggle */}
               <ToggleLanguageButton />
             </div>
@@ -81,29 +82,41 @@ const ClientNavBar = () => {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="flex items-center justify-around py-3 px-2">
           {/* Home */}
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
           >
-            <FaHome className="text-lg" />
+            <img
+              width={20}
+              height={20}
+              src='/home.svg'
+            />
             <span className="text-xs font-medium truncate">{t('links.home')}</span>
           </Link>
-          
-          {/* Search */}
+
+          {/* Doctors */}
           <button className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0">
-            <FaSearch className="text-lg" />
-            <span className="text-xs font-medium truncate">Search</span>
+            <img
+              width={20}
+              height={20}
+              src='/doctors.svg'
+            />
+            <span className="text-xs font-medium truncate">Doctors</span>
           </button>
-          
-          {/* Contact */}
-          <Link 
-            href="#" 
+
+          {/* Favorites */}
+          <Link
+            href="#"
             className="flex flex-col items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors p-2 min-w-0"
           >
-            <FaPhone className="text-lg" />
-            <span className="text-xs font-medium truncate">{t('links.contact')}</span>
+            <img
+              width={20}
+              height={20}
+              src='/favorite.svg'
+            />
+            <span className="text-xs font-medium truncate">Favorites</span>
           </Link>
-          
+
           {/* Profile/Auth */}
           <div className="flex flex-col items-center gap-1 p-2 min-w-0">
             <SignedOut>
@@ -114,15 +127,13 @@ const ClientNavBar = () => {
                 </button>
               </SignInButton>
             </SignedOut>
-            
+
             <SignedIn>
               <div className="flex flex-col items-center gap-1">
-                <UserButton 
-                  appearance={{
-                    elements: {
-                      avatarBox: "w-5 h-5 ring-1 ring-gray-300"
-                    }
-                  }}
+                <img
+                  width={20}
+                  height={20}
+                  src='/profile.svg'
                 />
                 <span className="text-xs font-medium text-gray-600 truncate">Profile</span>
               </div>
